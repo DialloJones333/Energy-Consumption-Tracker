@@ -37,7 +37,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'energy_management',
 ]
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'HomeEnergyMonitor',
+        'USER': 'DialloJones',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -49,7 +61,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Energy_Consumption_Tracker.urls'
+ROOT_URLCONF = 'energy_configs.urls'
 
 TEMPLATES = [
     {
@@ -67,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Energy_Consumption_Tracker.wsgi.application'
+WSGI_APPLICATION = 'energy_configs.wsgi.application'
 
 
 # Database
