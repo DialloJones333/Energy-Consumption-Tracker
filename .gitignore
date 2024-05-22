@@ -25,3 +25,9 @@ dist-ssr
 
 # Virtual environment
 .venv/
+venv/
+env/
+ENV/
+.env/
+*.pyc
+__pycache__/
