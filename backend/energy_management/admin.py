@@ -6,4 +6,3 @@ admin.site.register(ConsumptionRecord)
 admin.site.register(Tip)
 admin.site.register(Notification)
 admin.site.register(UserProfile)
-
