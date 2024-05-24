@@ -1,11 +1,8 @@
-
-import "../assets/styles/LandingNavbar.css";
-
 const LandingNavbar = () => {
-    return (
-        <div>
-            Hey
-        </div>
+    return  (
+        <h1 className="text-3xl font-bold underline">
+            Hello world!
+        </h1>
     )
-}
+};
 export default LandingNavbar;
