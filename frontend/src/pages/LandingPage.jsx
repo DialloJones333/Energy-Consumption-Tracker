@@ -1,10 +1,10 @@
-import LandingNavbar from '../components/LandingNavbar';
+import Navbar from '../components/Navbar';
 import LandingCharts from '../components/LandingCharts';
 import '../styles/LandingPage.css'
 
 const LandingPage = () => (
     <div className=' bg-gray-100'>
-        <LandingNavbar />
+        <Navbar />
         <main className="p-10">
             <section className="text-center mb-10">
                 <h1 className="text-6xl font-bold mb-8">EcoEfficient Living</h1>
