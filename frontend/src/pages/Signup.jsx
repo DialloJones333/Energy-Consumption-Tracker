@@ -1,11 +1,11 @@
-import Navbar from '../components/Navbar';
+import LandingNavbar from '../components/LandingNavbar';
 import Footer from '../components/Footer';
 import SignUpForm from '../components/SignUpForm';
 
 const Signup = () => {
     return (
         <div>
-            <Navbar />
+            <LandingNavbar />
             <SignUpForm />
             <Footer />
         </div>
