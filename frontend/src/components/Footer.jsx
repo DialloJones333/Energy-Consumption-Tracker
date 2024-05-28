@@ -1,5 +1,5 @@
 import { ReactSVG } from 'react-svg';
-import githubIcon from '../assets/github.svg'
+import githubicon from '../assets/github.svg'
 import linkedinicon from '../assets/linkedin.svg'
 import emailicon from '../assets/email.svg'
 
@@ -11,7 +11,7 @@ const Footer = () => (
         </aside> 
         <nav className="flex justify-center items-center space-x-3 md:place-self-center md:justify-self-end">
             <a href="https://github.com/DialloJones333"className="hover:text-gray-400" target="_blank" rel="noopener noreferrer">
-                <ReactSVG src={githubIcon} className="w-6 h-6 fill-current hover:text-purple-900" />
+                <ReactSVG src={githubicon} className="w-6 h-6 fill-current hover:text-purple-900" />
             </a>
             <a href="https://linkedin.com/in/diallo-jones0133310"className="hover:text-gray-400" target="_blank" rel="noopener noreferrer">
                 <ReactSVG src={linkedinicon} className="w-7 h-6 fill-current hover:text-blue-600"/>

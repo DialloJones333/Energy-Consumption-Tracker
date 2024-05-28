@@ -1,15 +1,15 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import LogInForm from '../components/LogInForm';
+import SignUpForm from '../components/SignUpForm';
 
-const Login = () => {
+const Signup = () => {
     return (
         <div>
             <Navbar />
-            <LogInForm />
+            <SignUpForm />
             <Footer />
         </div>
     );
 };
 
-export default Login;
+export default Signup;
