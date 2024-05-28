@@ -19,9 +19,6 @@ const LandingPage = () => (
             </section>
             <LandingCharts />
         </main>
-        <footer>
-            
-        </footer>
     </div>
 );
 
