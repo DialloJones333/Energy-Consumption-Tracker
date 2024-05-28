@@ -6,7 +6,7 @@ const LandingNavbar = () => {
     return (
         <nav className="flex items-center justify-between p-5 bg-gray-100 shadow-md">
             <div className="logo">
-                <img src="/assets/images/Energy_Consumpt_Logo.png" alt="EcoEfficient Living Logo" className="h-10" />
+                <img src="images/Energy_Consumpt_Logo.png" alt="EcoEfficient Living Logo" className="h-10" />
             </div>
             <div className="nav-links flex space-x-5">
                 {location.pathname === '/' && (
