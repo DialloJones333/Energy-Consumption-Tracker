@@ -4,8 +4,6 @@ const LandingNavbar = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    console.log('LandingPage rendered with pathname:', location.pathname);
-
     return (
         <nav className="flex items-center justify-between p-5 bg-gray-100 shadow-md">
             <div className="logo">
