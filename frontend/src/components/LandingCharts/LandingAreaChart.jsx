@@ -60,8 +60,8 @@ class LandingAreaChart extends PureComponent {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
+                    <XAxis tick={{ fill: '#1e293b' }} dataKey="name" />
+                    <YAxis tick={{ fill: '#1e293b' }} />
                     <Tooltip />
                     <Area type="monotone" dataKey="uv" stackId="1" stroke="#a8a29e" fill="#a8a29e" />
                     <Area type="monotone" dataKey="pv" stackId="1" stroke="#10B981" fill="#10B981" />

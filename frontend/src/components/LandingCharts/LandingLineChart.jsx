@@ -62,8 +62,8 @@ class LandingLineChart extends PureComponent {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
+                    <XAxis tick={{ fill: '#1e293b' }} dataKey="name" />
+                    <YAxis tick={{ fill: '#1e293b' }} />
                     <Tooltip />
                     <Legend />
                     <Line type="monotone" dataKey="pv" stroke="#a8a29e" activeDot={{ r: 8 }} />

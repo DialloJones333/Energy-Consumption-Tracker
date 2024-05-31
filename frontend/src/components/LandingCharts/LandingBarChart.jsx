@@ -62,8 +62,8 @@ class LandingBarChart extends PureComponent {
                     }}
                     barSize={20}
                 >
-                    <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
-                    <YAxis />
+                    <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} tick={{ fill: '#1e293b' }} />
+                    <YAxis tick={{ fill: '#1e293b' }} />
                     <Tooltip />
                     <Legend />
                     <CartesianGrid strokeDasharray="3 3" />
