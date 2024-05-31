@@ -59,7 +59,7 @@ class LandingAreaChart extends PureComponent {
                     <YAxis />
                     <Tooltip />
                     <Area type="monotone" dataKey="uv" stackId="1" stroke="#8884d8" fill="#8884d8" />
-                    <Area type="monotone" dataKey="pv" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
+                    <Area type="monotone" dataKey="pv" stackId="1" stroke="#10B981" fill="#10B981" />
                 </AreaChart>
             </ResponsiveContainer>
         );
