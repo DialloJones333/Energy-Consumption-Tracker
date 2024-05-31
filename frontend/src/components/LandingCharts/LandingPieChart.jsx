@@ -46,8 +46,8 @@ const renderActiveShape = (props) => {
             />
             <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
             <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333" style={{ fontSize: '12px' }}>{`PV ${value}`}</text>
-            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999" style={{ fontSize: '12px' }}>
+            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#000" style={{ fontSize: '12px' }}>{`PV ${value}`}</text>
+            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#000" style={{ fontSize: '12px' }}>
                 {`(Rate ${(percent * 100).toFixed(2)}%)`}
             </text>
         </g>
@@ -77,7 +77,7 @@ class LandingPieChart extends PureComponent {
                         cy="50%"
                         innerRadius={40}
                         outerRadius={60}
-                        fill="#8884d8"
+                        fill="#10B981"
                         dataKey="value"
                         onMouseEnter={this.onPieEnter}
                     />

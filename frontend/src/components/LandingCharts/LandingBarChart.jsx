@@ -3,43 +3,43 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 
 const data = [
     {
-        name: 'Page A',
+        name: '12AM',
         uv: 4000,
         pv: 2400,
         amt: 2400,
     },
     {
-        name: 'Page B',
+        name: '2AM',
         uv: 3000,
         pv: 1398,
         amt: 2210,
     },
     {
-        name: 'Page C',
+        name: '4AM',
         uv: 2000,
-        pv: 9800,
+        pv: 1100,
         amt: 2290,
     },
     {
-        name: 'Page D',
+        name: '6AM',
         uv: 2780,
         pv: 3908,
         amt: 2000,
     },
     {
-        name: 'Page E',
+        name: '8AM',
         uv: 1890,
         pv: 4800,
         amt: 2181,
     },
     {
-        name: 'Page F',
+        name: '10AM',
         uv: 2390,
         pv: 3800,
         amt: 2500,
     },
     {
-        name: 'Page G',
+        name: '12PM',
         uv: 3490,
         pv: 4300,
         amt: 2100,
@@ -67,7 +67,7 @@ class LandingBarChart extends PureComponent {
                     <Tooltip />
                     <Legend />
                     <CartesianGrid strokeDasharray="3 3" />
-                    <Bar dataKey="pv" fill="#8884d8" background={{ fill: '#eee' }} />
+                    <Bar dataKey="pv" fill="#a8a29e" background={{ fill: '#eee' }} />
                 </BarChart>
             </ResponsiveContainer>
         );

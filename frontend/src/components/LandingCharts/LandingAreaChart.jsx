@@ -3,39 +3,44 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 const data = [
     {
-        name: 'Page A',
+        name: 'January',
         uv: 4000,
         pv: 2400,
     },
     {
-        name: 'Page B',
+        name: 'February',
         uv: 3000,
         pv: 1398,
     },
     {
-        name: 'Page C',
+        name: 'March',
         uv: 2000,
         pv: 9800,
     },
     {
-        name: 'Page D',
+        name: 'April',
         uv: 2780,
         pv: 3908,
     },
     {
-        name: 'Page E',
+        name: 'May',
         uv: 1890,
         pv: 4800,
     },
     {
-        name: 'Page F',
+        name: 'June',
         uv: 2390,
         pv: 3800,
     },
     {
-        name: 'Page G',
+        name: 'July',
         uv: 3490,
         pv: 4300,
+    },
+    {
+        name: 'August',
+        uv: 4220,
+        pv: 5100,
     },
 ];
 
@@ -58,7 +63,7 @@ class LandingAreaChart extends PureComponent {
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
-                    <Area type="monotone" dataKey="uv" stackId="1" stroke="#8884d8" fill="#8884d8" />
+                    <Area type="monotone" dataKey="uv" stackId="1" stroke="#a8a29e" fill="#a8a29e" />
                     <Area type="monotone" dataKey="pv" stackId="1" stroke="#10B981" fill="#10B981" />
                 </AreaChart>
             </ResponsiveContainer>
