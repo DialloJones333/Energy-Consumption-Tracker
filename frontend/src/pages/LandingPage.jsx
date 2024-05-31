@@ -9,7 +9,7 @@ const LandingPage = () => (
         <main className="p-10 flex-grow">
             <section className="text-center mb-10">
                 <h1 className="text-6xl font-bold mb-8">EcoEfficient Living</h1>
-                <p className="text-gray-700 mb-8 max-w-4xl mx-auto">
+                <p className="text-slate-800 text-2xl mb-8 max-w-4xl mx-auto">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit, nisl rutrum maximus eleifend, 
                     nibh libero convallis lacus, eu consequat eros metus sed nunc. Phasellus finibus fringilla erat ut rhoncus. 
                     Quisque iaculis metus et condimentum porta. Maecenas purus odio, fermentum nec cursus eu, feugiat ullamcorper orci. 
