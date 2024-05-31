@@ -4,9 +4,9 @@ import Footer from '../components/Footer'
 import '../styles/LandingPage.css'
 
 const LandingPage = () => (
-    <div className='bg-gray-100'>
+    <div className='bg-gray-100 flex flex-col min-h-screen'>
         <LandingNavbar />
-        <main className="p-10 min-h-screen">
+        <main className="p-10 flex-grow">
             <section className="text-center mb-10">
                 <h1 className="text-6xl font-bold mb-8">EcoEfficient Living</h1>
                 <p className="text-gray-700 mb-8 max-w-4xl mx-auto">

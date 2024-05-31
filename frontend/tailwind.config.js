@@ -7,9 +7,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
-  },
+    extend: {
+      spacing: {
+        '104': '26rem',
+        '72': '18rem',
+      },
+      },
+    },
   plugins: [
     daisyui,
-  ],
-}
+    ],
+  }
+
