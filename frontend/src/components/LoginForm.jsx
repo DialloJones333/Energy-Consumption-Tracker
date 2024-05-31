@@ -1,6 +1,14 @@
-
+import { useEffect, useRef } from 'react';
 
 const LoginForm = () => {
+    const emailInputRef = useRef(null);
+
+    useEffect(() => {
+        if (emailInputRef.current) {
+            emailInputRef.current.focus();
+        }
+    }, []);
+
     return (
         <div className=" min-h-screen flex items-center justify-center">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -19,6 +27,7 @@ const LoginForm = () => {
                             id="email"
                             type="email"
                             placeholder="Enter your email"
+                            ref={emailInputRef}
                         />
                     </div>
                     <div className="mb-6">

@@ -1,4 +1,14 @@
+import { useEffect, useRef } from 'react';
+
 const SignUpForm = () => {
+    const nameInputRef = useRef(null);
+
+    useEffect(() => {
+        if (nameInputRef.current) {
+            nameInputRef.current.focus();
+        }
+    }, []);
+
     return (
         <div className="min-h-screen flex items-center justify-center">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -17,6 +27,7 @@ const SignUpForm = () => {
                             id="first-name"
                             type="text"
                             placeholder="Enter your first name"
+                            ref={nameInputRef}
                         />
                     </div>
                     <div className="mb-6">
