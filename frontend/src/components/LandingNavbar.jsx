@@ -13,13 +13,13 @@ const LandingNavbar = () => {
                 {location.pathname === '/' && (
                     <div className=' space-x-5'>
                         <button 
-                            className="btn btn-outline border-slate-800 hover:bg-green-500 text-gray-700 font-bold" 
+                            className="btn btn-outline shadow-md border-slate-800 hover:bg-green-500 text-gray-700 font-bold" 
                             type='button'
                             onClick={() => navigate('/login')}>
                             Log In
                         </button>
                         <button 
-                            className="btn btn-outline border-slate-800 hover:bg-green-500 text-gray-700 font-bold" 
+                            className="btn btn-outline shadow-md border-slate-800 hover:bg-green-500 text-gray-700 font-bold" 
                             type='button'
                             onClick={() => navigate('/signup')}>
                             Sign Up
@@ -29,13 +29,13 @@ const LandingNavbar = () => {
                 {location.pathname === '/signup' && (
                     <div className="space-x-5">
                         <button
-                            className="btn btn-outline border-slate-800 hover:bg-green-500 text-gray-700 font-bold" 
+                            className="btn btn-outline shadow-md border-slate-800 hover:bg-green-500 text-gray-700 font-bold" 
                             type='button'
                             onClick={() => navigate('/')}>
                             Home
                         </button>
                         <button 
-                            className="btn btn-outline border-slate-800 hover:bg-green-500 text-gray-700 font-bold" 
+                            className="btn btn-outline shadow-md border-slate-800 hover:bg-green-500 text-gray-700 font-bold" 
                             type='button'
                             onClick={() => navigate('/login')}>
                             Log In
@@ -45,13 +45,13 @@ const LandingNavbar = () => {
                 {location.pathname === '/login' && (
                     <div className="space-x-5">
                         <button
-                            className="btn btn-outline border-slate-800 hover:bg-green-500 text-gray-700 font-bold" 
+                            className="btn btn-outline shadow-md border-slate-800 hover:bg-green-500 text-gray-700 font-bold" 
                             type='button'
                             onClick={() => navigate('/')}>
                             Home
                         </button>
                         <button 
-                            className="btn btn-outline border-slate-800 hover:bg-green-500 text-gray-700 font-bold" 
+                            className="btn btn-outline shadow-md border-slate-800 hover:bg-green-500 text-gray-700 font-bold" 
                             type='button'
                             onClick={() => navigate('/signup')}>
                             Sign Up
