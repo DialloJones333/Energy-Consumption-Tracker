@@ -4,38 +4,38 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 const data = [
     {
         name: '1st',
-        Local: 3000,
-        User: 2200,
+        User: 3000,
+        Local: 2200,
     },
     {
         name: '2nd',
-        Local: 4200,
-        User: 1398,
+        User: 4200,
+        Local: 1398,
     },
     {
         name: '3rd',
-        Local: 2000,
-        User: 5500,
+        User: 2000,
+        Local: 5500,
     },
     {
         name: '4th',
-        Local: 2780,
-        User: 3908,
+        User: 2780,
+        Local: 3908,
     },
     {
         name: '5th',
-        Local: 1890,
-        User: 4800,
+        User: 1890,
+        Local: 4800,
     },
     {
         name: '6th',
-        Local: 1390,
-        User: 3800,
+        User: 1390,
+        Local: 3800,
     },
     {
         name: '7th',
-        Local: 2690,
-        User: 4800,
+        User: 2690,
+        Local: 4800,
     },
 ];
 

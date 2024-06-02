@@ -14,7 +14,7 @@ const Dashboard = () => {
                     </div>
                     <div className="flex flex-row justify-center">
                         <a href="/">
-                            <button className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold">
+                            <button className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
                                 Manage Devices
                             </button>
                         </a>
@@ -22,8 +22,22 @@ const Dashboard = () => {
                     <div className="w-104 h-72 bg-gray-200 flex items-center justify-center rounded-lg shadow-md">
                         
                     </div>
+                        <div className="flex flex-row justify-center">
+                            <a href="/">
+                                <button className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
+                                    Compare Rates
+                                </button>
+                            </a>
+                        </div>
                     <div className="w-104 h-72 bg-gray-200 flex items-center justify-center rounded-lg shadow-md">
                         
+                    </div>
+                    <div className="flex flex-row justify-center mb-10">
+                        <a href="/">
+                            <button className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
+                                Compare Rates
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div className="flex flex-col items-center gap-10 w-full">
