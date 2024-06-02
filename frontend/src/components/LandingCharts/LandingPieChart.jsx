@@ -2,10 +2,10 @@ import { PureComponent } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
 
 const data = [
-    { name: 'Device A', value: 400 },
-    { name: 'Device B', value: 300 },
-    { name: 'Device C', value: 300 },
-    { name: 'Device D', value: 200 },
+    { name: 'Device A', value: 510 },
+    { name: 'Device B', value: 325 },
+    { name: 'Device C', value: 180 },
+    { name: 'Device D', value: 300 },
 ];
 
 const renderActiveShape = (props) => {
@@ -46,7 +46,7 @@ const renderActiveShape = (props) => {
             />
             <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
             <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#1e293b" style={{ fontSize: '12px' }}>{`PV ${value}`}</text>
+            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#1e293b" style={{ fontSize: '12px' }}>{`Value ${value}`}</text>
             <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#1e293b" style={{ fontSize: '12px' }}>
                 {`(Rate ${(percent * 100).toFixed(2)}%)`}
             </text>

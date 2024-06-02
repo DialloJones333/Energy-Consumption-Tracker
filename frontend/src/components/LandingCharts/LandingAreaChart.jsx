@@ -4,43 +4,43 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 const data = [
     {
         name: 'January',
-        uv: 4000,
-        pv: 2400,
+        Usage: 4500,
+        Goal: 5000,
     },
     {
         name: 'February',
-        uv: 3000,
-        pv: 1398,
+        Usage: 4400,
+        Goal: 3398,
     },
     {
         name: 'March',
-        uv: 2000,
-        pv: 9800,
+        Usage: 5200,
+        Goal: 6800,
     },
     {
         name: 'April',
-        uv: 2780,
-        pv: 3908,
+        Usage: 3780,
+        Goal: 4908,
     },
     {
         name: 'May',
-        uv: 1890,
-        pv: 4800,
+        Usage: 4890,
+        Goal: 5950,
     },
     {
         name: 'June',
-        uv: 2390,
-        pv: 3800,
+        Usage: 3390,
+        Goal: 3800,
     },
     {
         name: 'July',
-        uv: 3490,
-        pv: 4300,
+        Usage: 4490,
+        Goal: 5300,
     },
     {
         name: 'August',
-        uv: 4220,
-        pv: 5100,
+        Usage: 2220,
+        Goal: 4100,
     },
 ];
 
@@ -63,8 +63,8 @@ class LandingAreaChart extends PureComponent {
                     <XAxis tick={{ fill: '#1e293b' }} dataKey="name" />
                     <YAxis tick={{ fill: '#1e293b' }} />
                     <Tooltip />
-                    <Area type="monotone" dataKey="uv" stackId="1" stroke="#a8a29e" fill="#a8a29e" />
-                    <Area type="monotone" dataKey="pv" stackId="1" stroke="#10B981" fill="#10B981" />
+                    <Area type="monotone" dataKey="Usage" stackId="1" stroke="#a8a29e" fill="#a8a29e" />
+                    <Area type="monotone" dataKey="Goal" stackId="1" stroke="#10B981" fill="#10B981" />
                 </AreaChart>
             </ResponsiveContainer>
         );
