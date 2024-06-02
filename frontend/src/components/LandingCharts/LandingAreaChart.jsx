@@ -9,8 +9,8 @@ const data = [
     },
     {
         name: 'February',
-        Usage: 4400,
-        Goal: 3398,
+        Usage: 3300,
+        Goal: 4298,
     },
     {
         name: 'March',
