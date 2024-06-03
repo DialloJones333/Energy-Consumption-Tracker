@@ -19,7 +19,7 @@ const SignUpForm = () => {
                     <div className="mb-6">
                         <label
                             className="block text-sm font-bold mb-2"
-                            htmlFor="email">
+                            htmlFor="first-name">
                             First Name
                         </label>
                         <input
@@ -33,7 +33,7 @@ const SignUpForm = () => {
                     <div className="mb-6">
                         <label
                             className="block text-slate-800 text-sm font-bold mb-2"
-                            htmlFor="password"
+                            htmlFor="last-name"
                         >
                             Last Name
                         </label>

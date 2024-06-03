@@ -1,5 +1,6 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import DeviceChart from "../components/Charts/DeviceChart";
 import '../styles/LandingPage.css';
 
 const Dashboard = () => {
@@ -10,10 +11,10 @@ const Dashboard = () => {
             <main className="flex flex-row gap-10 mt-10">
                 <div className="flex flex-col ms-4 gap-10">
                     <div className="w-104 h-72 bg-gray-200 flex items-center justify-center rounded-lg shadow-lg">
-                        
+                        <DeviceChart />
                     </div>
                     <div className="flex flex-row justify-center">
-                        <a href="/">
+                        <a href="/device-management">
                             <button className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
                                 Manage Devices
                             </button>
@@ -35,7 +36,7 @@ const Dashboard = () => {
                     <div className="flex flex-row justify-center mb-10">
                         <a href="/">
                             <button className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
-                                Compare Rates
+                                Explore Tips & Tricks
                             </button>
                         </a>
                     </div>
