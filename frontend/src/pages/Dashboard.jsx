@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import DeviceChart from "../components/Charts/DeviceChart";
+import CompareRatesChart from "../components/Charts/CompareRatesChart";
 import '../styles/LandingPage.css';
 
 const Dashboard = () => {
@@ -12,7 +13,7 @@ const Dashboard = () => {
             <Navbar />
             <main className="flex flex-row gap-10 mt-10">
                 <div className="flex flex-col ms-4 gap-10">
-                    <div className="w-104 h-72 bg-gray-200 flex items-center justify-center rounded-lg shadow-lg">
+                    <div className="w-104 h-72 bg-gray-100 flex items-center justify-center rounded-lg ">
                         <DeviceChart />
                     </div>
                     <div className="flex flex-row justify-center">
@@ -20,8 +21,8 @@ const Dashboard = () => {
                             Manage Devices
                         </button>
                     </div>
-                    <div className="w-104 h-72 bg-gray-200 flex items-center justify-center rounded-lg shadow-md">
-                        
+                    <div className="w-104 h-72 bg-gray-100 flex items-center justify-center rounded-lg">
+                        <CompareRatesChart />
                     </div>
                         <div className="flex flex-row justify-center">
                             <button onClick={() => navigate('/')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
