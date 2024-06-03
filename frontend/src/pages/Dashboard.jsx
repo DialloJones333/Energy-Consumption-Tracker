@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import DeviceChart from "../components/Charts/DeviceChart";
 import '../styles/LandingPage.css';
 
 const Dashboard = () => {
+    const navigate = useNavigate();
 
     return (
         <div className="dashboard-page bg-gray-100 min-h-screen p-5">
@@ -14,31 +16,25 @@ const Dashboard = () => {
                         <DeviceChart />
                     </div>
                     <div className="flex flex-row justify-center">
-                        <a href="/device-management">
-                            <button className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
-                                Manage Devices
-                            </button>
-                        </a>
+                        <button onClick={() => navigate('/device-management')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
+                            Manage Devices
+                        </button>
                     </div>
                     <div className="w-104 h-72 bg-gray-200 flex items-center justify-center rounded-lg shadow-md">
                         
                     </div>
                         <div className="flex flex-row justify-center">
-                            <a href="/">
-                                <button className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
-                                    Compare Rates
-                                </button>
-                            </a>
+                            <button onClick={() => navigate('/')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
+                                Compare Rates
+                            </button>
                         </div>
                     <div className="w-104 h-72 bg-gray-200 flex items-center justify-center rounded-lg shadow-md">
                         
                     </div>
                     <div className="flex flex-row justify-center mb-10">
-                        <a href="/">
-                            <button className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
-                                Explore Tips & Tricks
-                            </button>
-                        </a>
+                        <button onClick={() => navigate('/')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
+                            Explore Tips & Tricks
+                        </button>
                     </div>
                 </div>
                 <div className="flex flex-col items-center gap-10 w-full">
