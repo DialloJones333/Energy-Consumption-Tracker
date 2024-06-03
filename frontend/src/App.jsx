@@ -4,6 +4,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import DeviceManagement from './pages/DeviceManagement';
+import CompareRates from './pages/CompareRates';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/device-management' element={<DeviceManagement />} />
+        <Route path='/compare-rates' element={<CompareRates />} />
       </Routes>
     </Router>
   );

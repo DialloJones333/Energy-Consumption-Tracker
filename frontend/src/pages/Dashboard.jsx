@@ -25,7 +25,7 @@ const Dashboard = () => {
                         <MiniCompareChart />
                     </div>
                         <div className="flex flex-row justify-center">
-                            <button onClick={() => navigate('/')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
+                            <button onClick={() => navigate('/compare-rates')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
                                 Compare Rates
                             </button>
                         </div>
