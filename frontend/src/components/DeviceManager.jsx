@@ -1,7 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const DeviceManager = () => {
     const DeviceInputRef = useRef(null);
+    const [deviceType, setDeviceType] = useState('');
+    const [deviceTypes] = useState(['LED Bulbs', 'Incandescent Bulbs', 'CFL Bulbs', 'Smart Bulbs', 'Smart Plugs', 'Smart Thermostats', 'Fans', 'Televisions', 'Gaming Consoles', 'Desktop Computers', 'Laptops',  ]);
 
     useEffect(() => {
         if (DeviceInputRef.current) {
@@ -37,12 +39,17 @@ const DeviceManager = () => {
                         >
                             Device Type
                         </label>
-                        <input
+                        <select
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="device-type"
-                            type="text"
-                            placeholder="Enter device type"
-                        />
+                            value={deviceType}
+                            onChange={(e) => setDeviceType(e.target.value)}
+                        >
+                            <option value="">Select device type</option>
+                            {deviceTypes.map((type) => (
+                                <option key={type} value={type}>{type}</option>
+                            ))}
+                        </select>
                     </div>
                     <div className="flex items-center justify-between">
                         <button
