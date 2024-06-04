@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import DeviceChart from "../components/Charts/DeviceChart";
 import MiniCompareChart from "../components/Charts/MiniCompareChart";
+import Carousel from "../components/Carousel";
 import '../styles/LandingPage.css';
 
 const Dashboard = () => {
@@ -30,7 +31,7 @@ const Dashboard = () => {
                             </button>
                         </div>
                     <div className="w-104 h-72 bg-gray-200 flex items-center justify-center rounded-lg shadow-md">
-                        
+                        <Carousel />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
                         <button onClick={() => navigate('/')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
