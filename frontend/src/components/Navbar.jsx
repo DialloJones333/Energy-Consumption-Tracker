@@ -3,6 +3,9 @@ import { useLocation, useNavigate} from 'react-router-dom';
 const Navbar = () => {
     const location = useLocation();
     const isDashboard = location.pathname === '/dashboard';
+    const isDeviceManagement = location.pathname === '/device-management';
+    const isCompareRates = location.pathname === '/compare-rates';
+    
     const navigate = useNavigate();
 
     return (
@@ -15,8 +18,8 @@ const Navbar = () => {
                         </button>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-md bg-gray-100 rounded-box w-52">
                             {!isDashboard && <li><button onClick={() => navigate('/dashboard')}>Dashboard</button></li>}
-                            <li><button onClick={() => navigate('/device-management')}>Device Management</button></li>
-                            <li><button onClick={() => navigate('/compare-rates')}>Comparison Tool</button></li>
+                            {!isDeviceManagement && <li><button onClick={() => navigate('/device-management')}>Device Management</button></li>}
+                            {!isCompareRates && <li><button onClick={() => navigate('/compare-rates')}>Comparison Tool</button></li>}
                             <li><button onClick={() => navigate('/')}>Tips & Tricks</button></li>
                             <li><a href="https://github.com/DialloJones333/Energy-Consumption-Tracker" target="_blank" rel="noopener noreferrer">About</a></li>
                         </ul>
