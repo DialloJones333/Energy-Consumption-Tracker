@@ -5,6 +5,7 @@ const Navbar = () => {
     const isDashboard = location.pathname === '/dashboard';
     const isDeviceManagement = location.pathname === '/device-management';
     const isCompareRates = location.pathname === '/compare-rates';
+    const isTipsAndTricks = location.pathname === '/tips-and-tricks';
     
     const navigate = useNavigate();
 
@@ -20,7 +21,7 @@ const Navbar = () => {
                             {!isDashboard && <li><button onClick={() => navigate('/dashboard')}>Dashboard</button></li>}
                             {!isDeviceManagement && <li><button onClick={() => navigate('/device-management')}>Device Management</button></li>}
                             {!isCompareRates && <li><button onClick={() => navigate('/compare-rates')}>Comparison Tool</button></li>}
-                            <li><button onClick={() => navigate('/')}>Tips & Tricks</button></li>
+                            {!isTipsAndTricks && <li><button onClick={() => navigate('/tips-and-tricks')}>Tips & Tricks</button></li>}
                             <li><a href="https://github.com/DialloJones333/Energy-Consumption-Tracker" target="_blank" rel="noopener noreferrer">About</a></li>
                         </ul>
                     </div>

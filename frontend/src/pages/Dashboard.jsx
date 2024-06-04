@@ -10,7 +10,7 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="dashboard-page bg-gray-100 min-h-screen p-5">
+        <div className="bg-gray-100 min-h-screen p-5">
             <Navbar />
             <main className="flex flex-row gap-10 mt-10">
                 <div className="flex flex-col ms-4 gap-10">
@@ -34,7 +34,7 @@ const Dashboard = () => {
                         <Carousel />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
-                        <button onClick={() => navigate('/')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
+                        <button onClick={() => navigate('/tips-and-tricks')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
                             Explore Tips & Tricks
                         </button>
                     </div>
