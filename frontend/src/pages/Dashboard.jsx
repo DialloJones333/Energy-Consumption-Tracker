@@ -30,7 +30,7 @@ const Dashboard = () => {
                                 Compare Rates
                             </button>
                         </div>
-                    <div className="w-104 h-72 bg-gray-200 flex items-center justify-center rounded-lg shadow-md">
+                    <div className="w-104 h-72 bg-gray-100 flex items-center justify-center shadow-lg rounded-lg ">
                         <Carousel />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
