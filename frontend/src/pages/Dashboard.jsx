@@ -4,6 +4,8 @@ import Footer from "../components/Footer";
 import DeviceChart from "../components/Charts/DeviceChart";
 import MiniCompareChart from "../components/Charts/MiniCompareChart";
 import Carousel from "../components/Carousel";
+import DailyChart from "../components/Charts/DailyChart";
+import AllTimeChart from "../components/Charts/AllTimeChart";
 import '../styles/LandingPage.css';
 
 const Dashboard = () => {
@@ -14,7 +16,7 @@ const Dashboard = () => {
             <Navbar />
             <main className="flex flex-row gap-10 mt-10">
                 <div className="flex flex-col ms-4 gap-10">
-                    <div className="w-104 h-72 bg-gray-100 flex items-center justify-center rounded-lg ">
+                    <div className="w-104 h-72 bg-gray-100 shadow-lg flex items-center justify-center rounded-lg ">
                         <DeviceChart />
                     </div>
                     <div className="flex flex-row justify-center">
@@ -22,7 +24,7 @@ const Dashboard = () => {
                             Manage Devices
                         </button>
                     </div>
-                    <div className="w-104 h-72 bg-gray-100 flex items-center justify-center rounded-lg">
+                    <div className="w-104 h-72 bg-gray-100 shadow-lg flex items-center justify-center rounded-lg">
                         <MiniCompareChart />
                     </div>
                         <div className="flex flex-row justify-center">
@@ -41,15 +43,15 @@ const Dashboard = () => {
                 </div>
                 <div className="flex flex-col items-center gap-10 w-full">
                     <div>
-                        <h1 className="text-6xl font-bold font-serif">
+                        <h1 className="text-6xl font-bold font-serif mb-10">
                             Dashboard
                         </h1>
                     </div>
-                    <div className="w-full max-w-4xl h-96 bg-gray-200 shadow-lg flex items-center justify-center rounded-lg">
-                        
+                    <div className="w-full max-w-4xl h-96 flex items-center mb-10 justify-center shadow-xl rounded-lg">
+                        <DailyChart />
                     </div>
-                    <div className="w-full max-w-4xl h-96 bg-gray-200 shadow-lg flex items-center justify-center rounded-lg">
-                        
+                    <div className="w-full max-w-4xl h-96 flex items-center justify-center shadow-xl rounded-lg">
+                        <AllTimeChart />
                     </div>
                 </div>
             </main>
