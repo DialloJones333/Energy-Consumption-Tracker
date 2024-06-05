@@ -1,7 +1,7 @@
 import LandingNavbar from '../components/LandingNavbar';
 import LandingCharts from '../components/LandingCharts';
-import Footer from '../components/Footer'
-import '../styles/LandingPage.css'
+import Footer from '../components/Footer';
+import '../styles/LandingPage.css';
 
 const LandingPage = () => (
     <div className='bg-gray-100 flex flex-col min-h-screen'>
