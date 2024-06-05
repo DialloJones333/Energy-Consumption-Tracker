@@ -4,6 +4,7 @@ import LowerEnergyCard from "../components/Cards/LowerEnergyCard";
 import LowerBillCard from "../components/Cards/LowerBillCard";
 import SmartHomeCard from "../components/Cards/SmartHomeCard";
 import Accordion from "../components/Accordion";
+import { tips1, tips2, tips3 } from "../data/tipsData";
 
 const TipsAndTricks = () => {
 
@@ -29,13 +30,13 @@ const TipsAndTricks = () => {
                         </h1>
                     </div>
                     <div className="w-full shadow-lg flex justify-center rounded-lg">
-                        <Accordion />
+                        <Accordion tips={tips1} />
                     </div>
                     <div className="w-full shadow-lg flex  justify-center rounded-lg">
-                        <Accordion />
+                        <Accordion tips={tips2} />
                     </div>
                     <div className="w-full shadow-lg flex  justify-center rounded-lg">
-                        <Accordion />
+                        <Accordion tips={tips3} />
                     </div>
                 </div>
             </main>
