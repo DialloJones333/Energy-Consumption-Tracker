@@ -50,13 +50,13 @@ const Dashboard = () => {
                     <div className="w-full max-w-4xl h-96 flex items-center justify-center shadow-xl rounded-lg">
                         <DailyChart />
                     </div>
-                    <div className="badge badge-lg bg-stone-400 text-black shadow-md mb-10">
+                    <div className="badge badge-lg bg-stone-300 text-black shadow-md mb-10">
                         Daily Energy Usage (KWH)
                     </div>
                     <div className="w-full max-w-4xl h-96 flex items-center justify-center shadow-xl rounded-lg">
                         <YearlyChart />
                     </div>
-                    <div className="badge badge-lg bg-stone-400 text-black shadow-md mb-10">
+                    <div className="badge badge-lg bg-stone-300 text-black shadow-md mb-10">
                         Yearly Energy Usage (KWH)
                     </div>
                 </div>
