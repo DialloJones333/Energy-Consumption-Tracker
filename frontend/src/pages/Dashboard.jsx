@@ -20,7 +20,7 @@ const Dashboard = () => {
                         <DeviceChart />
                     </div>
                     <div className="flex flex-row justify-center">
-                        <button onClick={() => navigate('/device-management')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
+                        <button onClick={() => navigate('/device-management')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold font-serif">
                             Manage Devices
                         </button>
                     </div>
@@ -28,7 +28,7 @@ const Dashboard = () => {
                         <MiniCompareChart />
                     </div>
                         <div className="flex flex-row justify-center">
-                            <button onClick={() => navigate('/compare-rates')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
+                            <button onClick={() => navigate('/compare-rates')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold font-serif">
                                 Compare Rates
                             </button>
                         </div>
@@ -36,7 +36,7 @@ const Dashboard = () => {
                         <Carousel />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
-                        <button onClick={() => navigate('/tips-and-tricks')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-green-500 text-slate-800 font-bold font-serif">
+                        <button onClick={() => navigate('/tips-and-tricks')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold font-serif">
                             Explore Tips & Tricks
                         </button>
                     </div>

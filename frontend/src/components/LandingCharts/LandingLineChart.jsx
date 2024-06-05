@@ -60,7 +60,7 @@ class LandingLineChart extends PureComponent {
                     <Tooltip />
                     <Legend />
                     <Line type="monotone" dataKey="Local" stroke="#a8a29e" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="User" stroke="#10B981" />
+                    <Line type="monotone" dataKey="User" stroke="#4ade80" />
                 </LineChart>
             </ResponsiveContainer>
             );

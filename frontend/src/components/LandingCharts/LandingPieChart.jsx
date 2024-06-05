@@ -77,7 +77,7 @@ class LandingPieChart extends PureComponent {
                         cy="50%"
                         innerRadius={40}
                         outerRadius={60}
-                        fill="#10B981"
+                        fill="#4ade80"
                         dataKey="value"
                         onMouseEnter={this.onPieEnter}
                     />

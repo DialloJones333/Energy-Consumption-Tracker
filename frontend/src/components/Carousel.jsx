@@ -9,8 +9,8 @@ const Carousel = () => {
                         Hey
                     </p>
                 <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                    <a href="#slide4" className="btn btn-circle bg-stone-300 hover:bg-green-500 text-black">❮</a>
-                    <a href="#slide2" className="btn btn-circle bg-stone-300 hover:bg-green-500 text-black">❯</a>
+                    <a href="#slide4" className="btn btn-circle bg-stone-300 hover:bg-emerald-500 text-black">❮</a>
+                    <a href="#slide2" className="btn btn-circle bg-stone-300 hover:bg-emerald-500 text-black">❯</a>
                 </div>
             </div>
             <div id="slide2" className="carousel-item relative w-full flex items-center justify-center">
@@ -18,8 +18,8 @@ const Carousel = () => {
                     Hello
                 </p>
                 <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                    <a href="#slide1" className="btn btn-circle bg-stone-300 hover:bg-green-500 text-black">❮</a>
-                    <a href="#slide3" className="btn btn-circle bg-stone-300 hover:bg-green-500 text-black">❯</a>
+                    <a href="#slide1" className="btn btn-circle bg-stone-300 hover:bg-emerald-500 text-black">❮</a>
+                    <a href="#slide3" className="btn btn-circle bg-stone-300 hover:bg-emerald-500 text-black">❯</a>
                 </div>
             </div>
             <div id="slide3" className="carousel-item relative w-full flex items-center justify-center">
@@ -27,8 +27,8 @@ const Carousel = () => {
                     How you doing
                 </p>
                 <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                    <a href="#slide2" className="btn btn-circle bg-stone-300 hover:bg-green-500 text-black">❮</a>
-                    <a href="#slide4" className="btn btn-circle bg-stone-300 hover:bg-green-500 text-black">❯</a>
+                    <a href="#slide2" className="btn btn-circle bg-stone-300 hover:bg-emerald-500 text-black">❮</a>
+                    <a href="#slide4" className="btn btn-circle bg-stone-300 hover:bg-emerald-500 text-black">❯</a>
                 </div>
             </div>
             <div id="slide4" className="carousel-item relative w-full flex items-center justify-center">
@@ -36,8 +36,8 @@ const Carousel = () => {
                     How it going
                 </p>
                 <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                    <a href="#slide3" className="btn btn-circle bg-stone-300 hover:bg-green-500 text-black">❮</a>
-                    <a href="#slide1" className="btn btn-circle bg-stone-300 hover:bg-green-500 text-black">❯</a>
+                    <a href="#slide3" className="btn btn-circle bg-stone-300 hover:bg-emerald-500 text-black">❮</a>
+                    <a href="#slide1" className="btn btn-circle bg-stone-300 hover:bg-emerald-500 text-black">❯</a>
                 </div>
             </div>
         </div>

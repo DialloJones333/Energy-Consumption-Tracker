@@ -64,7 +64,7 @@ class LandingAreaChart extends PureComponent {
                     <YAxis tick={{ fill: '#1e293b' }} />
                     <Tooltip />
                     <Area type="monotone" dataKey="Usage" stackId="1" stroke="#a8a29e" fill="#a8a29e" />
-                    <Area type="monotone" dataKey="Goal" stackId="1" stroke="#10B981" fill="#10B981" />
+                    <Area type="monotone" dataKey="Goal" stackId="1" stroke="#4ade80" fill="#4ade80" />
                 </AreaChart>
             </ResponsiveContainer>
         );
