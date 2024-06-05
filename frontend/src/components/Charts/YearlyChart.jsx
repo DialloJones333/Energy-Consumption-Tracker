@@ -64,7 +64,7 @@ const data = [
     },
 ];
 
-class AllTimeChart extends PureComponent {
+class YearlyChart extends PureComponent {
     render() {
         return (
             <ResponsiveContainer width="100%" height="100%">
@@ -91,4 +91,4 @@ class AllTimeChart extends PureComponent {
     }
 }
 
-export default AllTimeChart;
+export default YearlyChart;

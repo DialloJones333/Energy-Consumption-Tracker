@@ -5,7 +5,7 @@ import DeviceChart from "../components/Charts/DeviceChart";
 import MiniCompareChart from "../components/Charts/MiniCompareChart";
 import Carousel from "../components/Carousel";
 import DailyChart from "../components/Charts/DailyChart";
-import AllTimeChart from "../components/Charts/AllTimeChart";
+import YearlyChart from "../components/Charts/YearlyChart";
 import '../styles/LandingPage.css';
 
 const Dashboard = () => {
@@ -47,11 +47,17 @@ const Dashboard = () => {
                             Dashboard
                         </h1>
                     </div>
-                    <div className="w-full max-w-4xl h-96 flex items-center mb-10 justify-center shadow-xl rounded-lg">
+                    <div className="w-full max-w-4xl h-96 flex items-center justify-center shadow-xl rounded-lg">
                         <DailyChart />
                     </div>
+                    <div className="badge badge-lg bg-stone-400 text-black shadow-md mb-10">
+                        Daily Energy Usage (KWH)
+                    </div>
                     <div className="w-full max-w-4xl h-96 flex items-center justify-center shadow-xl rounded-lg">
-                        <AllTimeChart />
+                        <YearlyChart />
+                    </div>
+                    <div className="badge badge-lg bg-stone-400 text-black shadow-md mb-10">
+                        Yearly Energy Usage (KWH)
                     </div>
                 </div>
             </main>
