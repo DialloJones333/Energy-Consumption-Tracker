@@ -8,7 +8,7 @@ const LowerEnergyCard = () => {
                 <h2 className="card-title">Want to Lower Your Energy Consumption?</h2>
                 <p>Check out this page to find out how!</p>
                 <div className="card-actions justify-end">
-                <button className="btn bg-stone-400 text-gray-100 hover:bg-green-500">Learn More</button>
+                <button className="btn bg-stone-400 text-gray-100 hover:bg-emerald-500">Learn More</button>
                 </div>
             </div>
         </div>

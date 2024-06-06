@@ -2,7 +2,7 @@ import LandingNavbar from '../components/LandingNavbar';
 import Footer from '../components/Footer';
 import SignUpForm from '../components/SignUpForm';
 
-const Signup = () => {
+const SignUp = () => {
     return (
         <div>
             <LandingNavbar />
@@ -12,4 +12,4 @@ const Signup = () => {
     );
 };
 
-export default Signup;
+export default SignUp;

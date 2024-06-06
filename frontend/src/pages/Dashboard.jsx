@@ -12,11 +12,11 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="bg-gray-100 min-h-screen p-5">
+        <div className="min-h-screen p-5">
             <Navbar />
             <main className="flex flex-row gap-10 mt-10">
                 <div className="flex flex-col ms-4 gap-10">
-                    <div className="w-104 h-72 bg-gray-100 shadow-lg flex items-center justify-center rounded-lg ">
+                    <div className="w-104 h-72 shadow-lg flex items-center justify-center rounded-lg ">
                         <DeviceChart />
                     </div>
                     <div className="flex flex-row justify-center">
@@ -24,7 +24,7 @@ const Dashboard = () => {
                             Manage Devices
                         </button>
                     </div>
-                    <div className="w-104 h-72 bg-gray-100 shadow-lg flex items-center justify-center rounded-lg">
+                    <div className="w-104 h-72 shadow-lg flex items-center justify-center rounded-lg">
                         <MiniCompareChart />
                     </div>
                         <div className="flex flex-row justify-center">
@@ -32,7 +32,7 @@ const Dashboard = () => {
                                 Compare Rates
                             </button>
                         </div>
-                    <div className="w-104 h-72 bg-gray-100 flex items-center justify-center shadow-lg rounded-lg ">
+                    <div className="w-104 h-72 flex items-center justify-center shadow-lg rounded-lg ">
                         <Carousel />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
