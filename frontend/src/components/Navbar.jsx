@@ -6,6 +6,7 @@ const Navbar = () => {
     const isDeviceManagement = location.pathname === '/device-management';
     const isCompareRates = location.pathname === '/compare-rates';
     const isTipsAndTricks = location.pathname === '/tips-and-tricks';
+    const isProfile  = location.pathname === '/profile'
     
     const navigate = useNavigate();
 
@@ -41,11 +42,11 @@ const Navbar = () => {
                         </div>
                     </button>
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gray-100 rounded-box w-52">
-                        <li>
-                            <button onClick={() => navigate('/')} className="justify-between">
+                        {!isProfile && <li>
+                            <button onClick={() => navigate('/profile')} className="justify-between">
                                 Profile <span className="badge">New</span>
                             </button>
-                        </li>
+                        </li>}
                         <li><button onClick={() => navigate('/')}>Account Preferences</button></li>
                         <li><button onClick={() => navigate('/')}>Notifications</button></li>
                         <li><button onClick={() => navigate('/')}>Logout</button></li>
