@@ -19,7 +19,7 @@ const Dashboard = () => {
                     <div className="w-104 h-72 shadow-lg flex items-center justify-center rounded-lg ">
                         <DeviceChart />
                     </div>
-                    <div className="flex flex-row justify-center">
+                    <div className="flex flex-row justify-center mb-10">
                         <button onClick={() => navigate('/device-management')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold font-serif">
                             Manage Devices
                         </button>
@@ -27,7 +27,7 @@ const Dashboard = () => {
                     <div className="w-104 h-72 shadow-lg flex items-center justify-center rounded-lg">
                         <MiniCompareChart />
                     </div>
-                        <div className="flex flex-row justify-center">
+                    <div className="flex flex-row justify-center mb-10">
                             <button onClick={() => navigate('/compare-rates')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold font-serif">
                                 Compare Rates
                             </button>
