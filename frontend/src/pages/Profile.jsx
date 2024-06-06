@@ -22,12 +22,11 @@ const Profile = () => {
                         Something
                     </div>
                 </div>
-                <div className="flex flex-col gap-10 mb-10 w-2/4">
+                <div className="flex flex-col me-4 gap-10 mb-10 w-2/4">
                     <div className="h-104 bg-gray-200 shadow-lg items-center justify-center flex rounded-lg">
                         Something else
                     </div>
                 </div>
-                <div className="w-4"></div> {/* Fixed-width gap */}
             </main>
             <Footer />
         </div>
