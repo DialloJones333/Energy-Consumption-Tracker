@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 const DeviceManagement = () => {
     return (
-        <div>
+        <div className="min-h-screen p-5" >
             <Navbar />
             <DeviceManager />
             <Footer />
