@@ -46,6 +46,20 @@ const SignUpForm = () => {
                     </div>
                     <div className="mb-6">
                         <label
+                            className="block text-slate-800 text-sm font-bold mb-2"
+                            htmlFor="username"
+                        >
+                            Username
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            id="username"
+                            type="text"
+                            placeholder="Crete a unique username"
+                        />
+                    </div>
+                    <div className="mb-6">
+                        <label
                             className="block text-sm font-bold mb-2"
                             htmlFor="email">
                             Email
@@ -68,7 +82,7 @@ const SignUpForm = () => {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="password"
                             type="password"
-                            placeholder="Enter your password"
+                            placeholder="Enter a password"
                         />
                     </div>
                     <div className="mb-6">
@@ -82,7 +96,7 @@ const SignUpForm = () => {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="password"
                             type="password"
-                            placeholder="Enter your password again"
+                            placeholder="Enter the password again"
                         />
                     </div>
                     <div className="flex items-center justify-between">

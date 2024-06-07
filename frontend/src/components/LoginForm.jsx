@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 
 const LoginForm = () => {
-    const emailInputRef = useRef(null);
+    const userNameInputRef = useRef(null);
 
     useEffect(() => {
-        if (emailInputRef.current) {
-            emailInputRef.current.focus();
+        if (userNameInputRef.current) {
+            userNameInputRef.current.focus();
         }
     }, []);
 
@@ -19,15 +19,15 @@ const LoginForm = () => {
                     <div className="mb-6">
                         <label
                             className="block text-sm font-bold mb-2"
-                            htmlFor="email">
-                            Email
+                            htmlFor="username">
+                            Username
                         </label>
                         <input
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-800 leading-tight focus:outline-none focus:shadow-outline bg-white"
-                            id="email"
-                            type="email"
-                            placeholder="Enter your email"
-                            ref={emailInputRef}
+                            id="username"
+                            type="text"
+                            placeholder="Enter your username"
+                            ref={userNameInputRef}
                         />
                     </div>
                     <div className="mb-6">

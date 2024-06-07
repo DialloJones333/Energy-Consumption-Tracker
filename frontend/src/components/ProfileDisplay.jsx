@@ -9,8 +9,13 @@ const ProfileDisplay = () => {
             <h1 className="text-5xl font-bold font-serif mb-4">
                 Users Name
             </h1>
-            <div>
-                
+            <div className="flex flex-row">
+                <div className=" p-4 border-e-2 border-black">
+                    Hey
+                </div>
+                <div className="p-4 ">
+                    Heyy
+                </div>
             </div>
         </div>
     )
