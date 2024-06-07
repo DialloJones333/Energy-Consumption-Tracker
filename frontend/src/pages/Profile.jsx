@@ -7,13 +7,13 @@ const Profile = () => {
     return (
         <div className="min-h-screen p-5">
             <Navbar />
-            <section className="flex flex-row w-full items-center">
-                <div className="w-full h-72 flex border-b-2 border-slate-800">
-                    <div className="flex flex-row ms-4 items-center">
-                        <h1 className="text-6xl font-bold font-serif mb-10">
-                            Profile
-                        </h1>
-                    </div>
+            <section className="w-full border-b-2 border-slate-800 ">
+                <div className="flex flex-col ms-4 mt-20">
+                    <h1 className="text-6xl font-bold font-serif mb-10">
+                        Profile
+                    </h1>
+                </div>
+                <div className="flex justify-center">
                     <TabBar />
                 </div>
             </section>
