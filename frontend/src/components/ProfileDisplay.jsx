@@ -10,11 +10,33 @@ const ProfileDisplay = () => {
                 Users Name
             </h1>
             <div className="flex flex-row">
-                <div className=" p-4 border-e-2 border-black">
-                    Hey
+                <div className="p-4 border-e-2 border-black">
+                    <div className="badge badge-lg bg-stone-300 text-black shadow-md p-4">
+                        <h2 className="text-l">
+                            Phone Number
+                        </h2>
+                    </div>
                 </div>
-                <div className="p-4 ">
-                    Heyy
+                <div className="p-4 border-e-2 border-black">
+                    <div className="badge badge-lg bg-stone-300 text-black shadow-md p-4">
+                        <h2 className="text-l">
+                            Username
+                        </h2>
+                    </div>
+                </div>
+                <div className="p-4">
+                    <div className="badge badge-lg bg-stone-300 text-black shadow-md p-4">
+                        <h2 className="text-l">
+                            Email
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div className="p-4">
+                <div className="badge badge-lg p-4 bg-stone-300 text-black shadow-md">
+                    <h2 className="text-l">
+                        Address
+                    </h2>
                 </div>
             </div>
         </div>
