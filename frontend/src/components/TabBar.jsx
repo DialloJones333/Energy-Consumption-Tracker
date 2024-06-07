@@ -8,7 +8,7 @@ const TabBar = () => {
             <Link to="/profile" role="tab" className={`tab font-serif text-stone-400 ${location.pathname === '/profile' ? 'tab-active' : ''}`} aria-label="Profile">
                 Profile
             </Link>
-            <Link to="/dashboard" role="tab" className={`tab font-serif text-stone-400 ${location.pathname === '/dashboard' ? 'tab-active' : ''}`} aria-label="Dashboard">
+            <Link to="/account-preferences" role="tab" className={`tab font-serif text-stone-400 ${location.pathname === '/account-preferences' ? 'tab-active' : ''}`} aria-label="Account Preferences">
                 Account Preferences
             </Link>
         </div>

@@ -7,6 +7,7 @@ const Navbar = () => {
     const isCompareRates = location.pathname === '/compare-rates';
     const isTipsAndTricks = location.pathname === '/tips-and-tricks';
     const isProfile  = location.pathname === '/profile'
+    const isAccountPreferences = location.pathname === '/account-preferences'
     
     const navigate = useNavigate();
 
@@ -47,7 +48,7 @@ const Navbar = () => {
                                 Profile <span className="badge">New</span>
                             </button>
                         </li>}
-                        <li><button onClick={() => navigate('/')}>Account Preferences</button></li>
+                        {!isAccountPreferences && <li><button onClick={() => navigate('/account-preferences')}>Account Preferences</button></li>}
                         <li><button onClick={() => navigate('/')}>Notifications</button></li>
                         <li><button onClick={() => navigate('/')}>Logout</button></li>
                     </ul>

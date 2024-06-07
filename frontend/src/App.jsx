@@ -7,6 +7,7 @@ import DeviceManagement from './pages/DeviceManagement';
 import CompareRates from './pages/CompareRates';
 import TipsAndTricks from './pages/TipsAndTricks';
 import Profile from './pages/Profile';
+import AccountPreferences from './pages/AccountPreferences';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path='/compare-rates' element={<CompareRates />} />
         <Route path='/tips-and-tricks' element={<TipsAndTricks />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/account-preferences' element={<AccountPreferences />} />
       </Routes>
     </Router>
   );

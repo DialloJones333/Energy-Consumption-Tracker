@@ -1,9 +1,8 @@
 import Navbar from "../components/Navbar";
 import TabBar from "../components/TabBar";
-import ProfileDisplay from "../components/ProfileDisplay";
 import Footer from "../components/Footer";
 
-const Profile = () => {
+const AccountPreferences = () => {
     return (
         <div className="min-h-screen p-5">
             <Navbar />
@@ -11,7 +10,7 @@ const Profile = () => {
                 <div className="w-full h-72 flex border-b-2 border-slate-800">
                     <div className="flex flex-row ms-4 items-center">
                         <h1 className="text-6xl font-bold font-serif mb-10">
-                            Profile
+                            Account Preferences
                         </h1>
                     </div>
                     <TabBar />
@@ -20,7 +19,7 @@ const Profile = () => {
             <main className="flex flex-row ms-4 mt-10">
                 <div className="flex flex-col gap-10 w-2/4">
                     <div className="h-104 bg-gray-200 me-8 flex items-start justify-center shadow-lg rounded-lg">
-                        <ProfileDisplay />
+                        Something
                     </div>
                 </div>
                 <div className="flex flex-col me-4 gap-10 mb-10 w-2/4">
@@ -34,4 +33,4 @@ const Profile = () => {
     );
 }
 
-export default Profile;
+export default AccountPreferences;
