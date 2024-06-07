@@ -10,8 +10,8 @@ const ProfileForm = () => {
     }, []);
 
     return (
-        <div className="flex flex-col p-4 w-full">
-            <h2 className="text-3xl font-bold mb-4 text-center">
+        <div className="flex flex-col p-2 w-full">
+            <h2 className="text-3xl font-bold mb-2 text-center">
                 Your Info
             </h2>
             <form className="w-full">
@@ -41,7 +41,7 @@ const ProfileForm = () => {
                     </div>
                 </div>
                 <div className="flex flex-col items-center p-2">
-                    <div className="w-1/2 p-4">
+                    <div className="w-1/2 p-2">
                         <label className="block text-xl font-bold mb-2" htmlFor="last-name">
                             Username
                         </label>
@@ -76,6 +76,13 @@ const ProfileForm = () => {
                             placeholder="Change your email"
                         />
                     </div>
+                </div>
+                <div className="flex flex-col items-center p-3">
+                    <button
+                        className="bg-stone-400 hover:bg-emerald-500 text-gray-100 font-bold py-2 p-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
+                        type="button">
+                        Apply
+                    </button>
                 </div>
             </form>
         </div>
