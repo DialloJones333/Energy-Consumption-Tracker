@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 const Profile = () => {
     return (
-        <div className="min-h-screen p-5">
+        <div className="min-h-screen flex flex-col p-5">
             <Navbar />
             <section className="w-full border-b-2 border-slate-800 ">
                 <div className="flex flex-col ms-4 mt-20">
@@ -17,9 +17,9 @@ const Profile = () => {
                     <TabBar />
                 </div>
             </section>
-            <main className="flex flex-row ms-4 mt-10">
+            <main className="flex flex-row flex-grow ms-4 mt-10">
                 <div className="flex flex-col gap-10 w-2/4">
-                    <div className="h-104 bg-gray-200 me-8 flex items-start justify-center shadow-lg rounded-lg">
+                    <div className="bg-gray-100 me-8 flex items-start justify-center shadow-lg rounded-lg">
                         <ProfileDisplay />
                     </div>
                 </div>

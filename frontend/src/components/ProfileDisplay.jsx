@@ -9,7 +9,7 @@ const ProfileDisplay = () => {
             <h1 className="text-5xl font-bold font-serif mb-4">
                 Users Name
             </h1>
-            <div className="flex flex-row">
+            <div className="flex p-4 flex-row border-b-2 border-black">
                 <div className="p-4 border-e-2 border-black">
                     <div className="badge badge-lg bg-stone-300 text-black shadow-md p-4">
                         <h2 className="text-l">
@@ -17,7 +17,7 @@ const ProfileDisplay = () => {
                         </h2>
                     </div>
                 </div>
-                <div className="p-4 border-e-2 border-black">
+                <div className="p-4  border-e-2 border-black">
                     <div className="badge badge-lg bg-stone-300 text-black shadow-md p-4">
                         <h2 className="text-l">
                             Username
