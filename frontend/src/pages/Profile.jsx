@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import TabBar from "../components/TabBar";
 import ProfileDisplay from "../components/ProfileDisplay";
+import ProfileForm from "../components/ProfileForm";
 import Footer from "../components/Footer";
 
 const Profile = () => {
@@ -19,13 +20,13 @@ const Profile = () => {
             </section>
             <main className="flex flex-row flex-grow ms-4 mt-10">
                 <div className="flex flex-col gap-10 w-2/4">
-                    <div className="bg-gray-100 me-8 flex items-start justify-center shadow-lg rounded-lg">
+                    <div className="me-8 h-104 flex items-start justify-center shadow-xl rounded-lg">
                         <ProfileDisplay />
                     </div>
                 </div>
                 <div className="flex flex-col me-4 gap-10 mb-10 w-2/4">
-                    <div className="h-104 bg-gray-200 shadow-lg items-center justify-center flex rounded-lg">
-                        Something else
+                    <div className="h-104 shadow-xl flex rounded-lg">
+                        <ProfileForm />
                     </div>
                 </div>
             </main>
