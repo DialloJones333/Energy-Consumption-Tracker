@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import TabBar from "../components/TabBar";
 import ProfileDisplay from "../components/ProfileDisplay";
-import ProfileForm from "../components/ProfileForm";
+import ProfileForm from "../components/Forms/ProfileForm";
 import Footer from "../components/Footer";
 
 const Profile = () => {

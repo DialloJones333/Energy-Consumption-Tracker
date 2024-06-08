@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import CompareRatesForm from "../components/CompareRatesForm";
+import CompareRatesForm from "../components/Forms/CompareRatesForm";
 import CompareRatesChart from "../components/Charts/CompareRatesChart";
 import Footer from "../components/Footer";
 
