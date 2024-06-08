@@ -1,5 +1,6 @@
 import Navbar from "../components/Navbar";
 import TabBar from "../components/TabBar";
+import AccountPrefDisplay from "../components/AccountPrefDisplay";
 import Footer from "../components/Footer";
 
 const AccountPreferences = () => {
@@ -18,8 +19,8 @@ const AccountPreferences = () => {
             </section>
             <main className="flex flex-row flex-grow ms-4 mt-10">
                 <div className="flex flex-col gap-10 w-2/4">
-                    <div className="h-104 bg-gray-200 me-8 flex items-center justify-center shadow-xl rounded-lg">
-                        Something
+                    <div className="h-104 me-8 flex items-center justify-center shadow-xl rounded-lg">
+                        <AccountPrefDisplay />
                     </div>
                 </div>
                 <div className="flex flex-col me-4 gap-10 mb-10 w-2/4">
