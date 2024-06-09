@@ -9,20 +9,20 @@ const CompareRatesForm = () => {
     
 
     return (
-        <div className=" min-h-screen flex items-center w-full h-full justify-center">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div className="flex items-center justify-center w-full">
+            <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
                 <h2 className="text-2xl font-bold text-center mb-6">
                     Filter
                 </h2>
                 <form>
                     <div className="mb-6">
                         <label
-                            className="block text-sm font-bold mb-2"
+                            className="block text-md font-bold mb-2"
                             htmlFor="region">
                             Region
                         </label>
                         <select
-                            className="shadow-lg appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="device-type"
                             value={region}
                             onChange={(e) => setRegion(e.target.value)}
@@ -35,13 +35,13 @@ const CompareRatesForm = () => {
                     </div>
                     <div className="mb-6">
                         <label
-                            className="block text-slate-800 text-sm font-bold mb-2"
+                            className="block text-slate-800 text-md font-bold mb-2"
                             htmlFor="device-type"
                         >
                             Time Frame
                         </label>
                         <select
-                            className="shadow-lg appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="device-type"
                             value={timeFrame}
                             onChange={(e) => setTimeFrame(e.target.value)}
