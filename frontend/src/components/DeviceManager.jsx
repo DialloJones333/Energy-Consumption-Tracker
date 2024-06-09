@@ -12,20 +12,20 @@ const DeviceManager = () => {
     }, []);
 
     return (
-        <div className=" min-h-screen flex items-center justify-center">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div className="flex items-center justify-center w-full">
+            <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
                 <h2 className="text-2xl font-bold text-center mb-6">
                     Add Device
                 </h2>
                 <form>
                     <div className="mb-6">
                         <label
-                            className="block text-sm font-bold mb-2"
+                            className="block text-md font-bold mb-2"
                             htmlFor="device">
                             Device Name
                         </label>
                         <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-800 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="device"
                             type="text"
                             placeholder="Enter device name"
@@ -34,13 +34,13 @@ const DeviceManager = () => {
                     </div>
                     <div className="mb-6">
                         <label
-                            className="block text-slate-800 text-sm font-bold mb-2"
+                            className="block text-slate-800 text-md font-bold mb-2"
                             htmlFor="device-type"
                         >
                             Device Type
                         </label>
                         <select
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="device-type"
                             value={deviceType}
                             onChange={(e) => setDeviceType(e.target.value)}

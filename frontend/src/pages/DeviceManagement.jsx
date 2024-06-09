@@ -4,9 +4,11 @@ import Footer from "../components/Footer";
 
 const DeviceManagement = () => {
     return (
-        <div className="min-h-screen p-5" >
+        <div className="flex flex-col min-h-screen" >
             <Navbar />
-            <DeviceManager />
+            <div className="flex flex-grow items-center justify-center p-10">
+                <DeviceManager />
+            </div>
             <Footer />
         </div>
     );
