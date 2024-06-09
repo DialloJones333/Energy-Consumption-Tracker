@@ -4,9 +4,11 @@ import LoginForm from '../components/Forms/LoginForm';
 
 const Login = () => {
     return (
-        <div>
+        <div className='flex flex-col min-h-screen'>
             <LandingNavbar />
-            <LoginForm />
+            <div className="flex flex-grow items-center justify-center p-10">
+                <LoginForm />
+            </div>
             <Footer />
         </div>
     );

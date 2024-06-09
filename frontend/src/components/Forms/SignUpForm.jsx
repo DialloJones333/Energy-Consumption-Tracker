@@ -10,20 +10,20 @@ const SignUpForm = () => {
     }, []);
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div className="flex items-center justify-center w-full">
+            <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
                 <h2 className="text-2xl font-bold text-center mb-6">
                     Sign Up
                 </h2>
                 <form>
                     <div className="mb-6">
                         <label
-                            className="block text-sm font-bold mb-2"
+                            className="block text-md font-bold mb-2"
                             htmlFor="first-name">
                             First Name
                         </label>
                         <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-800 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="first-name"
                             type="text"
                             placeholder="Enter your first name"
@@ -32,13 +32,13 @@ const SignUpForm = () => {
                     </div>
                     <div className="mb-6">
                         <label
-                            className="block text-slate-800 text-sm font-bold mb-2"
+                            className="block text-slate-800 text-md font-bold mb-2"
                             htmlFor="last-name"
                         >
                             Last Name
                         </label>
                         <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="last-name"
                             type="text"
                             placeholder="Enter your last name"
@@ -46,13 +46,13 @@ const SignUpForm = () => {
                     </div>
                     <div className="mb-6">
                         <label
-                            className="block text-slate-800 text-sm font-bold mb-2"
+                            className="block text-slate-800 text-md font-bold mb-2"
                             htmlFor="username"
                         >
                             Username
                         </label>
                         <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="username"
                             type="text"
                             placeholder="Crete a unique username"
@@ -60,12 +60,12 @@ const SignUpForm = () => {
                     </div>
                     <div className="mb-6">
                         <label
-                            className="block text-sm font-bold mb-2"
+                            className="block text-md font-bold mb-2"
                             htmlFor="email">
                             Email
                         </label>
                         <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-800 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="email"
                             type="email"
                             placeholder="Enter your email"
@@ -73,13 +73,13 @@ const SignUpForm = () => {
                     </div>
                     <div className="mb-6">
                         <label
-                            className="block text-slate-800 text-sm font-bold mb-2"
+                            className="block text-slate-800 text-md font-bold mb-2"
                             htmlFor="password"
                         >
                             Password
                         </label>
                         <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="password"
                             type="password"
                             placeholder="Enter a password"
@@ -87,13 +87,13 @@ const SignUpForm = () => {
                     </div>
                     <div className="mb-6">
                         <label
-                            className="block text-slate-800 text-sm font-bold mb-2"
+                            className="block text-slate-800 text-md font-bold mb-2"
                             htmlFor="password"
                         >
                             Enter Password Again
                         </label>
                         <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="password"
                             type="password"
                             placeholder="Enter the password again"

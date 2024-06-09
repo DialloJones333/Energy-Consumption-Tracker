@@ -4,9 +4,11 @@ import SignUpForm from '../components/Forms/SignUpForm';
 
 const SignUp = () => {
     return (
-        <div>
+        <div className='flex flex-col min-h-screen'>
             <LandingNavbar />
-            <SignUpForm />
+            <div className='flex flex-grow items-center justify-center p-10'>
+                <SignUpForm />
+            </div>
             <Footer />
         </div>
     );
