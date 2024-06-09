@@ -7,7 +7,7 @@ const CompareRates = () => {
     
 
     return (
-        <div className="dashboard-page min-h-screen p-5">
+        <div className="min-h-screen p-5">
             <Navbar />
             <main className=" items-center flex flex-row gap-10 ">
                 <div className="flex flex-col ms-5">

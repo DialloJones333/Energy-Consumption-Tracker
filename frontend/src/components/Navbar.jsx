@@ -50,7 +50,7 @@ const Navbar = () => {
                             </button>
                         </li>}
                         {!isAccountPreferences && <li><button onClick={() => navigate('/account-preferences')}>Account Preferences</button></li>}
-                        {!isNotifications && <li><button onClick={() => navigate('/')}>Notifications</button></li>}
+                        {!isNotifications && <li><button onClick={() => navigate('/notifications')}>Notifications</button></li>}
                         <li><button onClick={() => navigate('/')}>Logout</button></li>
                     </ul>
                 </div>
