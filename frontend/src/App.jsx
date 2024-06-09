@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
-import SignUp from './pages/SignUp';
+import SignUp from './pages/Signup';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import DeviceManagement from './pages/DeviceManagement';
@@ -8,6 +8,7 @@ import CompareRates from './pages/CompareRates';
 import TipsAndTricks from './pages/TipsAndTricks';
 import Profile from './pages/Profile';
 import AccountPreferences from './pages/AccountPreferences';
+import Notifications from './pages/Notifications';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path='/tips-and-tricks' element={<TipsAndTricks />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/account-preferences' element={<AccountPreferences />} />
+        <Route path='/notifications' element={<Notifications />} />
       </Routes>
     </Router>
   );
