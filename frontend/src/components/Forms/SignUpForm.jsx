@@ -82,7 +82,7 @@ const SignUpForm = () => {
                             className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="password"
                             type="password"
-                            placeholder="Enter a password"
+                            placeholder="Create a password"
                         />
                     </div>
                     <div className="mb-6">
@@ -90,7 +90,7 @@ const SignUpForm = () => {
                             className="block text-slate-800 text-md font-bold mb-2"
                             htmlFor="password"
                         >
-                            Enter Password Again
+                            Password Again
                         </label>
                         <input
                             className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
