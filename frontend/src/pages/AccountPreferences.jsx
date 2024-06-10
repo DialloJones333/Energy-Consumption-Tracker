@@ -38,7 +38,7 @@ const AccountPreferences = () => {
             </section>
             <main className="flex flex-row flex-grow ms-4 mt-10">
                 <div className="flex flex-col gap-10 w-2/4">
-                    <div className="h-104 me-8 flex items-center justify-center shadow-2xl rounded-lg">
+                    <div className="h-104 me-8 flex items-center justify-center shadow-2xl rounded-lg font-serif">
                         <AccountPrefDisplay
                             textNoti={textNoti}
                             emailNoti={emailNoti}
@@ -47,7 +47,7 @@ const AccountPreferences = () => {
                     </div>
                 </div>
                 <div className="flex flex-col me-4 gap-10 mb-10 w-2/4">
-                    <div className="h-104 shadow-2xl items-center justify-center flex rounded-lg">
+                    <div className="h-104 shadow-2xl items-center justify-center flex rounded-lg font-serif">
                         <AccountPrefForm
                             textNoti={textNoti}
                             setTextNoti={setTextNoti}

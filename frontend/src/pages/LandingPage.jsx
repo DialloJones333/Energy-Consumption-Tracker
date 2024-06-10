@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import '../styles/LandingPage.css';
 
 const LandingPage = () => (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col min-h-screen font-serif'>
         <LandingNavbar />
         <main className="p-10 flex-grow">
             <section className="text-center mb-10">

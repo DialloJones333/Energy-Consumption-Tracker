@@ -13,7 +13,7 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="shadow-xl rounded-xl mx-4 my-2 p-4 bg-white">
+        <div className="shadow-xl rounded-xl mx-4 my-2 p-4 bg-white font-serif">
             <div className="navbar bg-gray-100 shadow-md">
                 <div className="navbar-start">
                     <div className="dropdown">

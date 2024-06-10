@@ -2,15 +2,15 @@ import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-const ProfileForm = ({ firstName, lastName, username, phoneNum, email, handleApplyChanges }) => {
+const ProfileForm = ({ firstName, lastName, username, phoneNumber, email, handleApplyChanges }) => {
     const [localFirstName, setLocalFirstName] = useState(firstName);
     const [localLastName, setLocalLastName] = useState(lastName);
     const [localUsername, setLocalUsername] = useState(username);
-    const [localPhoneNum, setLocalPhoneNum] = useState(phoneNum);
+    const [localPhoneNumber, setLocalPhoneNumber] = useState(phoneNumber);
     const [localEmail, setLocalEmail] = useState(email);
 
     const handleApply = () => {
-        handleApplyChanges(localFirstName, localLastName, localUsername, localPhoneNum, localEmail);
+        handleApplyChanges(localFirstName, localLastName, localUsername, localPhoneNumber, localEmail);
     };
 
     const nameInputRef = useRef(null);
@@ -83,8 +83,8 @@ const ProfileForm = ({ firstName, lastName, username, phoneNum, email, handleApp
                             id="phone-number"
                             type="tel"
                             placeholder="Change your phone number"
-                            value={localPhoneNum}
-                            onChange={(e) => setLocalPhoneNum(e.target.value)}
+                            value={localPhoneNumber}
+                            onChange={(e) => setLocalPhoneNumber(e.target.value)}
                         />
                     </div>
                     <div className="w-1/2 p-2">
@@ -109,7 +109,8 @@ const ProfileForm = ({ firstName, lastName, username, phoneNum, email, handleApp
                     >
                         Apply
                     </button>
-                    <div className="ml-4 flex-grow text-right"> <button
+                    <div className="ml-4 flex-grow text-right"> 
+                    <button
                         className="bg-stone-400 hover:bg-emerald-500 text-gray-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
                         type="button"
                         onClick={() => navigate('/change-password')}
@@ -126,7 +127,7 @@ ProfileForm.propTypes = {
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
-    phoneNum: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     handleApplyChanges: PropTypes.func.isRequired,
 };

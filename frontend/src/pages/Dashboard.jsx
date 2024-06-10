@@ -12,7 +12,7 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen p-5">
+        <div className="min-h-screen p-5 font-serif">
             <Navbar />
             <main className="flex flex-row gap-10 mt-10">
                 <div className="flex flex-col ms-4 gap-10">
@@ -20,7 +20,7 @@ const Dashboard = () => {
                         <DeviceChart />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
-                        <button onClick={() => navigate('/device-management')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold font-serif">
+                        <button onClick={() => navigate('/device-management')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold ">
                             Manage Devices
                         </button>
                     </div>
@@ -28,7 +28,7 @@ const Dashboard = () => {
                         <MiniCompareChart />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
-                            <button onClick={() => navigate('/compare-rates')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold font-serif">
+                            <button onClick={() => navigate('/compare-rates')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold ">
                                 Compare Rates
                             </button>
                         </div>
@@ -36,14 +36,14 @@ const Dashboard = () => {
                         <Carousel />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
-                        <button onClick={() => navigate('/tips-and-tricks')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold font-serif">
+                        <button onClick={() => navigate('/tips-and-tricks')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold ">
                             Explore Tips & Tricks
                         </button>
                     </div>
                 </div>
                 <div className="flex flex-col items-center gap-10 w-full">
                     <div>
-                        <h1 className="text-6xl font-bold font-serif mb-10">
+                        <h1 className="text-6xl font-bold  mb-10">
                             Dashboard
                         </h1>
                     </div>

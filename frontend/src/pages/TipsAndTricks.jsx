@@ -9,7 +9,7 @@ import { tips1, tips2, tips3 } from "../data/tipsData";
 const TipsAndTricks = () => {
 
     return (
-        <div className="min-h-screen p-5">
+        <div className="min-h-screen p-5 font-serif">
             <Navbar />
             <main className="flex flex-row gap-10 mt-10 mb-10">
                 <div className="flex flex-col ms-4 gap-10">
