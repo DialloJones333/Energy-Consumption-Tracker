@@ -16,7 +16,7 @@ const Dashboard = () => {
             <Navbar />
             <main className="flex flex-row gap-10 mt-10">
                 <div className="flex flex-col ms-4 gap-10">
-                    <div className="w-104 h-72 shadow-lg flex items-center justify-center rounded-lg ">
+                    <div className="w-104 h-72 shadow-xl flex items-center justify-center rounded-lg ">
                         <DeviceChart />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
@@ -24,7 +24,7 @@ const Dashboard = () => {
                             Manage Devices
                         </button>
                     </div>
-                    <div className="w-104 h-72 shadow-lg flex items-center justify-center rounded-lg">
+                    <div className="w-104 h-72 shadow-xl flex items-center justify-center rounded-lg">
                         <MiniCompareChart />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
@@ -32,7 +32,7 @@ const Dashboard = () => {
                                 Compare Rates
                             </button>
                         </div>
-                    <div className="w-104 h-72 flex items-center justify-center shadow-lg rounded-lg ">
+                    <div className="w-104 h-72 flex items-center justify-center shadow-xl rounded-lg ">
                         <Carousel />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
@@ -47,13 +47,13 @@ const Dashboard = () => {
                             Dashboard
                         </h1>
                     </div>
-                    <div className="w-full max-w-4xl h-96 flex items-center justify-center shadow-xl rounded-lg">
+                    <div className="w-full max-w-4xl h-96 flex items-center justify-center shadow-2xl rounded-lg">
                         <DailyChart />
                     </div>
                     <div className="badge badge-lg bg-stone-300 text-black shadow-md mb-10">
                         Daily Energy Usage (KWH)
                     </div>
-                    <div className="w-full max-w-4xl h-96 flex items-center justify-center shadow-xl rounded-lg">
+                    <div className="w-full max-w-4xl h-96 flex items-center justify-center shadow-2xl rounded-lg">
                         <YearlyChart />
                     </div>
                     <div className="badge badge-lg bg-stone-300 text-black shadow-md mb-10">
