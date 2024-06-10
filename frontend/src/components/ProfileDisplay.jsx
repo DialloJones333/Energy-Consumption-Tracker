@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 
 const ProfileDisplay = ({firstName, lastName, username, phoneNum, email}) => {
+    
     return (
         <div className="flex flex-col items-center">
             <div className="avatar mb-4">

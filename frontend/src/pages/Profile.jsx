@@ -12,7 +12,6 @@ const Profile = () => {
     const [phoneNum, setPhoneNum] = useState('7049960661')
     const [email, setEmail] = useState('diallojones23@gmail.com')
 
-
     const handleApplyChanges = (newFirstName, newLastname, newUsername, newPhoneNum, newEmail) => {
         setFirstName(newFirstName);
         setLastName(newLastname);

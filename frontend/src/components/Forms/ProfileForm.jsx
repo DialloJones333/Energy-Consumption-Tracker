@@ -1,18 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
-const ProfileForm = ({ firstName, lastName, username, phoneNum, email, handleApplyChanges}) => {
+const ProfileForm = ({ firstName, lastName, username, phoneNum, email, handleApplyChanges }) => {
     const [localFirstName, setLocalFirstName] = useState(firstName);
     const [localLastName, setLocalLastName] = useState(lastName);
     const [localUsername, setLocalUsername] = useState(username);
     const [localPhoneNum, setLocalPhoneNum] = useState(phoneNum);
     const [localEmail, setLocalEmail] = useState(email);
 
-
     const handleApply = () => {
         handleApplyChanges(localFirstName, localLastName, localUsername, localPhoneNum, localEmail);
     };
-
 
     const nameInputRef = useRef(null);
 
@@ -21,6 +20,8 @@ const ProfileForm = ({ firstName, lastName, username, phoneNum, email, handleApp
             nameInputRef.current.focus();
         }
     }, []);
+
+    const navigate = useNavigate();
 
     return (
         <div className="flex flex-col p-2 w-full">
@@ -100,14 +101,21 @@ const ProfileForm = ({ firstName, lastName, username, phoneNum, email, handleApp
                         />
                     </div>
                 </div>
-                <div className="flex flex-col items-center p-3">
+                <div className="flex justify-center items-center p-3">
                     <button
-                        className="bg-stone-400 hover:bg-emerald-500 text-gray-100 font-bold py-2 p-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
+                        className="bg-stone-400 hover:bg-emerald-500 text-gray-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
                         type="button"
                         onClick={handleApply}
                     >
                         Apply
                     </button>
+                    <div className="ml-4 flex-grow text-right"> <button
+                        className="bg-stone-400 hover:bg-emerald-500 text-gray-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
+                        type="button"
+                        onClick={() => navigate('/change-password')}
+                    >
+                        Change your password
+                    </button></div>
                 </div>
             </form>
         </div>
