@@ -44,6 +44,20 @@ const ChangePasswordForm = () => {
                             placeholder="Enter your new password"
                         />
                     </div>
+                    <div className="mb-6">
+                        <label
+                            className="block text-slate-800 text-md font-bold mb-2"
+                            htmlFor="password"
+                        >
+                            New Password Again
+                        </label>
+                        <input
+                            className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            id="password"
+                            type="password"
+                            placeholder="Enter your new password again"
+                        />
+                    </div>
                     <div className="flex items-center justify-between">
                         <button
                             className="bg-stone-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
