@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import energyLogo from "./assets/Energy_Consumpt_Logo.png";
-import './App.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import SignUp from './pages/Signup';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import DeviceManagement from './pages/DeviceManagement';
+import CompareRates from './pages/CompareRates';
+import TipsAndTricks from './pages/TipsAndTricks';
+import Profile from './pages/Profile';
+import ChangePassword from './pages/ChangePassword'
+import AccountPreferences from './pages/AccountPreferences';
+import Notifications from './pages/Notifications';
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={energyLogo} className="logo" alt="Energy logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>EcoEfficient Living</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-      Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<LandingPage />} />
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/device-management' element={<DeviceManagement />} />
+        <Route path='/compare-rates' element={<CompareRates />} />
+        <Route path='/tips-and-tricks' element={<TipsAndTricks />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='/change-password' element={<ChangePassword />} />
+        <Route path='/account-preferences' element={<AccountPreferences />} />
+        <Route path='/notifications' element={<Notifications />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App
