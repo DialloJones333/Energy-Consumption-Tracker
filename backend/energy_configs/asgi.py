@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Energy_Consumption_Tracker.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'energy_configs.settings.development')
 
 application = get_asgi_application()
