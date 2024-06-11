@@ -9,7 +9,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': 'http://127.0.0.1:8000', // Proxy API requests to Django backend
+      '/api': 'http://localhost:8000', // Proxy API requests to Django backend
     },
   },
 });
