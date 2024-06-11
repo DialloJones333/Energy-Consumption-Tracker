@@ -92,7 +92,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # My frontend URL
     "http://127.0.0.1:5173",
-    "http://127.0.0.1:8000",  # API URL if needed
+    "http://127.0.0.1:8000",  # API URL
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True  # Only for development, remove in production
