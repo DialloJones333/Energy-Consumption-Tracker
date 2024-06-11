@@ -19,7 +19,6 @@ class Device(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     device_type = models.CharField(max_length=50)
-    location = models.CharField(max_length=100, blank=True)
 
 class ConsumptionRecord(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
