@@ -8,6 +8,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
@@ -15,6 +16,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, '../frontend/dist/favicon_package'),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 # Templates settings
 TEMPLATES = [
@@ -32,6 +34,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 # Other settings...
 INSTALLED_APPS = [
@@ -56,6 +59,7 @@ REST_FRAMEWORK = {
     ),
 }
 
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
@@ -71,6 +75,7 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -83,6 +88,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
 ]
 
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # My frontend URL
     "http://127.0.0.1:5173",
@@ -94,6 +100,7 @@ CORS_ALLOW_ALL_ORIGINS = True  # Only for development, remove in production
 ROOT_URLCONF = 'energy_configs.urls'
 
 WSGI_APPLICATION = 'energy_configs.wsgi.application'
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -110,6 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'

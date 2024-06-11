@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import UserProfile, Device, ConsumptionRecord, Tip, Notification
 
+
 # Serializer for handling user registration
 class RegisterSerializer(serializers.ModelSerializer):
     # Meta class to specify the model and fields to be serialized
@@ -22,11 +23,17 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
         return user  # Return the newly created user
 
+
+# Serializer for handling user login
+
+
+
 # Serializer for User model
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'username', 'email']
+
 
 # Serializer for UserProfile model
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -36,11 +43,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = ['user', 'phone_number']
 
+
 # Serializer for Device model
 class DeviceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Device
         fields = '__all__'
+
 
 # Serializer for ConsumptionRecord model
 class ConsumptionRecordSerializer(serializers.ModelSerializer):
@@ -48,11 +57,13 @@ class ConsumptionRecordSerializer(serializers.ModelSerializer):
         model = ConsumptionRecord
         fields = '__all__'
 
+
 # Serializer for Tip model
 class TipSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tip
         fields = '__all__'
+
 
 # Serializer for Notification model
 class NotificationSerializer(serializers.ModelSerializer):

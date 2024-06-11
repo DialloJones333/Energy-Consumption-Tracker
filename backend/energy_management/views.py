@@ -31,36 +31,43 @@ class RegisterView(APIView):
         logger.debug("Errors: %s", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # ViewSets for other models in my project
 from rest_framework import viewsets
 from django.contrib.auth.models import User
 from .models import UserProfile, Device, ConsumptionRecord, Tip, Notification
 from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, TipSerializer, NotificationSerializer
 
+
 # ViewSet for User model
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
 
 # ViewSet for UserProfile model
 class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
+
 # ViewSet for Device model
 class DeviceViewSet(viewsets.ModelViewSet):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
+
 
 # ViewSet for ConsumptionRecord model
 class ConsumptionRecordViewSet(viewsets.ModelViewSet):
     queryset = ConsumptionRecord.objects.all()
     serializer_class = ConsumptionRecordSerializer
 
+
 # ViewSet for Tip model
 class TipViewSet(viewsets.ModelViewSet):
     queryset = Tip.objects.all()
     serializer_class = TipSerializer
+
 
 # ViewSet for Notification model
 class NotificationViewSet(viewsets.ModelViewSet):
