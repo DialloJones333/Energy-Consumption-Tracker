@@ -1,3 +1,4 @@
+from importlib.metadata import requires
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
@@ -43,6 +44,11 @@ class LoginSerializer(serializers.Serializer):
         if user and user.check_password(data['password']):
             return user
         raise serializers.ValidationError("Incorrect credentials")
+
+
+# Serializer for handling user logout
+class LogoutSerializer(serializers.Serializer):
+    pass  # No fields needed for logout
 
 
 # Serializer for User model

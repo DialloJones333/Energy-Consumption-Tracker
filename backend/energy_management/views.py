@@ -2,7 +2,8 @@ import logging
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.authtoken.models import Token
 from .serializers import RegisterSerializer, LoginSerializer
 
 # Setting up a logger for debugging purposes
@@ -30,8 +31,8 @@ class RegisterView(APIView):
         # If data is not valid, log the errors and return them with a 400 status
         logger.debug("Errors: %s", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    
+
+
 class LoginView(APIView):
     # Allowing any user (authenticated or not) to access this view
     permission_classes = [AllowAny]
@@ -52,6 +53,18 @@ class LoginView(APIView):
         # If data is not valid, log the errors and return them with a 400 status
         logger.debug("Errors: %s", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LogoutView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            logger.debug("User %s is logging out", request.user)
+            request.user.auth_token.delete()
+        except (AttributeError, Token.DoesNotExist):
+            logger.error("Token does not exist or other error for user %s", request.user)
+        return Response(status=status.HTTP_200_OK)
 
 
 # ViewSets for other models in my project

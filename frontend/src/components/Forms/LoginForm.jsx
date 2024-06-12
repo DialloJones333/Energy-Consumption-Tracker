@@ -15,10 +15,12 @@ const LoginForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await api.post('/login/', {
+            const response = await api.post('/login/', {
                 username,
                 password
             });
+            const token = response.data.token;
+            localStorage.setItem('authToken', token);
             login()
             navigate('/dashboard');
         } catch (error) {
