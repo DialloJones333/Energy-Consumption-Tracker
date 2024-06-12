@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import UserViewSet, UserProfileViewSet, DeviceViewSet, ConsumptionRecordViewSet, TipViewSet, NotificationViewSet, RegisterView
+from .views import UserViewSet, UserProfileViewSet, DeviceViewSet, ConsumptionRecordViewSet, TipViewSet, NotificationViewSet, RegisterView, LoginView
 
 
 # Creating a router for automatically determining URL conf for API views
@@ -17,4 +17,5 @@ router.register(r'notifications', NotificationViewSet)
 urlpatterns = [
     path('api/', include(router.urls)),  # Include the router URLs
     path('api/register/', RegisterView.as_view(), name='register'),  # Registration endpoint
+    path('api/login/', LoginView.as_view(), name='login'),  # Login endpoint
 ]

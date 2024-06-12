@@ -33,7 +33,16 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 # Serializer for handling user login
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
 
+    # Overriding the validate method to handle user login
+    def validate(self, data):
+        user = User.objects.filter(username=data['username']).first()
+        if user and user.check_password(data['password']):
+            return user
+        raise serializers.ValidationError("Incorrect credentials")
 
 
 # Serializer for User model

@@ -9,7 +9,7 @@ const SignUpForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [error, setError] = useState('');
+    const [errors, setErrors] = useState('');
     const navigate = useNavigate();
 
     const nameInputRef = useRef(null);
@@ -23,15 +23,36 @@ const SignUpForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
-            setError('Passwords do not match');
+            setErrors({ password: ["Passwords do not match"] });
             return;
         }
         try {
-            await api.post('/register/', { first_name: firstName, last_name: lastName, username, email, password });
+            await api.post('/register/', {
+                first_name: firstName,
+                last_name: lastName,
+                username,
+                email,
+                password,
+                password_confirm: confirmPassword
+            });
             navigate('/login');
         } catch (error) {
-            console.error('Error signing up:', error);
+            if (error.response && error.response.data) {
+                setErrors(error.response.data);
+            } else {
+                setErrors({ non_field_errors: ["Something went wrong. Please try again."] });
+            }
         }
+    };
+
+    const renderErrors = () => {
+        return Object.entries(errors).map(([field, messages]) => (
+            <div key={field} className="text-red-500 mb-2">
+                {messages.map((message, index) => (
+                    <p key={index}>{field.charAt(0).toUpperCase() + field.slice(1)}: {message}</p>
+                ))}
+            </div>
+        ));
     };
 
     return (
@@ -40,7 +61,7 @@ const SignUpForm = () => {
                 <h2 className="text-2xl font-bold text-center mb-6">
                     Sign Up
                 </h2>
-                {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+                {renderErrors()}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-6">
                         <label
