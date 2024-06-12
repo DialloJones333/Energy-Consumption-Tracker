@@ -2,8 +2,10 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import api from '../../../services/api';
+import useAuth from '../../../services/useAuth';
 
 const LoginForm = () => {
+    const { login } = useAuth();
     const userNameInputRef = useRef(null);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -17,6 +19,7 @@ const LoginForm = () => {
                 username,
                 password
             });
+            login()
             navigate('/dashboard');
         } catch (error) {
             setError(error.response?.data || { non_field_errors: ["Something went wrong. Please try again."] });
