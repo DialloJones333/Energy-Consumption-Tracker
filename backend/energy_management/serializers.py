@@ -1,19 +1,27 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
 from .models import UserProfile, Device, ConsumptionRecord, Tip, Notification
 
 
 # Serializer for handling user registration
 class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    password_confirm = serializers.CharField(write_only=True, required=True)
+
     # Meta class to specify the model and fields to be serialized
     class Meta:
         model = User
-        fields = ['username', 'password', 'email', 'first_name', 'last_name']
-        extra_kwargs = {'password': {'write_only': True}}  # Ensure password is write-only
+        fields = ['username', 'password', 'password_confirm', 'email', 'first_name', 'last_name']
+        
+        # Custom validation for matching passwords
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password_confirm']:
+            raise serializers.ValidationError({"password": "Password fields didn't match."})
+        return attrs
 
     # Overriding the create method to handle user creation with hashed password
     def create(self, validated_data):
-        # Creating a new user with the validated data
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
