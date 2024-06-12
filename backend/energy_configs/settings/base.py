@@ -88,6 +88,8 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
 ]
 
+CSRF_COOKIE_NAME = "csrftoken"
+CSRF_HEADER_NAME = "HTTP_X_CSRFTOKEN"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # My frontend URL
@@ -96,6 +98,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True  # Only for development, remove in production
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'energy_configs.urls'
 
