@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import api from '../../../services/api';
 
 const SignUpForm = () => {
@@ -37,19 +38,15 @@ const SignUpForm = () => {
             });
             navigate('/login');
         } catch (error) {
-            if (error.response && error.response.data) {
-                setErrors(error.response.data);
-            } else {
-                setErrors({ non_field_errors: ["Something went wrong. Please try again."] });
-            }
+            setErrors(error.response?.data || { non_field_errors: ["Something went wrong. Please try again."] });
         }
     };
 
     const renderErrors = () => {
         return Object.entries(errors).map(([field, messages]) => (
             <div key={field} className="text-red-500 mb-2">
-                {messages.map((message, index) => (
-                    <p key={index}>{field.charAt(0).toUpperCase() + field.slice(1)}: {message}</p>
+                {messages.map((message) => (
+                    <p key={uuidv4()}>{field.charAt(0).toUpperCase() + field.slice(1)}: {message}</p>
                 ))}
             </div>
         ));
