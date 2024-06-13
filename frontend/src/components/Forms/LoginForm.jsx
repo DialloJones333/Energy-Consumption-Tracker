@@ -11,7 +11,7 @@ const LoginForm = () => {
     const [messages, setMessages] = useState([]);
     const navigate = useNavigate()
 
-    const handleSubmit = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         try {
             await login(username, password);
@@ -46,7 +46,7 @@ const LoginForm = () => {
                     Log In
                 </h2>
                 {renderError()}
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleLogin}>
                     <div className="mb-6">
                         <label
                             className="block text-md font-bold mb-2"
