@@ -10,7 +10,7 @@ const SignUpForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [errors, setErrors] = useState('');
+    const [messages, setMessages] = useState([]);
     const navigate = useNavigate();
 
     const nameInputRef = useRef(null);
@@ -24,7 +24,7 @@ const SignUpForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
-            setErrors({ password: ["Passwords do not match"] });
+            setMessages([{ message: "Passwords do not match" }]);
             return;
         }
         try {
@@ -38,16 +38,19 @@ const SignUpForm = () => {
             });
             navigate('/login');
         } catch (error) {
-            setErrors(error.response?.data || { non_field_errors: ["Something went wrong. Please try again."] });
+            if (error.response && error.response.data) {
+                const errorMessages = Object.values(error.response.data).flat().map(msg => ({ message: msg }));
+                setMessages(errorMessages);
+            } else {
+                setMessages([{ message: "Something went wrong. Please try again." }]);
+            }
         }
     };
 
     const renderErrors = () => {
-        return Object.entries(errors).map(([field, messages]) => (
-            <div key={field} className="text-red-500 mb-2">
-                {messages.map((message) => (
-                    <p key={uuidv4()}>{field.charAt(0).toUpperCase() + field.slice(1)}: {message}</p>
-                ))}
+        return messages.map((msg) => (
+            <div key={uuidv4()} className="text-red-500">
+                {msg.message}
             </div>
         ));
     };

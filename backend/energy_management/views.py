@@ -14,6 +14,8 @@ logger = logging.getLogger(__name__)
 
 # View for handling user registration
 class RegisterView(APIView):
+    permission_classes = [AllowAny]
+
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
@@ -29,12 +31,13 @@ class RegisterView(APIView):
                 },
                 status=status.HTTP_201_CREATED,
             )
-            response.set_cookie("csrftoken", get_token(request))
             return response
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LoginView(APIView):
+    permission_classes = (AllowAny,)
+
     def post(self, request):
         username = request.data.get("username")
         password = request.data.get("password")
@@ -82,7 +85,9 @@ class LogoutView(APIView):
             logger.debug("User %s is logging out", request.user)
             request.user.auth_token.delete()
         except (AttributeError, Token.DoesNotExist):
-            logger.error("Token does not exist or other error for user %s", request.user)
+            logger.error(
+                "Token does not exist or other error for user %s", request.user
+            )
         return Response(status=status.HTTP_200_OK)
 
 

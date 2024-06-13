@@ -11,16 +11,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            api.get('/verify-token/', { headers: { Authorization: `Token ${token}` } })
-                .then(response => {
-                    setUser(response.data.user);
-                    setIsAuthenticated(true);
-                })
-                .catch(() => {
-                    localStorage.removeItem('token');
-                    setIsAuthenticated(false);
-                    setUser(null);
-                });
+            setIsAuthenticated(true);
         } else {
             localStorage.removeItem('token');
             setIsAuthenticated(false);
@@ -33,6 +24,12 @@ export const AuthProvider = ({ children }) => {
             const response = await api.post('/login/', { username, password });
             const token = response.data.token;
             localStorage.setItem('token', token);
+            setUser({
+                username: response.data.username,
+                email: response.data.email,
+                first_name: response.data.first_name,
+                last_name: response.data.last_name,
+            });
             setIsAuthenticated(true);
         } catch (error) {
             console.error('Login failed', error);

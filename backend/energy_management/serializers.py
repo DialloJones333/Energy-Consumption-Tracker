@@ -6,29 +6,42 @@ from .models import UserProfile, Device, ConsumptionRecord, Tip, Notification
 
 
 # Serializer for handling user registration
+from rest_framework import serializers
+from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+
+
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    password = serializers.CharField(
+        write_only=True, required=True, validators=[validate_password]
+    )
     password_confirm = serializers.CharField(write_only=True, required=True)
 
-    # Meta class to specify the model and fields to be serialized
     class Meta:
         model = User
-        fields = ['username', 'password', 'password_confirm', 'email', 'first_name', 'last_name']
-        
-        # Custom validation for matching passwords
+        fields = [
+            "username",
+            "password",
+            "password_confirm",
+            "email",
+            "first_name",
+            "last_name",
+        ]
+
     def validate(self, attrs):
-        if attrs['password'] != attrs['password_confirm']:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
+        if attrs["password"] != attrs["password_confirm"]:
+            raise serializers.ValidationError(
+                {"password": "Password fields didn't match."}
+            )
         return attrs
 
-    # Overriding the create method to handle user creation with hashed password
     def create(self, validated_data):
         user = User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name']
+            username=validated_data["username"],
+            email=validated_data["email"],
+            password=validated_data["password"],
+            first_name=validated_data["first_name"],
+            last_name=validated_data["last_name"],
         )
         return user  # Return the newly created user
 
