@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import api from '../../../services/api';
 import useAuth from '../../../services/useAuth';
 
 const LoginForm = () => {
@@ -9,31 +8,27 @@ const LoginForm = () => {
     const userNameInputRef = useRef(null);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [messages, setMessages] = useState([]);
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.post('/login/', {
-                username,
-                password
-            });
-            const token = response.data.token;
-            localStorage.setItem('authToken', token);
-            login()
+            await login(username, password);
             navigate('/dashboard');
         } catch (error) {
-            setError(error.response?.data || { non_field_errors: ["Something went wrong. Please try again."] });
+            setMessages([error.response.data.error]);
         }
     };
     
     const renderError = () => {
-        return Object.entries(error).map(([field, messages]) => (
-            <div key={field} className="text-red-500 mb-2">
-                {messages.map((message) => (
-                    <p key={uuidv4()}>{field.charAt(0).toUpperCase() + field.slice(1)}: {message}</p>
-                ))}
+        if (!Array.isArray(messages)) {
+            return null;
+        }
+
+        return messages.map((message) => (
+            <div key={uuidv4()} className="text-red-500">
+                {message}
             </div>
         ));
     };
