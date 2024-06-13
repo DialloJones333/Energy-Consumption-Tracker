@@ -38,7 +38,7 @@ const SignUpForm = () => {
             });
             navigate('/login');
         } catch (error) {
-            if (error.response && error.response.data) {
+            if (error?.response?.data) {
                 const errorMessages = Object.values(error.response.data).flat().map(msg => ({ message: msg }));
                 setMessages(errorMessages);
             } else {

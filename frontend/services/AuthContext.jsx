@@ -11,7 +11,16 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            setIsAuthenticated(true);
+            api.get('/verify-token/')
+                .then(response => {
+                    setUser(response.data.user);
+                    setIsAuthenticated(true);
+                })
+                .catch(() => {
+                    localStorage.removeItem('token');
+                    setIsAuthenticated(false);
+                    setUser(null);
+                });
         } else {
             localStorage.removeItem('token');
             setIsAuthenticated(false);
@@ -42,6 +51,9 @@ export const AuthProvider = ({ children }) => {
         try {
             await api.post('/logout/');
             localStorage.removeItem('token');
+            localStorage.removeItem('access');
+            localStorage.removeItem('refresh');
+            localStorage.removeItem('authToken');
             setUser(null);
             setIsAuthenticated(false);
         } catch (error) {

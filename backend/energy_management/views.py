@@ -82,13 +82,10 @@ class LogoutView(APIView):
 
     def post(self, request):
         try:
-            logger.debug("User %s is logging out", request.user)
             request.user.auth_token.delete()
+            return Response(status=status.HTTP_200_OK)
         except (AttributeError, Token.DoesNotExist):
-            logger.error(
-                "Token does not exist or other error for user %s", request.user
-            )
-        return Response(status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 # ViewSets for other models in my project

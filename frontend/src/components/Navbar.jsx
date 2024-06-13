@@ -1,5 +1,4 @@
 import { useLocation, useNavigate} from 'react-router-dom';
-import api from '../../services/api';
 import useAuth from '../../services/useAuth';
 
 const Navbar = () => {
@@ -16,8 +15,7 @@ const Navbar = () => {
     
     const handleLogout = async () => {
         try {
-            await api.post('/logout/');
-            logout();
+            await logout();
             navigate('/');
         } catch (error) {
             console.error("Logout failed", error);
