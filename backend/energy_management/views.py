@@ -89,10 +89,19 @@ class LogoutView(APIView):
 
 
 # ViewSets for other models in my project
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from django.contrib.auth.models import User
 from .models import UserProfile, Device, ConsumptionRecord, Tip, Notification
 from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, TipSerializer, NotificationSerializer
+
+
+class CurrentUserViewSet(viewsets.ViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def list(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
 
 # ViewSet for User model

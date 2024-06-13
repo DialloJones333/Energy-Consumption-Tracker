@@ -1,16 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import TabBar from "../components/TabBar";
 import ProfileDisplay from "../components/ProfileDisplay";
 import ProfileForm from "../components/Forms/ProfileForm";
 import Footer from "../components/Footer";
+import AuthContext from '../../services/AuthContext';
 
 const Profile = () => {
-    const [firstName, setFirstName] = useState('Diallo')
-    const [lastName, setLastName] = useState('Jones')
-    const [username, setUsername] = useState('DialloJones23')
-    const [phoneNumber, setPhoneNumber] = useState('7049960661')
-    const [email, setEmail] = useState('diallojones23@gmail.com')
+    const { user } = useContext(AuthContext);
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [username, setUsername] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [email, setEmail] = useState('')
+
+    useEffect(() => {
+        if (user) {
+            setFirstName(user.first_name);
+            setLastName(user.last_name);
+            setUsername(user.username);
+            setPhoneNumber(user.phone_number);
+            setEmail(user.email);
+        }
+    }, [user]);
 
     const handleApplyChanges = (newFirstName, newLastname, newUsername, newPhoneNumber, newEmail) => {
         setFirstName(newFirstName);

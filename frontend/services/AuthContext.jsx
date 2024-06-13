@@ -1,6 +1,6 @@
 import { createContext, useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import api from './api';
+import api, { getUserData } from './api';
 
 const AuthContext = createContext();
 
@@ -11,18 +11,22 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            api.get('/verify-token/')
-                .then(response => {
-                    setUser(response.data.user);
-                    setIsAuthenticated(true);
-                })
-                .catch(() => {
-                    localStorage.removeItem('token');
-                    setIsAuthenticated(false);
-                    setUser(null);
-                });
+            api.get('/verify-token/', {
+                headers: {
+                    'Authorization': `Token ${token}`
+                }
+            })
+            .then(async () => {
+                const userData = await getUserData();
+                setIsAuthenticated(true);
+                setUser(userData);
+            })
+            .catch(() => {
+                localStorage.removeItem('token');
+                setIsAuthenticated(false);
+                setUser(null);
+            });
         } else {
-            localStorage.removeItem('token');
             setIsAuthenticated(false);
             setUser(null);
         }
@@ -33,13 +37,9 @@ export const AuthProvider = ({ children }) => {
             const response = await api.post('/login/', { username, password });
             const token = response.data.token;
             localStorage.setItem('token', token);
-            setUser({
-                username: response.data.username,
-                email: response.data.email,
-                first_name: response.data.first_name,
-                last_name: response.data.last_name,
-            });
+            const userData = await getUserData();
             setIsAuthenticated(true);
+            setUser(userData);
         } catch (error) {
             console.error('Login failed', error);
             setIsAuthenticated(false);

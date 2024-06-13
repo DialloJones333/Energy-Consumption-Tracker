@@ -15,6 +15,16 @@ function getCookie(name) {
     return cookieValue;
 }
 
+export const getUserData = async () => {
+    try {
+        const response = await api.get('/current-user/');
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        throw error;
+    }
+};
+
 const api = axios.create({
     baseURL: 'http://127.0.0.1:8000/api',
 });
