@@ -5,12 +5,11 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from django.middleware.csrf import get_token
-from .serializers import RegisterSerializer, LoginSerializer
+from rest_framework.viewsets import ViewSet
+from .serializers import RegisterSerializer, LoginSerializer, CurrentUserSerializer
 
 # Setting up a logger for debugging purposes
 logger = logging.getLogger(__name__)
-
 
 # View for handling user registration
 class RegisterView(APIView):
@@ -94,13 +93,12 @@ from django.contrib.auth.models import User
 from .models import UserProfile, Device, ConsumptionRecord, Tip, Notification
 from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, TipSerializer, NotificationSerializer
 
-
-class CurrentUserViewSet(viewsets.ViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+class CurrentUserViewSet(ViewSet):
+    permission_classes = [IsAuthenticated]
 
     def list(self, request):
         user = request.user
-        serializer = UserSerializer(user)
+        serializer = CurrentUserSerializer(user)
         return Response(serializer.data)
 
 

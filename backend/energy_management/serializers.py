@@ -57,6 +57,14 @@ class LoginSerializer(serializers.Serializer):
         if user and user.check_password(data['password']):
             return user
         raise serializers.ValidationError("Incorrect credentials")
+    
+    
+class CurrentUserSerializer(serializers.ModelSerializer):
+    phone_number = serializers.CharField(source='userprofile.phone_number', read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'username', 'email', 'phone_number']
 
 
 # Serializer for handling user logout
