@@ -1,4 +1,4 @@
-import { createContext, useState, useMemo } from 'react';
+import { createContext, useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from './api';
 
@@ -8,12 +8,31 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            api.get('/verify-token/', { headers: { Authorization: `Token ${token}` } })
+                .then(response => {
+                    setUser(response.data.user);
+                    setIsAuthenticated(true);
+                })
+                .catch(() => {
+                    localStorage.removeItem('token');
+                    setIsAuthenticated(false);
+                    setUser(null);
+                });
+        } else {
+            localStorage.removeItem('token');
+            setIsAuthenticated(false);
+            setUser(null);
+        }
+    }, []);
+
     const login = async (username, password) => {
         try {
             const response = await api.post('/login/', { username, password });
-            const { token, username, email, first_name, last_name } = response.data;
+            const token = response.data.token;
             localStorage.setItem('token', token);
-            setUser({ username, email, first_name, last_name });
             setIsAuthenticated(true);
         } catch (error) {
             console.error('Login failed', error);

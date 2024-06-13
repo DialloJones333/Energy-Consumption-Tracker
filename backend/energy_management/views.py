@@ -57,6 +57,23 @@ class LoginView(APIView):
         )
 
 
+class VerifyTokenView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response(
+            {
+                "user": {
+                    "username": user.username,
+                    "email": user.email,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                }
+            }
+        )
+
+
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
