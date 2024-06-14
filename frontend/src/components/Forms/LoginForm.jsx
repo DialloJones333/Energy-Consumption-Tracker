@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import useAuth from '../../../services/useAuth';
 
 const LoginForm = () => {
+    // Import the login function from the useAuth hook
     const { login } = useAuth();
     const userNameInputRef = useRef(null);
     const [username, setUsername] = useState('');
@@ -11,8 +12,10 @@ const LoginForm = () => {
     const [messages, setMessages] = useState([]);
     const navigate = useNavigate()
 
+    // Function to handle the login form submission
     const handleLogin = async (e) => {
         e.preventDefault();
+        // Call the login function with the username and password
         try {
             await login(username, password);
             navigate('/dashboard');
@@ -20,12 +23,15 @@ const LoginForm = () => {
             setMessages([error.response.data.error]);
         }
     };
-    
+
+    // Function to render the error messages
     const renderError = () => {
+        // If the messages array is not an array, return null
         if (!Array.isArray(messages)) {
             return null;
         }
 
+        // Map through the messages array and display each message
         return messages.map((message) => (
             <div key={uuidv4()} className="text-red-500">
                 {message}
@@ -33,6 +39,7 @@ const LoginForm = () => {
         ));
     };
 
+    // Focus the username input field when the component mounts
     useEffect(() => {
         if (userNameInputRef.current) {
             userNameInputRef.current.focus();

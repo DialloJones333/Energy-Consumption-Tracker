@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import api from '../../../services/api';
 
 const SignUpForm = () => {
+    // State variables to hold the form data and error messages
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [username, setUsername] = useState('');
@@ -13,20 +14,26 @@ const SignUpForm = () => {
     const [messages, setMessages] = useState([]);
     const navigate = useNavigate();
 
+    // Reference to the first name input field
     const nameInputRef = useRef(null);
 
+    // Focus the first name input field when the component mounts
     useEffect(() => {
         if (nameInputRef.current) {
             nameInputRef.current.focus();
         }
     }, []);
 
+    // Function to handle the form submission
     const handleSubmit = async (e) => {
+        // Prevent the default form submission behavior
         e.preventDefault();
+        // Check if the passwords match
         if (password !== confirmPassword) {
             setMessages([{ message: "Passwords do not match" }]);
             return;
         }
+        // Send a POST request to the register endpoint with the form data
         try {
             await api.post('/register/', {
                 first_name: firstName,
@@ -36,18 +43,23 @@ const SignUpForm = () => {
                 password,
                 password_confirm: confirmPassword
             });
+            // Redirect the user to the login page
             navigate('/login');
         } catch (error) {
+            // If there is an error, set the error messages
             if (error?.response?.data) {
                 const errorMessages = Object.values(error.response.data).flat().map(msg => ({ message: msg }));
                 setMessages(errorMessages);
             } else {
+                // If there is no error message, set a generic error message
                 setMessages([{ message: "Something went wrong. Please try again." }]);
             }
         }
     };
 
+    // Function to render the error messages
     const renderErrors = () => {
+        // Map through the messages array and display each message
         return messages.map((msg) => (
             <div key={uuidv4()} className="text-red-500">
                 {msg.message}
