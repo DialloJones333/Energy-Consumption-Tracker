@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import AuthContext from '../../services/AuthContext';
 
 const Profile = () => {
+    // Get the user data from the AuthContext provider
     const { user, setUser } = useContext(AuthContext);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -14,7 +15,9 @@ const Profile = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
 
+    // Update user profile fields in local state
     useEffect(() => {
+        // Check if there is a user
         if (user) {
             setFirstName(user.first_name);
             setLastName(user.last_name);
@@ -22,10 +25,13 @@ const Profile = () => {
             setPhoneNumber(user.phone_number);
             setEmail(user.email);
         }
-    }, [user]);
+    }, [user]); // Update when user changes
 
+    //Handle changes in the form
     const handleApplyChanges = (newFirstName, newLastName, newUsername, newPhoneNumber, newEmail) => {
+        // Update user profile fields in local state
         const updatedUser = {
+            // Spread the existing user data
             ...user,
             first_name: newFirstName,
             last_name: newLastName,
@@ -33,6 +39,7 @@ const Profile = () => {
             phone_number: newPhoneNumber,
             email: newEmail
         };
+        // Update the user data in the AuthContext provider
         setUser(updatedUser);
     };
 

@@ -134,6 +134,7 @@ class CurrentUserViewSet(ViewSet):
         user_profile.phone_number = data.get('phone_number', user_profile.phone_number)
         user_profile.save()
 
+        # Serialize the updated user data and return a response
         serializer = CurrentUserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
