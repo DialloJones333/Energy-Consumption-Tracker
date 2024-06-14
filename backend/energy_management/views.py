@@ -15,9 +15,12 @@ logger = logging.getLogger(__name__)
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
+    # POST method for user registration
     def post(self, request):
+        # Check if the request contains valid data
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
+            # Save the user and return a response
             user = serializer.save()
             token, _ = Token.objects.get_or_create(user=user)
             response = Response(
@@ -37,11 +40,14 @@ class RegisterView(APIView):
 class LoginView(APIView):
     permission_classes = (AllowAny,)
 
+    # POST method for user login
     def post(self, request):
+        # Check if the request contains valid data
         username = request.data.get("username")
         password = request.data.get("password")
         user = authenticate(username=username, password=password)
 
+        # Check if the user exists and return a response
         if user is not None:
             token, _ = Token.objects.get_or_create(user=user)
             return Response(
@@ -62,7 +68,9 @@ class LoginView(APIView):
 class VerifyTokenView(APIView):
     permission_classes = [IsAuthenticated]
 
+    # GET method for verifying token
     def get(self, request):
+        # Make a request to get the users data
         user = request.user
         return Response(
             {
@@ -79,7 +87,9 @@ class VerifyTokenView(APIView):
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
+    # POST method for user logout
     def post(self, request):
+        # Delete the user's token and return a response
         try:
             request.user.auth_token.delete()
             return Response(status=status.HTTP_200_OK)
@@ -96,8 +106,11 @@ from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer
 class CurrentUserViewSet(ViewSet):
     permission_classes = [IsAuthenticated]
 
+    # GET method for getting current a list of user data
     def list(self, request):
+        # Get the current user
         user = request.user
+        # Serialize the user data and return a response
         serializer = CurrentUserSerializer(user)
         return Response(serializer.data)
 

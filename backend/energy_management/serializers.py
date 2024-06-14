@@ -4,13 +4,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from .models import UserProfile, Device, ConsumptionRecord, Tip, Notification
 
-
+# Serializer for handling user registration
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True, required=True, validators=[validate_password]
     )
     password_confirm = serializers.CharField(write_only=True, required=True)
 
+    # Meta class that defines the model and fields to be serialized
     class Meta:
         model = User
         fields = [
@@ -22,6 +23,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             "last_name",
         ]
 
+    # Validate function to check if the passwords match
     def validate(self, attrs):
         if attrs["password"] != attrs["password_confirm"]:
             raise serializers.ValidationError(
@@ -29,6 +31,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             )
         return attrs
 
+    # Create function to create the user while validating the data
     def create(self, validated_data):
         user = User.objects.create_user(
             username=validated_data["username"],
@@ -45,17 +48,19 @@ class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
 
-    # Overriding the validate method to handle user login
+    # Validate function to check if the user exists and the password is correct
     def validate(self, data):
         user = User.objects.filter(username=data['username']).first()
         if user and user.check_password(data['password']):
             return user
         raise serializers.ValidationError("Incorrect credentials")
-    
-    
+
+
+# Serializer for handling current user
 class CurrentUserSerializer(serializers.ModelSerializer):
     phone_number = serializers.CharField(source='userprofile.phone_number', read_only=True)
 
+    # Meta class that defines the model and fields to be serialized
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'username', 'email', 'phone_number']
