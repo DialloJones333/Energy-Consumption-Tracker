@@ -6,7 +6,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework.viewsets import ViewSet
-from .serializers import RegisterSerializer, LoginSerializer, CurrentUserSerializer
+from .serializers import RegisterSerializer, CurrentUserSerializer
 
 # Setting up a logger for debugging purposes
 logger = logging.getLogger(__name__)
@@ -98,7 +98,8 @@ class LogoutView(APIView):
 
 
 # ViewSets for other models in my project
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets
+from rest_framework.decorators import action
 from django.contrib.auth.models import User
 from .models import UserProfile, Device, ConsumptionRecord, Tip, Notification
 from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, TipSerializer, NotificationSerializer
@@ -106,7 +107,7 @@ from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer
 class CurrentUserViewSet(ViewSet):
     permission_classes = [IsAuthenticated]
 
-    # GET method for getting current a list of user data
+    # GET method for getting a list of the current users data
     def list(self, request):
         # Get the current user
         user = request.user
@@ -114,6 +115,12 @@ class CurrentUserViewSet(ViewSet):
         serializer = CurrentUserSerializer(user)
         return Response(serializer.data)
 
+    # PUT method for updating the users data
+    @action(detail=False, methods=['put'])
+    def update_user(self, request):
+        # Get the current user
+        user = request.user
+        
 
 # ViewSet for User model
 class UserViewSet(viewsets.ModelViewSet):
