@@ -9,6 +9,14 @@ const ProfileForm = ({ firstName, lastName, username, phoneNumber, email, handle
     const [localPhoneNumber, setLocalPhoneNumber] = useState(phoneNumber);
     const [localEmail, setLocalEmail] = useState(email);
 
+    useEffect(() => {
+        setLocalFirstName(firstName);
+        setLocalLastName(lastName);
+        setLocalUsername(username);
+        setLocalPhoneNumber(phoneNumber);
+        setLocalEmail(email);
+    }, [firstName, lastName, username, phoneNumber, email]);
+
     const handleApply = () => {
         handleApplyChanges(localFirstName, localLastName, localUsername, localPhoneNumber, localEmail);
     };
