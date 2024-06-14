@@ -116,11 +116,27 @@ class CurrentUserViewSet(ViewSet):
         return Response(serializer.data)
 
     # PUT method for updating the users data
-    @action(detail=False, methods=['put'])
-    def update_user(self, request):
+    def put(self, request):
         # Get the current user
         user = request.user
+        # Get the data from the request
+        data = request.data
         
+        # Update user fields
+        user.first_name = data.get('first_name', user.first_name)
+        user.last_name = data.get('last_name', user.last_name)
+        user.username = data.get('username', user.username)
+        user.email = data.get('email', user.email)
+        user.save()
+
+        # Update user profile fields
+        user_profile, _ = UserProfile.objects.get_or_create(user=user)
+        user_profile.phone_number = data.get('phone_number', user_profile.phone_number)
+        user_profile.save()
+
+        serializer = CurrentUserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 # ViewSet for User model
 class UserViewSet(viewsets.ModelViewSet):

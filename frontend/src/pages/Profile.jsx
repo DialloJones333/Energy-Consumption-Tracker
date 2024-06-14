@@ -7,17 +7,14 @@ import Footer from "../components/Footer";
 import AuthContext from '../../services/AuthContext';
 
 const Profile = () => {
-    // Get the user data from the authentication context
-    const { user } = useContext(AuthContext);
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [username, setUsername] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
-    const [email, setEmail] = useState('')
+    const { user, setUser } = useContext(AuthContext);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [username, setUsername] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [email, setEmail] = useState('');
 
-    // Set the form fields to the user data when the component mounts
     useEffect(() => {
-        // If the user data is available, set the form fields
         if (user) {
             setFirstName(user.first_name);
             setLastName(user.last_name);
@@ -27,13 +24,16 @@ const Profile = () => {
         }
     }, [user]);
 
-    // Function to apply the changes to the user data
-    const handleApplyChanges = (newFirstName, newLastname, newUsername, newPhoneNumber, newEmail) => {
-        setFirstName(newFirstName);
-        setLastName(newLastname);
-        setUsername(newUsername);
-        setPhoneNumber(newPhoneNumber);
-        setEmail(newEmail);
+    const handleApplyChanges = (newFirstName, newLastName, newUsername, newPhoneNumber, newEmail) => {
+        const updatedUser = {
+            ...user,
+            first_name: newFirstName,
+            last_name: newLastName,
+            username: newUsername,
+            phone_number: newPhoneNumber,
+            email: newEmail
+        };
+        setUser(updatedUser);
     };
 
     return (
@@ -53,7 +53,6 @@ const Profile = () => {
                 <div className="flex flex-col gap-10 w-2/4">
                     <div className="me-8 h-104 flex items-center justify-center shadow-2xl rounded-lg font-serif">
                         <ProfileDisplay
-                            // Pass the user data to the ProfileDisplay component
                             firstName={firstName}
                             lastName={lastName}
                             username={username}
@@ -65,7 +64,6 @@ const Profile = () => {
                 <div className="flex flex-col me-4 gap-10 mb-10 w-2/4">
                     <div className="min-h-104 overflow-auto shadow-2xl flex rounded-lg font-serif">
                         <ProfileForm
-                            // Pass the user data and the function to apply the changes to the ProfileForm component
                             firstName={firstName}
                             lastName={lastName}
                             username={username}
