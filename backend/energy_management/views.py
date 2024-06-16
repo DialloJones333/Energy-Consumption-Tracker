@@ -25,11 +25,11 @@ class RegisterView(APIView):
             token, _ = Token.objects.get_or_create(user=user)
             response = Response(
                 {
-                    "token": token.key,
-                    "username": user.username,
-                    "email": user.email,
-                    "first_name": user.first_name,
-                    "last_name": user.last_name,
+                    'token': token.key,
+                    'username': user.username,
+                    'email': user.email,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
                 },
                 status=status.HTTP_201_CREATED,
             )
@@ -43,8 +43,8 @@ class LoginView(APIView):
     # POST method for user login
     def post(self, request):
         # Check if the request contains valid data
-        username = request.data.get("username")
-        password = request.data.get("password")
+        username = request.data.get('username')
+        password = request.data.get('password')
         user = authenticate(username=username, password=password)
 
         # Check if the user exists and return a response
@@ -52,16 +52,16 @@ class LoginView(APIView):
             token, _ = Token.objects.get_or_create(user=user)
             return Response(
                 {
-                    "token": token.key,
-                    "username": user.username,
-                    "email": user.email,
-                    "first_name": user.first_name,
-                    "last_name": user.last_name,
+                    'token': token.key,
+                    'username': user.username,
+                    'email': user.email,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
                 },
                 status=status.HTTP_200_OK,
             )
         return Response(
-            {"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST
+            {'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST
         )
 
 
@@ -74,11 +74,11 @@ class VerifyTokenView(APIView):
         user = request.user
         return Response(
             {
-                "user": {
-                    "username": user.username,
-                    "email": user.email,
-                    "first_name": user.first_name,
-                    "last_name": user.last_name,
+                'user': {
+                    'username': user.username,
+                    'email': user.email,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
                 }
             }
         )
@@ -121,7 +121,7 @@ class CurrentUserViewSet(ViewSet):
         user = request.user
         # Get the data from the request
         data = request.data
-        
+
         # Update user fields
         user.first_name = data.get('first_name', user.first_name)
         user.last_name = data.get('last_name', user.last_name)
@@ -138,6 +138,39 @@ class CurrentUserViewSet(ViewSet):
         serializer = CurrentUserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    # POST method for changing users passwords
+    def post(self, request):
+        # Get the current user
+        user = request.user
+        # Get the data from the request
+        data = request.data
+
+        # Get the users password and validate
+        current_password = data.get("current_password")
+        # Get the users new password
+        new_password = data.get("new_password")
+        new_password_again = data.get("new_password_again")
+
+        # Validate the users current password
+        if not user.check_password(current_password):
+            return Response(
+                {"error": "Current password is incorrect"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # If the new passwords do not match return an error response 
+        if new_password != new_password_again:
+            return Response(
+                {"error": "New passwords do not match"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # If they do set the new password and save the user
+        user.set_password(new_password)
+        user.save()
+        return Response(
+            {"status": "Password changed successfully"}, status=status.HTTP_200_OK
+        )
 
 # ViewSet for User model
 class UserViewSet(viewsets.ModelViewSet):
