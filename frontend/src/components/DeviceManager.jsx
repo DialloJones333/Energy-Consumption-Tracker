@@ -8,6 +8,7 @@ const DeviceManager = () => {
     const [device, setDevice] = useState('')
     const [deviceType, setDeviceType] = useState('');
     const [deviceTypes] = useState(['LED Bulbs', 'Incandescent Bulbs', 'CFL Bulbs', 'Smart Bulbs', 'Smart Plugs', 'Smart Thermostats', 'Fans', 'Televisions', 'Gaming Consoles', 'Desktop Computers', 'Laptops']);
+    const [hoursUsed, setHoursUsed] = useState('')
     const [messages, setMessages] = useState([]);
 
     const navigate = useNavigate();
@@ -27,6 +28,7 @@ const DeviceManager = () => {
                 // Add the values of the input fields in the response
                 "device": device,
                 "device_type": deviceType,
+                "hours_used": hoursUsed,
             }, {
                     // Include the users authorization token in the Authorization headers
                     headers: {
@@ -101,6 +103,21 @@ const DeviceManager = () => {
                                 <option key={type} value={type}>{type}</option>
                             ))}
                         </select>
+                    </div>
+                    <div className="mb-6">
+                        <label
+                            className="block text-md font-bold mb-2"
+                            htmlFor="daily-usage">
+                            Average Daily Usage (Hours)
+                        </label>
+                        <input
+                            className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            id="daily-usage"
+                            type="text"
+                            placeholder="Enter the hours the device is plugged in per day"
+                            value={hoursUsed}
+                            onChange={(e) => setHoursUsed(e.target.value)}
+                        />
                     </div>
                     <div className="flex items-center justify-between">
                         <button

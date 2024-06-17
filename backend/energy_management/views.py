@@ -208,15 +208,39 @@ class DeviceViewSet(viewsets.ModelViewSet):
         # Get the device type
         device_type = data.get('device_type')
         
+        # Get the usage hours
+        hours_used_per_day = data.get('hours_used')
+        
         # Check if either fields are blank
-        if not name or not device_type:
+        if not name or not device_type or not hours_used_per_day:
             return Response(
                 {'error': 'Neither fields can be blank'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+            
+        # Ensure hours_used_per_day is a valid float
+        try:
+            hours_used_per_day = float(hours_used_per_day)
+        except ValueError:
+            return Response(
+                {'error': 'Average daily usage must be a valid number'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+            
+        # Ensure user cannot input a time over 24 hours
+        if hours_used_per_day > 24.0:
+            return Response(
+                {'error': 'Average daily usage cannot exceed 24 hours'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         # Update the device model with the data
-        device = Device.objects.create(user=user, name=name, device_type=device_type)
+        device = Device.objects.create(
+            user=user, 
+            name=name, 
+            device_type=device_type,
+            hours_used_per_day=hours_used_per_day
+        )
 
         # Serialize the newly created device and return it
         serializer = self.get_serializer(device)
