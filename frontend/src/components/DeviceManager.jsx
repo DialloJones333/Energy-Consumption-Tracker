@@ -1,15 +1,63 @@
 import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import api from '../../services/api';
 
 const DeviceManager = () => {
     const DeviceInputRef = useRef(null);
+    const [device, setDevice] = useState('')
     const [deviceType, setDeviceType] = useState('');
-    const [deviceTypes] = useState(['LED Bulbs', 'Incandescent Bulbs', 'CFL Bulbs', 'Smart Bulbs', 'Smart Plugs', 'Smart Thermostats', 'Fans', 'Televisions', 'Gaming Consoles', 'Desktop Computers', 'Laptops',  ]);
+    const [deviceTypes] = useState(['LED Bulbs', 'Incandescent Bulbs', 'CFL Bulbs', 'Smart Bulbs', 'Smart Plugs', 'Smart Thermostats', 'Fans', 'Televisions', 'Gaming Consoles', 'Desktop Computers', 'Laptops']);
+    const [messages, setMessages] = useState([]);
 
+    const navigate = useNavigate();
+
+    // Focus the device input field when the component mounts
     useEffect(() => {
         if (DeviceInputRef.current) {
             DeviceInputRef.current.focus();
         }
     }, []);
+
+    // Function to handle adding a device
+    const handleDevices = async () => {
+        try {
+            // Make a POST request to my devices endpoint
+            const response = await api.post('/devices/', {
+                // Add the values of the input fields in the response
+                "device": device,
+                "device_type": deviceType,
+            }, {
+                    // Include the users authorization token in the Authorization headers
+                    headers: {
+                        'Authorization': `Token ${localStorage.getItem('token')}`,
+                    },
+            });
+
+            // Log the response
+            console.log(response.data);
+            navigate('/dashboard')
+
+        // Catch any errors
+        } catch (error) {
+            setMessages([error.response.data.error]);
+        }
+    };
+
+    // Function to render the error messages
+    const renderError = () => {
+        // If the messages array is not an array, return null
+        if (!Array.isArray(messages)) {
+            return null;
+        }
+
+        // Map through the messages array and display each message
+        return messages.map((message) => (
+            <div key={uuidv4()} className="text-red-500">
+                {message}
+            </div>
+        ));
+    };
 
     return (
         <div className="flex items-center justify-center w-full">
@@ -17,6 +65,7 @@ const DeviceManager = () => {
                 <h2 className="text-2xl font-bold text-center mb-6">
                     Add Device
                 </h2>
+                {renderError()}
                 <form>
                     <div className="mb-6">
                         <label
@@ -30,6 +79,8 @@ const DeviceManager = () => {
                             type="text"
                             placeholder="Enter device name"
                             ref={DeviceInputRef}
+                            value={device}
+                            onChange={(e) => setDevice(e.target.value)}
                         />
                     </div>
                     <div className="mb-6">
@@ -55,6 +106,7 @@ const DeviceManager = () => {
                         <button
                             className="bg-stone-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
                             type="button"
+                            onClick={handleDevices}
                         >
                             Add Device
                         </button>

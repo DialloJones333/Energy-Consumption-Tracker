@@ -104,6 +104,7 @@ from django.contrib.auth.models import User
 from .models import UserProfile, Device, ConsumptionRecord, Tip, Notification
 from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, TipSerializer, NotificationSerializer
 
+# ViewSet for Current User
 class CurrentUserViewSet(ViewSet):
     permission_classes = [IsAuthenticated]
 
@@ -146,29 +147,29 @@ class CurrentUserViewSet(ViewSet):
         data = request.data
 
         # Get the users password and validate
-        current_password = data.get("current_password")
+        current_password = data.get('current_password')
         # Get the users new password
-        new_password = data.get("new_password")
-        new_password_again = data.get("new_password_again")
+        new_password = data.get('new_password')
+        new_password_again = data.get('new_password_again')
 
         # Validate the users current password
         if not user.check_password(current_password):
             return Response(
-                {"error": "Current password is incorrect"},
+                {'error': 'Current password is incorrect'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         # If the new passwords does not contain anything
         if not new_password:
             return Response(
-                {"error": "New passwords cannot be blank"},
+                {'error': 'New passwords cannot be blank'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         # If new passwords do not match
         if new_password != new_password_again:
             return Response(
-                {"error": "New passwords do not match"},
+                {'error': 'New passwords do not match'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -176,7 +177,7 @@ class CurrentUserViewSet(ViewSet):
         user.set_password(new_password)
         user.save()
         return Response(
-            {"status": "Password changed successfully"}, status=status.HTTP_200_OK
+            {'status': 'Password changed successfully'}, status=status.HTTP_200_OK
         )
 
 # ViewSet for User model
@@ -195,6 +196,31 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 class DeviceViewSet(viewsets.ModelViewSet):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
+
+    def create(self, request):
+        # Get the current user
+        user = request.user
+        # Get the data from the request
+        data = request.data
+        
+        # Get the devices name
+        name = data.get('device')
+        # Get the device type
+        device_type = data.get('device_type')
+        
+        # Check if either fields are blank
+        if not name or not device_type:
+            return Response(
+                {'error': 'Neither fields can be blank'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Update the device model with the data
+        device = Device.objects.create(user=user, name=name, device_type=device_type)
+
+        # Serialize the newly created device and return it
+        serializer = self.get_serializer(device)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 # ViewSet for ConsumptionRecord model
