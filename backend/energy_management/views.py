@@ -158,14 +158,21 @@ class CurrentUserViewSet(ViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # If the new passwords do not match return an error response 
+        # If the new passwords does not contain anything
+        if not new_password:
+            return Response(
+                {"error": "New passwords cannot be blank"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # If new passwords do not match
         if new_password != new_password_again:
             return Response(
                 {"error": "New passwords do not match"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # If they do set the new password and save the user
+        # If the password is valid and they do match set the new password and save the user
         user.set_password(new_password)
         user.save()
         return Response(
