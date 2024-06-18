@@ -83,6 +83,7 @@ const DeviceManager = () => {
                             ref={DeviceInputRef}
                             value={device}
                             onChange={(e) => setDevice(e.target.value)}
+                            maxLength={30} // Set the maxLength to 30 characters
                         />
                     </div>
                     <div className="mb-6">
