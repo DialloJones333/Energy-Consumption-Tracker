@@ -36,6 +36,29 @@ class Device(models.Model):
     hours_used_per_day = models.FloatField(default=0.0)
 
 
+    # Consumption rates (in kWh) for each device type
+    CONSUMPTION_RATES = {
+        'LED Bulbs': 0.01,
+        'Incandescent Bulbs': 0.06,
+        'CFL Bulbs': 0.015,
+        'Smart Bulbs': 0.01,
+        'Smart Plugs': 0.05,
+        'Smart Thermostats': 0.1,
+        'Fans': 0.05,
+        'Televisions': 0.1,
+        'Gaming Consoles': 0.2,
+        'Desktop Computers': 0.3,
+        'Laptops': 0.1
+    }
+
+
+# Calculate the daily consumption of a device based on its type and the number of hours used per day.
+    @property
+    def daily_consumption(self):
+        rate = self.CONSUMPTION_RATES.get(self.device_type, 0)
+        return rate * self.hours_used_per_day
+
+
 class ConsumptionRecord(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
     date = models.DateField()

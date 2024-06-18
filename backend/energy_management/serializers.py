@@ -89,6 +89,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 # Serializer for Device model
 class DeviceSerializer(serializers.ModelSerializer):
+    daily_consumption = serializers.FloatField(read_only=True)
     class Meta:
         model = Device
         fields = '__all__'
