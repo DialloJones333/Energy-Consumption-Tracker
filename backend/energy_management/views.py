@@ -8,6 +8,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework.viewsets import ViewSet
+from .tasks import generate_consumption_records
 from .serializers import RegisterSerializer, CurrentUserSerializer
 
 # Setting up a logger for debugging purposes
@@ -250,6 +251,20 @@ class DeviceViewSet(viewsets.ModelViewSet):
             device_type=device_type,
             hours_used_per_day=hours_used_per_day
         )
+        
+        # Calculate initial consumption record synchronously
+        now = timezone.now()
+        daily_consumption = device.daily_consumption
+        ConsumptionRecord.objects.create(
+            device=device,
+            date=now.date(),
+            timestamp=now,
+            consumption=daily_consumption / 12,  # Adjust as needed for your consumption rate
+            unit='kWh'
+        )
+
+        # Trigger Celery task for future updates
+        generate_consumption_records.delay()
 
         # Serialize the newly created device and return it
         serializer = self.get_serializer(device)
