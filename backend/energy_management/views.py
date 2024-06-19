@@ -1,5 +1,7 @@
 import logging
 from rest_framework import status
+from django.utils import timezone
+from django.db.models import Sum
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -256,8 +258,34 @@ class DeviceViewSet(viewsets.ModelViewSet):
 
 # ViewSet for ConsumptionRecord model
 class ConsumptionRecordViewSet(viewsets.ModelViewSet):
-    queryset = ConsumptionRecord.objects.all()
+    permission_classes=[IsAuthenticated]
     serializer_class = ConsumptionRecordSerializer
+    
+    # Custom queryset function to filter devices by current user
+    def get_queryset(self):
+        return ConsumptionRecord.objects.filter(device__user=self.request.user)
+    
+    
+    @action(detail=False, methods=['get'])
+    def total_consumption(self, request):
+        now = timezone.now()
+        start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_of_day = now.replace(hour=23, minute=59, second=59, microsecond=999999)
+
+        consumption_records = ConsumptionRecord.objects.filter(
+            device__user=request.user,
+            timestamp__range=(start_of_day, end_of_day)
+        ).values('timestamp__hour').annotate(total_consumption=Sum('consumption'))
+
+        data = [
+            {
+                'hour': record['timestamp__hour'],
+                'total_consumption': record['total_consumption']
+            }
+            for record in consumption_records
+        ]
+
+        return Response(data)
 
 
 # ViewSet for Tip model

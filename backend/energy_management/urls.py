@@ -11,7 +11,7 @@ router.register(r'current-user', CurrentUserViewSet, basename='current-user')
 router.register(r'update-user', CurrentUserViewSet, basename='update-user')
 router.register(r'update-password', CurrentUserViewSet, basename='update-password')
 router.register(r'devices', DeviceViewSet, basename='devices')
-router.register(r'consumption-records', ConsumptionRecordViewSet)
+router.register(r'consumption-records', ConsumptionRecordViewSet, basename='consumption-records')
 router.register(r'tips', TipViewSet)
 router.register(r'notifications', NotificationViewSet)
 

@@ -73,6 +73,7 @@ class LogoutSerializer(serializers.Serializer):
 
 # Serializer for User model
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'username', 'email']
@@ -92,14 +93,15 @@ class DeviceSerializer(serializers.ModelSerializer):
     daily_consumption = serializers.FloatField(read_only=True)
     class Meta:
         model = Device
-        fields = '__all__'
+        fields = ['id', 'user', 'brand', 'device_type', 'hours_used_per_day', 'daily_consumption']
 
 
 # Serializer for ConsumptionRecord model
 class ConsumptionRecordSerializer(serializers.ModelSerializer):
+    device = DeviceSerializer()
     class Meta:
         model = ConsumptionRecord
-        fields = '__all__'
+        fields = ['device', 'date', 'timestamp', 'consumption', 'unit']
 
 
 # Serializer for Tip model
