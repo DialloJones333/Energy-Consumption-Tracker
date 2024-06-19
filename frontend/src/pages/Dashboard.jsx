@@ -12,7 +12,7 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen p-5 font-serif">
+        <div className="flex flex-col min-h-screen p-5 font-serif">
             <Navbar />
             <main className="flex flex-row gap-10 mt-10">
                 <div className="flex flex-col ms-4 gap-10">
