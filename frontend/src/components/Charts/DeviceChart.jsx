@@ -44,6 +44,7 @@ const DeviceChart = ({ token }) => {
         return consumptionRates[deviceType] * hoursUsed;
     };
 
+
     const renderActiveShape = (props) => {
         const RADIAN = Math.PI / 180;
         const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;

@@ -194,8 +194,15 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
 # ViewSet for Device model
 class DeviceViewSet(viewsets.ModelViewSet):
-    queryset = Device.objects.all()
     serializer_class = DeviceSerializer
+    permission_classes = [IsAuthenticated]
+    
+    # Custom queryset function to filter devices by current user
+    def get_queryset(self):
+        return Device.objects.filter(user=self.request.user)
+
+
+
 
     def create(self, request):
         # Get the current user
