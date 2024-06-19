@@ -16,7 +16,8 @@ const DeviceChart = ({ token }) => {
                     }
                 });
                 setData(response.data.map(device => ({
-                    name: device.name,
+                    brand: device.brand,
+                    deviceType: device.device_type,
                     value: calculateConsumption(device.device_type, device.hours_used_per_day)
                 })));
             } catch (error) {
@@ -45,6 +46,23 @@ const DeviceChart = ({ token }) => {
     };
 
 
+    const getDeviceTypeAbbreviation = (deviceType) => {
+        const abbreviations = {
+            'LED Bulbs': 'LED',
+            'Incandescent Bulbs': 'Inc',
+            'CFL Bulbs': 'CFL',
+            'Smart Bulbs': 'SB',
+            'Smart Plugs': 'SP',
+            'Smart Thermostats': 'ST',
+            'Fans': 'Fan',
+            'Televisions': 'TV',
+            'Gaming Consoles': 'GC',
+            'Desktop Computers': 'PC',
+            'Laptops': 'Lap'
+        };
+        return abbreviations[deviceType] || deviceType;
+    };
+
     const renderActiveShape = (props) => {
         const RADIAN = Math.PI / 180;
         const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
@@ -61,7 +79,10 @@ const DeviceChart = ({ token }) => {
         return (
             <g>
                 <text x={ex} y={ey} textAnchor={textAnchor} fill="#1e293b" style={{ fontSize: '14px', fontWeight: 'bold' }}>
-                    {payload.name}
+                    {payload.brand}
+                </text>
+                <text x={ex} y={ey + 15} textAnchor={textAnchor} fill="#1e293b" style={{ fontSize: '12px' }}>
+                    {getDeviceTypeAbbreviation(payload.deviceType)}
                 </text>
                 <Sector
                     cx={cx}
@@ -126,7 +147,8 @@ DeviceChart.propTypes = {
     endAngle: PropTypes.number.isRequired,
     fill: PropTypes.string.isRequired,
     payload: PropTypes.shape({
-        name: PropTypes.string.isRequired
+        brand: PropTypes.string.isRequired,
+        deviceType: PropTypes.string.isRequired
     }).isRequired,
     percent: PropTypes.number.isRequired,
     value: PropTypes.number.isRequired,

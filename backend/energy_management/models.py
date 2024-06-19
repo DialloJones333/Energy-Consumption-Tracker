@@ -31,7 +31,7 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
 
 class Device(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=30)
+    brand = models.CharField(max_length=30)
     device_type = models.CharField(max_length=50)
     hours_used_per_day = models.FloatField(default=0.0)
 

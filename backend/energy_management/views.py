@@ -210,8 +210,8 @@ class DeviceViewSet(viewsets.ModelViewSet):
         # Get the data from the request
         data = request.data
         
-        # Get the devices name
-        name = data.get('device')
+        # Get the devices brand
+        brand = data.get('device_brand')
         # Get the device type
         device_type = data.get('device_type')
         
@@ -219,7 +219,7 @@ class DeviceViewSet(viewsets.ModelViewSet):
         hours_used_per_day = data.get('hours_used')
         
         # Check if either fields are blank
-        if not name or not device_type or not hours_used_per_day:
+        if not brand or not device_type or not hours_used_per_day:
             return Response(
                 {'error': 'Neither fields can be blank'},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -244,7 +244,7 @@ class DeviceViewSet(viewsets.ModelViewSet):
         # Update the device model with the data
         device = Device.objects.create(
             user=user, 
-            name=name, 
+            brand=brand, 
             device_type=device_type,
             hours_used_per_day=hours_used_per_day
         )
