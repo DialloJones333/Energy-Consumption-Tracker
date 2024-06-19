@@ -18,7 +18,7 @@ const DeviceChart = ({ token }) => {
                 setData(response.data.map(device => ({
                     brand: device.brand,
                     deviceType: device.device_type,
-                    value: calculateConsumption(device.device_type, device.hours_used_per_day)
+                    kWh: calculateConsumption(device.device_type, device.hours_used_per_day)
                 })));
             } catch (error) {
                 console.error('Failed to fetch devices:', error);
@@ -65,7 +65,7 @@ const DeviceChart = ({ token }) => {
 
     const renderActiveShape = (props) => {
         const RADIAN = Math.PI / 180;
-        const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
+        const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, kWh } = props;
         const sin = Math.sin(-RADIAN * midAngle);
         const cos = Math.cos(-RADIAN * midAngle);
         const sx = cx + (outerRadius + 10) * cos;
@@ -81,7 +81,7 @@ const DeviceChart = ({ token }) => {
                 <text x={ex} y={ey} textAnchor={textAnchor} fill="#1e293b" style={{ fontSize: '14px', fontWeight: 'bold' }}>
                     {payload.brand}
                 </text>
-                <text x={ex} y={ey + 15} textAnchor={textAnchor} fill="#1e293b" style={{ fontSize: '12px' }}>
+                <text x={ex} y={ey + 15} textAnchor={textAnchor} fill="#1e293b" style={{ fontSize: '12px', fontWeight: 'bold' }}>
                     {getDeviceTypeAbbreviation(payload.deviceType)}
                 </text>
                 <Sector
@@ -104,7 +104,7 @@ const DeviceChart = ({ token }) => {
                 />
                 <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
                 <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-                <text x={cx} y={cy} dy={-10} textAnchor="middle" fill={fill} style={{ fontSize: '14px' }}>{`Value ${value.toFixed(2)}`}</text>
+                <text x={cx} y={cy} dy={-10} textAnchor="middle" fill={fill} style={{ fontSize: '14px' }}>{`kWh: ${kWh.toFixed(2)}`}</text>
                 <text x={cx} y={cy} dy={10} textAnchor="middle" fill={fill} style={{ fontSize: '14px' }}>
                     {`Rate ${(percent * 100).toFixed(2)}%`}
                 </text>
@@ -128,7 +128,7 @@ const DeviceChart = ({ token }) => {
                     innerRadius={50}
                     outerRadius={70}
                     fill="#10B981"
-                    dataKey="value"
+                    dataKey="kWh"
                     onMouseEnter={onPieEnter}
                 />
             </PieChart>
@@ -151,7 +151,7 @@ DeviceChart.propTypes = {
         deviceType: PropTypes.string.isRequired
     }).isRequired,
     percent: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
+    kWh: PropTypes.number.isRequired,
 };
 
 export default DeviceChart;
