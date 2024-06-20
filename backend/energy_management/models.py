@@ -7,12 +7,14 @@ from django.conf import settings
 from rest_framework.authtoken.models import Token
 
 
+# Create an authentication token for each user
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
 
 
+# Model that extends Django's User model to store users phone numbers
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
@@ -22,6 +24,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+# Create a users profile whenever a new user is created or update whenever updated
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -29,12 +32,12 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     instance.userprofile.save()
 
 
+# Device model to store information about a users device
 class Device(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     brand = models.CharField(max_length=30)
     device_type = models.CharField(max_length=50)
     hours_used_per_day = models.FloatField(default=0.0)
-
 
     # Consumption rates (in kWh) for each device type
     CONSUMPTION_RATES = {
@@ -51,14 +54,14 @@ class Device(models.Model):
         'Laptops': 0.1
     }
 
-
-# Calculate the daily consumption of a device based on its type and the number of hours used per day.
+    # Calculate the daily consumption of a device based on its type and the number of hours used per day.
     @property
     def daily_consumption(self):
         rate = self.CONSUMPTION_RATES.get(self.device_type, 0)
         return rate * self.hours_used_per_day
 
 
+# Model to store consumption records of users devices
 class ConsumptionRecord(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
     date = models.DateField()
@@ -67,12 +70,14 @@ class ConsumptionRecord(models.Model):
     unit = models.CharField(max_length=10, default='kWh')
 
 
+# Model the store tips and tricks to show for the user
 class Tip(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     # Potential: add fields to categorize tips or link to specific devices
 
 
+# Model to store notification for the user
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField()

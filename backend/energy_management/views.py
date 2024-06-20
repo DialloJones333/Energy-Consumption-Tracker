@@ -23,7 +23,7 @@ class RegisterView(APIView):
         # Check if the request contains valid data
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
-            # Save the user and return a response
+            # Save the user and users token and return a response
             user = serializer.save()
             token, _ = Token.objects.get_or_create(user=user)
             response = Response(
@@ -119,6 +119,7 @@ class CurrentUserViewSet(ViewSet):
         serializer = CurrentUserSerializer(user)
         return Response(serializer.data)
 
+
     # PUT method for updating the users data
     def put(self, request):
         # Get the current user
@@ -141,6 +142,7 @@ class CurrentUserViewSet(ViewSet):
         # Serialize the updated user data and return a response
         serializer = CurrentUserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
 
     # POST method for changing users passwords
     def post(self, request):
@@ -183,6 +185,7 @@ class CurrentUserViewSet(ViewSet):
             {'status': 'Password changed successfully'}, status=status.HTTP_200_OK
         )
 
+
 # ViewSet for User model
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -204,9 +207,7 @@ class DeviceViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Device.objects.filter(user=self.request.user)
 
-
-
-
+    # POST method for add a new device
     def create(self, request):
         # Get the current user
         user = request.user
@@ -280,22 +281,31 @@ class ConsumptionRecordViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return ConsumptionRecord.objects.filter(device__user=self.request.user)
 
+    # GET method for returning the total consumption of a device
     @action(detail=False, methods=['get'])
     def total_consumption(self, request):
+        # Get the current time
         now = timezone.now()
+        # Set the start of the day to now and the end of the day to 24 hours from now
         start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
         end_of_day = now.replace(hour=23, minute=59, second=59, microsecond=999999)
 
-        # Fetch consumption records for the current user within the specified time range
-        consumption_records = ConsumptionRecord.objects.filter(
-            device__user=request.user,
-            timestamp__range=(start_of_day, end_of_day)
-        ).values('timestamp__hour').annotate(total_consumption=Sum('consumption'))
+        # Fetch consumption records for the current user within the last day
+        consumption_records = (
+            ConsumptionRecord.objects.filter(
+                device__user=request.user,
+                timestamp__range=(start_of_day, end_of_day),
+            ) # Get the sum of the consumption values for each hour within the last 24 hours.
+            .values("timestamp__hour")
+            .annotate(total_consumption=Sum("consumption"))
+        )
 
+        # Log the outputs to determine all is working as expected
         logger.debug(f"Start of day: {start_of_day}")
         logger.debug(f"End of day: {end_of_day}")
         logger.debug(f"Consumption records: {consumption_records}")
 
+        # Return the hour and total consumption from the users consumption records
         data = [
             {
                 'hour': record['timestamp__hour'],
@@ -304,6 +314,7 @@ class ConsumptionRecordViewSet(viewsets.ModelViewSet):
             for record in consumption_records
         ]
 
+        # Return the data as a response
         return Response(data)
 
 
