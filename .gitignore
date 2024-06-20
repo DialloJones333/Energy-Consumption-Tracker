@@ -84,5 +84,5 @@ __pycache__/
 db.sqlite3
 
 # Ignore database files
-.db
+*.db
 .rdb
