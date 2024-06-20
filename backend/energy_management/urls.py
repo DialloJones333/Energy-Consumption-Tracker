@@ -23,4 +23,5 @@ urlpatterns = [
     path("api/login/", LoginView.as_view(), name="login"),  # Login endpoint
     path("api/verify-token/", VerifyTokenView.as_view(), name="verify_token"), # Verify token endpoint
     path("api/logout/", LogoutView.as_view(), name="logout"),  # Logout endpoint
+    path("api/consumption-records/total_consumption/", ConsumptionRecordViewSet.as_view({'get': 'total_consumption'}), name="total_consumption"),
 ]

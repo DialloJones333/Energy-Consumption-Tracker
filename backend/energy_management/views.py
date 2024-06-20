@@ -273,24 +273,28 @@ class DeviceViewSet(viewsets.ModelViewSet):
 
 # ViewSet for ConsumptionRecord model
 class ConsumptionRecordViewSet(viewsets.ModelViewSet):
-    permission_classes=[IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = ConsumptionRecordSerializer
-    
-    # Custom queryset function to filter devices by current user
+
+    # Custom queryset function to filter records by current user
     def get_queryset(self):
         return ConsumptionRecord.objects.filter(device__user=self.request.user)
-    
-    
+
     @action(detail=False, methods=['get'])
     def total_consumption(self, request):
         now = timezone.now()
         start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
         end_of_day = now.replace(hour=23, minute=59, second=59, microsecond=999999)
 
+        # Fetch consumption records for the current user within the specified time range
         consumption_records = ConsumptionRecord.objects.filter(
             device__user=request.user,
             timestamp__range=(start_of_day, end_of_day)
         ).values('timestamp__hour').annotate(total_consumption=Sum('consumption'))
+
+        logger.debug(f"Start of day: {start_of_day}")
+        logger.debug(f"End of day: {end_of_day}")
+        logger.debug(f"Consumption records: {consumption_records}")
 
         data = [
             {
