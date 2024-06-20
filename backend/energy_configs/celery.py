@@ -8,17 +8,19 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'energy_configs.settings.develop
 
 app = Celery('energy_configs')
 
-# Using a string here means the worker doesn't have to serialize
+# Using a string means the worker doesn't have to serialize
 # the configuration object to child processes.
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
 
+# Print the details of the task request
 @app.task(bind=True)
 def debug_task(self):
     print(f'Request: {self.request!r}')
 
+# Dictionary that defines the schedule for generating consumption records
 app.conf.beat_schedule = {
     'generate-consumption-records-every-2-hours': {
         'task': 'energy_management.tasks.generate_consumption_records',
