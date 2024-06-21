@@ -40,6 +40,7 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# View for handling user login
 class LoginView(APIView):
     permission_classes = (AllowAny,)
 
@@ -68,6 +69,7 @@ class LoginView(APIView):
         )
 
 
+# View for verifying a users token
 class VerifyTokenView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -87,6 +89,7 @@ class VerifyTokenView(APIView):
         )
 
 
+# View for handling user logout
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -100,11 +103,11 @@ class LogoutView(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-# ViewSets for other models in my project
+# ViewSets for models in my project
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from django.contrib.auth.models import User
-from .models import UserProfile, Device, ConsumptionRecord, Tip, Notification
+from .models import UserProfile, Device, ConsumptionRecord, MonthlyConsumption, Tip, Notification
 from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, TipSerializer, NotificationSerializer
 
 # ViewSet for Current User
@@ -316,6 +319,33 @@ class ConsumptionRecordViewSet(viewsets.ModelViewSet):
 
         # Return the data as a response
         return Response(data)
+
+
+# API view my MonthlyConsumption model
+class YearlyConsumptionView(APIView):
+    def get(self, request):
+        # Get the current year
+        year = request.query_param.get('year', timezone.now().year)
+        # Get and aggregate the data from the MonthlyConsumption model
+        data = (
+            MonthlyConsumption.objects.filter(year=year, device__user=request.user)
+            .values("month")
+            .annotate(total_consumption=Sum("total_consumption"))
+        )
+
+        # Get each record of the month and total consumption from the response data
+        response_data = [
+            [
+                {
+                    "month": record.get("month"),
+                    "total_consumption": record.get("total_consumption"),
+                }
+                for record in data
+            ]
+        ]
+
+        # Return the response data
+        return Response(response_data)
 
 
 # ViewSet for Tip model
