@@ -301,9 +301,10 @@ class ConsumptionRecordViewSet(viewsets.ModelViewSet):
             ConsumptionRecord.objects.filter(
                 device__user=request.user,
                 timestamp__range=(start_of_day, end_of_day),
-            ) # Get the sum of the consumption values for each hour within the last 24 hours.
+            )  # Get the sum of the consumption values for each hour within the last 24 hours.
             .values("timestamp__hour")
             .annotate(total_consumption=Sum("consumption"))
+            .order_by("timestamp__hour")  # Sort by hour
         )
 
         # Log the outputs to determine all is working as expected
