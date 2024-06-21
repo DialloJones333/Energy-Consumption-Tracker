@@ -8,7 +8,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework.viewsets import ViewSet
-from .tasks import generate_consumption_records
+from .tasks import generate_consumption_records, generate_monthly_consumption
 from .serializers import RegisterSerializer, CurrentUserSerializer
 
 # Setting up a logger for debugging purposes
@@ -267,8 +267,11 @@ class DeviceViewSet(viewsets.ModelViewSet):
             unit='kWh'
         )
 
-        # Trigger Celery task for future updates
+        # Trigger Celery task for daily consumption updates
         generate_consumption_records.delay()
+        
+        # Trigger Celery task for monthly consumption updates
+        generate_monthly_consumption.delay()
 
         # Serialize the newly created device and return it
         serializer = self.get_serializer(device)
@@ -325,7 +328,7 @@ class ConsumptionRecordViewSet(viewsets.ModelViewSet):
 class YearlyConsumptionView(APIView):
     def get(self, request):
         # Get the current year
-        year = request.query_param.get('year', timezone.now().year)
+        year = request.query_params.get('year', timezone.now().year)
         # Get and aggregate the data from the MonthlyConsumption model
         data = (
             MonthlyConsumption.objects.filter(year=year, device__user=request.user)
@@ -335,13 +338,11 @@ class YearlyConsumptionView(APIView):
 
         # Get each record of the month and total consumption from the response data
         response_data = [
-            [
-                {
-                    "month": record.get("month"),
-                    "total_consumption": record.get("total_consumption"),
-                }
-                for record in data
-            ]
+            {
+                "month": record.get("month"),
+                "total_consumption": record.get("total_consumption"),
+            }
+            for record in data
         ]
 
         # Return the response data

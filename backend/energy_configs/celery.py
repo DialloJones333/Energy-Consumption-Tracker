@@ -15,15 +15,21 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
 
+
 # Print the details of the task request
 @app.task(bind=True)
 def debug_task(self):
-    print(f'Request: {self.request!r}')
+    print(f"Request: {self.request!r}")
+
 
 # Dictionary that defines the schedule for generating consumption records
 app.conf.beat_schedule = {
-    'generate-consumption-records-every-2-hours': {
-        'task': 'energy_management.tasks.generate_consumption_records',
-        'schedule': crontab(minute=0, hour='*/2'),  # every 2 hours
+    "generate-consumption-records-every-2-hours": {
+        "task": "energy_management.tasks.generate_consumption_records",
+        "schedule": crontab(minute=0, hour="*/2"),  # Every 2 hours
+    },
+    "generate-consumption-records-every-month": {
+        "task": "energy_management.tasks.generate_monthly_consumption",
+        "schedule": crontab(day_of_month="1", hour=0, minute=0),  # Every month
     },
 }
