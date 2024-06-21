@@ -70,6 +70,18 @@ class ConsumptionRecord(models.Model):
     unit = models.CharField(max_length=10, default='kWh')
 
 
+# Model to store monthly consumption records of users devices
+class MonthlyConsumption(models.Model):
+    device = models.ForeignKey(Device, on_delete=models.CASCADE)
+    year = models.IntegerField()
+    month = models.IntegerField()
+    total_consumption = models.FloatField()
+    unit = models.CharField(max_length=10, default='kWh')
+
+    class Meta:
+        unique_together = ('device', 'year', 'month')
+
+
 # Model the store tips and tricks to show for the user
 class Tip(models.Model):
     content = models.TextField()
