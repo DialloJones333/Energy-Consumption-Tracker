@@ -357,8 +357,24 @@ class TipViewSet(viewsets.ModelViewSet):
 
 
 # ViewSet for Notification model
-class NotificationViewSet(viewsets.ModelViewSet):
-    # Query all the objects in the Notification model
-    queryset = Notification.objects.all()
-    # Serialize the data
-    serializer_class = NotificationSerializer
+class NotificationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            notification = Notification.objects.get(user=request.user)
+        except Notification.DoesNotExist:
+            notification = Notification.objects.create(user=request.user)
+        serializer = NotificationSerializer(notification)
+        return Response(serializer.data)
+
+    def put(self, request):
+        try:
+            notification = Notification.objects.get(user=request.user)
+        except Notification.DoesNotExist:
+            return Response({"error": "Notification settings not found."}, status=status.HTTP_404_NOT_FOUND)
+        serializer = NotificationSerializer(notification, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

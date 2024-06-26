@@ -123,7 +123,7 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = [
-            'user', 'message', 'created_at', 'read',
-            'allow_text_notifications', 'allow_email_notifications',
+            'id', 'user', 'allow_text_notifications', 
+            'allow_email_notifications',
             'disable_all_notifications'
         ]
