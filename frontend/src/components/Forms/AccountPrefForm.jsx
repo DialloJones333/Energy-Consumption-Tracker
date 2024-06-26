@@ -13,11 +13,26 @@ const AccountPrefForm = ({ textNoti, emailNoti, disableAll, handleApplyChanges }
     }, [textNoti, emailNoti, disableAll]);
 
     const handleToggle = (field, value) => {
-        const updatedPreferences = {
-            allow_text_notifications: field === 'textNoti' ? value : localTextNoti,
-            allow_email_notifications: field === 'emailNoti' ? value : localEmailNoti,
-            disable_all_notifications: field === 'disableAll' ? value : localDisableAll,
-        };
+        let updatedPreferences;
+        if (field === 'disableAll') {
+            updatedPreferences = {
+                allow_text_notifications: false,
+                allow_email_notifications: false,
+                disable_all_notifications: value,
+            };
+            setLocalTextNoti(false);
+            setLocalEmailNoti(false);
+            setLocalDisableAll(value);
+        } else {
+            updatedPreferences = {
+                allow_text_notifications: field === 'textNoti' ? value : localTextNoti,
+                allow_email_notifications: field === 'emailNoti' ? value : localEmailNoti,
+                disable_all_notifications: false,
+            };
+            setLocalDisableAll(false);
+            if (field === 'textNoti') setLocalTextNoti(value);
+            if (field === 'emailNoti') setLocalEmailNoti(value);
+        }
         handleApplyChanges(updatedPreferences);
     };
 
