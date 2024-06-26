@@ -122,4 +122,8 @@ class TipSerializer(serializers.ModelSerializer):
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
-        fields = '__all__'
+        fields = [
+            'user', 'message', 'created_at', 'read',
+            'allow_text_notifications', 'allow_email_notifications',
+            'disable_all_notifications'
+        ]
