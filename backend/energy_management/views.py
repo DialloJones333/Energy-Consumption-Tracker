@@ -358,5 +358,7 @@ class TipViewSet(viewsets.ModelViewSet):
 
 # ViewSet for Notification model
 class NotificationViewSet(viewsets.ModelViewSet):
+    # Query all the objects in the Notification model
     queryset = Notification.objects.all()
+    # Serialize the data
     serializer_class = NotificationSerializer

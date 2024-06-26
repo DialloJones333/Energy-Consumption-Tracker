@@ -13,7 +13,7 @@ router.register(r'update-password', CurrentUserViewSet, basename='update-passwor
 router.register(r'devices', DeviceViewSet, basename='devices')
 router.register(r'consumption-records', ConsumptionRecordViewSet, basename='consumption-records')
 router.register(r'tips', TipViewSet)
-router.register(r'notifications', NotificationViewSet)
+router.register(r'notifications', NotificationViewSet, basename='notifications')
 
 
 # URL patterns for the energy management app

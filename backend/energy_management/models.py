@@ -92,16 +92,14 @@ class Tip(models.Model):
 # Model to store notifications and notification preferences for the user
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.TextField()
+    message = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     read = models.BooleanField(default=False)
 
-    # Notification preferences
     allow_text_notifications = models.BooleanField(default=True)
     allow_email_notifications = models.BooleanField(default=True)
     disable_all_notifications = models.BooleanField(default=False)
 
-    # If the user selects disable all notifications disable the text and email fields
     def save(self, *args, **kwargs):
         if self.disable_all_notifications:
             self.allow_text_notifications = False

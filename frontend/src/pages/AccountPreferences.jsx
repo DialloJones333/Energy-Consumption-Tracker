@@ -4,11 +4,39 @@ import TabBar from "../components/TabBar";
 import AccountPrefDisplay from "../components/AccountPrefDisplay";
 import AccountPrefForm from "../components/Forms/AccountPrefForm";
 import Footer from "../components/Footer";
+import api, { getUserData } from '../../services/api';
 
 const AccountPreferences = () => {
     const [textNoti, setTextNoti] = useState(true);
     const [emailNoti, setEmailNoti] = useState(true);
     const [disableAll, setDisableAll] = useState(false);
+    const [userId, setUserId] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchUserAndPreferences = async () => {
+            try {
+                const userData = await getUserData();
+                setUserId(userData.id);
+
+                const response = await api.get(`/notifications/${userData.id}/`, {
+                    headers: {
+                        'Authorization': `Token ${localStorage.getItem('token')}`
+                    }
+                });
+                const data = response.data;
+                setTextNoti(data.allow_text_notifications);
+                setEmailNoti(data.allow_email_notifications);
+                setDisableAll(data.disable_all_notifications);
+                setLoading(false);
+            } catch (error) {
+                console.error("There was an error fetching the user data or preferences!", error);
+                setLoading(false);
+            }
+        };
+
+        fetchUserAndPreferences();
+    }, []);
 
     useEffect(() => {
         if (disableAll) {
@@ -22,6 +50,10 @@ const AccountPreferences = () => {
             setDisableAll(false);
         }
     }, [textNoti, emailNoti]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="min-h-screen flex flex-col p-5">
@@ -55,6 +87,7 @@ const AccountPreferences = () => {
                             setEmailNoti={setEmailNoti}
                             disableAll={disableAll}
                             setDisableAll={setDisableAll}
+                            userId={userId}
                         />
                     </div>
                 </div>
