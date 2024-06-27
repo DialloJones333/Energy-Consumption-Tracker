@@ -10,6 +10,8 @@ export const AuthProvider = ({ children }) => {
     // State to hold the user data
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    // State to hold the notification preferences
+    const [notificationPreferences, setNotificationPreferences] = useState(null);
 
     // Check if the user is authenticated when the application starts
     useEffect(() => {
@@ -20,11 +22,18 @@ export const AuthProvider = ({ children }) => {
                     'Authorization': `Token ${token}`
                 }
             })
-            // If the token is valid, get the user data
+            // If the token is valid, get the user data and notification preferences
             .then(async () => {
                 const userData = await getUserData();
                 setIsAuthenticated(true);
                 setUser(userData);
+
+                const notificationResponse = await api.get('/notifications/', {
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                });
+                setNotificationPreferences(notificationResponse.data);
             })
             // If the token is invalid, remove it from the local storage
             .catch(() => {
@@ -49,6 +58,13 @@ export const AuthProvider = ({ children }) => {
             const userData = await getUserData();
             setIsAuthenticated(true);
             setUser(userData);
+
+            const notificationResponse = await api.get('/notifications/', {
+                headers: {
+                    'Authorization': `Token ${token}`
+                }
+            });
+            setNotificationPreferences(notificationResponse.data);
         // If the login fails, set the authentication state to false
         } catch (error) {
             console.error('Login failed', error);
@@ -80,7 +96,9 @@ export const AuthProvider = ({ children }) => {
         setUser,
         login,
         logout,
-    }), [isAuthenticated, user]);
+        notificationPreferences,
+        setNotificationPreferences
+    }), [isAuthenticated, user, notificationPreferences]);
 
     return (
         <AuthContext.Provider value={value}>
