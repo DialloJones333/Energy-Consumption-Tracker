@@ -7,26 +7,28 @@ import Footer from "../components/Footer";
 import AuthContext from '../../services/AuthContext';
 import api from '../../services/api'
 
+// Component to render the Account Preferences page
 const AccountPreferences = () => {
+    // Access the users Notification Preferences
     const { notificationPreferences, setNotificationPreferences } = useContext(AuthContext);
 
     // Function to handle applying changes to notification preferences
     const handleApplyChanges = async (updatedPreferences) => {
         try {
+            // Send a PUT request to the notifications endpoint with the updated preferences
             const response = await api.put('/notifications/', updatedPreferences, {
+                // Include the users Authorization Token in the headers
                 headers: {
                     'Authorization': `Token ${localStorage.getItem('token')}`
                 }
             });
+            // Set the users notification preferences with the response data
             setNotificationPreferences(response.data);
+        // If there is an error, log it
         } catch (error) {
             console.error("There was an error updating the user preferences!", error);
         }
     };
-
-    if (!notificationPreferences) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <div className="min-h-screen flex flex-col p-5">
