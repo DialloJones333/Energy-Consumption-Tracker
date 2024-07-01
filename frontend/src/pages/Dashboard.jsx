@@ -57,7 +57,7 @@ const Dashboard = () => {
                         <YearlyChart />
                     </div>
                     <div className="badge badge-lg bg-stone-300 text-black shadow-md mb-10">
-                        Yearly Energy Usage (KWH)
+                        Monthly Energy Usage (KWH)
                     </div>
                 </div>
             </main>
