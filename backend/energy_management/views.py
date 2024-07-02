@@ -104,10 +104,17 @@ class LogoutView(APIView):
 
 
 # ViewSets for models in my project
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.decorators import action
 from django.contrib.auth.models import User
-from .models import UserProfile, Device, ConsumptionRecord, MonthlyConsumption, Notification
+from .models import (
+    UserProfile,
+    Device,
+    ConsumptionRecord,
+    MonthlyConsumption,
+    Notification,
+    NotificationPreferences,
+)
 from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, NotificationPreferencesSerializer, NotificationMessageSerializer
 
 # ViewSet for Current User
@@ -356,18 +363,29 @@ class NotificationPreferencesView(APIView):
 
     def get(self, request):
         try:
-            notification = Notification.objects.get(user=request.user)
-        except Notification.DoesNotExist:
-            notification = Notification.objects.create(user=request.user)
-        serializer = NotificationPreferencesSerializer(notification)
+            notification_preferences = NotificationPreferences.objects.get(
+                user=request.user
+            )
+        except NotificationPreferences.DoesNotExist:
+            notification_preferences = NotificationPreferences.objects.create(
+                user=request.user
+            )
+        serializer = NotificationPreferencesSerializer(notification_preferences)
         return Response(serializer.data)
 
     def put(self, request):
         try:
-            notification = Notification.objects.get(user=request.user)
-        except Notification.DoesNotExist:
-            return Response({"error": "Notification settings not found."}, status=status.HTTP_404_NOT_FOUND)
-        serializer = NotificationPreferencesSerializer(notification, data=request.data, partial=True)
+            notification_preferences = NotificationPreferences.objects.get(
+                user=request.user
+            )
+        except NotificationPreferences.DoesNotExist:
+            return Response(
+                {"error": "Notification preferences not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        serializer = NotificationPreferencesSerializer(
+            notification_preferences, data=request.data, partial=True
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -377,10 +395,21 @@ class NotificationPreferencesView(APIView):
 class NotificationView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        notifications = Notification.objects.filter(user=request.user)
-        serializer = NotificationMessageSerializer(notifications, many=True)
-        return Response(serializer.data)
+    def get(self, request, pk=None):
+        if pk:
+            try:
+                notification = Notification.objects.get(id=pk, user=request.user)
+                serializer = NotificationMessageSerializer(notification)
+                return Response(serializer.data)
+            except Notification.DoesNotExist:
+                return Response(
+                    {"error": "Notification not found."},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+        else:
+            notifications = Notification.objects.filter(user=request.user)
+            serializer = NotificationMessageSerializer(notifications, many=True)
+            return Response(serializer.data)
 
     def put(self, request, pk=None):
         try:
@@ -390,4 +419,6 @@ class NotificationView(APIView):
             serializer = NotificationMessageSerializer(notification)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Notification.DoesNotExist:
-            return Response({"error": "Notification not found."}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"error": "Notification not found."}, status=status.HTTP_404_NOT_FOUND
+            )

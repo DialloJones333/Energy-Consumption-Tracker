@@ -2,7 +2,7 @@ from importlib.metadata import requires
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
-from .models import UserProfile, Device, ConsumptionRecord, MonthlyConsumption, Notification
+from .models import NotificationPreferences, UserProfile, Device, ConsumptionRecord, MonthlyConsumption, Notification, NotificationPreferences
 
 # Serializer for handling user registration
 class RegisterSerializer(serializers.ModelSerializer):
@@ -114,7 +114,7 @@ class MonthlyConsumptionSerializer(serializers.ModelSerializer):
 # Serializers for Notification model
 class NotificationPreferencesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Notification
+        model = NotificationPreferences
         fields = [
             'id', 'user', 'allow_text_notifications', 
             'allow_email_notifications',

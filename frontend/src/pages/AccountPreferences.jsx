@@ -1,34 +1,49 @@
-import { useContext } from 'react';
+import { useState, useEffect, useContext, useCallback } from 'react';
 import Navbar from "../components/Navbar";
 import TabBar from "../components/TabBar";
 import AccountPrefDisplay from "../components/AccountPrefDisplay";
 import AccountPrefForm from "../components/Forms/AccountPrefForm";
 import Footer from "../components/Footer";
 import AuthContext from '../../services/AuthContext';
-import api from '../../services/api'
+import api from '../../services/api';
 
 // Component to render the Account Preferences page
 const AccountPreferences = () => {
-    // Access the users Notification Preferences
+    // Access the user's Notification Preferences
     const { notificationPreferences, setNotificationPreferences } = useContext(AuthContext);
+    const [loading, setLoading] = useState(true);
 
-    // Function to handle applying changes to notification preferences
+    const fetchNotificationPreferences = useCallback(async () => {
+        try {
+            const response = await api.get('/notification-preferences/', {
+                headers: { 'Authorization': `Token ${localStorage.getItem('token')}` }
+            });
+            setNotificationPreferences(response.data);
+        } catch (error) {
+            console.error('Error fetching notification preferences:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, [setNotificationPreferences]);
+
+    useEffect(() => {
+        fetchNotificationPreferences();
+    }, [fetchNotificationPreferences]);
+
     const handleApplyChanges = async (updatedPreferences) => {
         try {
-            // Send a PUT request to the notifications endpoint with the updated preferences
-            const response = await api.put('/notifications/', updatedPreferences, {
-                // Include the users Authorization Token in the headers
-                headers: {
-                    'Authorization': `Token ${localStorage.getItem('token')}`
-                }
+            const response = await api.put('/notification-preferences/', updatedPreferences, {
+                headers: { 'Authorization': `Token ${localStorage.getItem('token')}` }
             });
-            // Set the users notification preferences with the response data
             setNotificationPreferences(response.data);
-        // If there is an error, log it
         } catch (error) {
-            console.error("There was an error updating the user preferences!", error);
+            console.error('There was an error updating the user preferences!', error);
         }
     };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="min-h-screen flex flex-col p-5">
