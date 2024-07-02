@@ -107,8 +107,8 @@ class LogoutView(APIView):
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from django.contrib.auth.models import User
-from .models import UserProfile, Device, ConsumptionRecord, MonthlyConsumption, Tip, Notification
-from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, TipSerializer, NotificationSerializer
+from .models import UserProfile, Device, ConsumptionRecord, MonthlyConsumption, Notification
+from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, NotificationSerializer
 
 # ViewSet for Current User
 class CurrentUserViewSet(ViewSet):
@@ -348,12 +348,6 @@ class YearlyConsumptionView(APIView):
 
         # Return the response data
         return Response(response_data)
-
-
-# ViewSet for Tip model
-class TipViewSet(viewsets.ModelViewSet):
-    queryset = Tip.objects.all()
-    serializer_class = TipSerializer
 
 
 # ViewSet for Notification model

@@ -82,13 +82,6 @@ class MonthlyConsumption(models.Model):
         unique_together = ('device', 'year', 'month')
 
 
-# Model the store tips and tricks to show for the user
-class Tip(models.Model):
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    # Potential: add fields to categorize tips or link to specific devices
-
-
 # Model to store notifications and notification preferences for the user
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import UserViewSet, UserProfileViewSet, DeviceViewSet, ConsumptionRecordViewSet, YearlyConsumptionView, TipViewSet, NotificationView, RegisterView, LoginView, LogoutView, VerifyTokenView, CurrentUserViewSet
+from .views import UserViewSet, UserProfileViewSet, DeviceViewSet, ConsumptionRecordViewSet, YearlyConsumptionView, NotificationView, RegisterView, LoginView, LogoutView, VerifyTokenView, CurrentUserViewSet
 
 
 # Creating a router for automatically determining URL conf for API views
@@ -12,7 +12,6 @@ router.register(r'update-user', CurrentUserViewSet, basename='update-user')
 router.register(r'update-password', CurrentUserViewSet, basename='update-password')
 router.register(r'devices', DeviceViewSet, basename='devices')
 router.register(r'consumption-records', ConsumptionRecordViewSet, basename='consumption-records')
-router.register(r'tips', TipViewSet)
 
 
 # URL patterns for the energy management app
