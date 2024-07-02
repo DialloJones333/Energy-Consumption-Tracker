@@ -8,7 +8,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework.viewsets import ViewSet
-from .tasks import generate_consumption_records, generate_monthly_consumption
+from .tasks import generate_consumption_records, generate_monthly_consumption, send_weekly_notifications, send_monthly_notifications
 from .serializers import RegisterSerializer, CurrentUserSerializer
 
 # Setting up a logger for debugging purposes
@@ -108,7 +108,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from django.contrib.auth.models import User
 from .models import UserProfile, Device, ConsumptionRecord, MonthlyConsumption, Notification
-from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, NotificationSerializer
+from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, NotificationPreferencesSerializer, NotificationMessageSerializer
 
 # ViewSet for Current User
 class CurrentUserViewSet(ViewSet):
@@ -351,7 +351,7 @@ class YearlyConsumptionView(APIView):
 
 
 # ViewSet for Notification model
-class NotificationView(APIView):
+class NotificationPreferencesView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -359,7 +359,7 @@ class NotificationView(APIView):
             notification = Notification.objects.get(user=request.user)
         except Notification.DoesNotExist:
             notification = Notification.objects.create(user=request.user)
-        serializer = NotificationSerializer(notification)
+        serializer = NotificationPreferencesSerializer(notification)
         return Response(serializer.data)
 
     def put(self, request):
@@ -367,8 +367,27 @@ class NotificationView(APIView):
             notification = Notification.objects.get(user=request.user)
         except Notification.DoesNotExist:
             return Response({"error": "Notification settings not found."}, status=status.HTTP_404_NOT_FOUND)
-        serializer = NotificationSerializer(notification, data=request.data, partial=True)
+        serializer = NotificationPreferencesSerializer(notification, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class NotificationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        notifications = Notification.objects.filter(user=request.user)
+        serializer = NotificationMessageSerializer(notifications, many=True)
+        return Response(serializer.data)
+
+    def put(self, request, pk=None):
+        try:
+            notification = Notification.objects.get(id=pk, user=request.user)
+            notification.read = not notification.read
+            notification.save()
+            serializer = NotificationMessageSerializer(notification)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Notification.DoesNotExist:
+            return Response({"error": "Notification not found."}, status=status.HTTP_404_NOT_FOUND)

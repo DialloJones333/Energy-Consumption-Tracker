@@ -111,12 +111,22 @@ class MonthlyConsumptionSerializer(serializers.ModelSerializer):
         fields = ['device', 'year', 'month', 'total_consumption', 'unit']
 
 
-# Serializer for Notification model
-class NotificationSerializer(serializers.ModelSerializer):
+# Serializers for Notification model
+class NotificationPreferencesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = [
             'id', 'user', 'allow_text_notifications', 
             'allow_email_notifications',
             'disable_all_notifications'
+        ]
+
+
+class NotificationMessageSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+
+    class Meta:
+        model = Notification
+        fields = [
+            'id', 'user', 'message', 'created_at', 'read'
         ]

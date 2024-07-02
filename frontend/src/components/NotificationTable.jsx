@@ -1,19 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import api from '../../services/api';
 
 const NotificationTable = () => {
-    const [notifications, setNotifications] = useState([
-        { id: 1, name: 'Diallo Jones', message: 'Your consumption usage was down 8% this past week. Keep up the good work!', date: '6/5/24', time: '12.12 PM', read: true },
-        { id: 2, name: 'Diallo Jones', message: 'Your consumption usage was up 2% this past month. Visit the tips and tricks page to learn how to keep it down!', date: '7/1/24', time: '3.33 PM', read: false },
-    ]);
+    const [notifications, setNotifications] = useState([]);
 
-    const toggleReadStatus = (id) => {
-        setNotifications((prevNotifications) =>
-            prevNotifications.map((notification) =>
-                notification.id === id
-                    ? { ...notification, read: !notification.read }
-                    : notification
-            )
-        );
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            try {
+                const response = await api.get('/notifications/', {
+                    headers: {
+                        'Authorization': `Token ${localStorage.getItem('token')}`
+                    }
+                });
+                setNotifications(response.data);
+            } catch (error) {
+                console.error('Error fetching notifications:', error);
+            }
+        };
+
+        fetchNotifications();
+    }, []);
+
+    const toggleReadStatus = async (id) => {
+        try {
+            const response = await api.put(`/notifications/${id}/`, null, {
+                headers: {
+                    'Authorization': `Token ${localStorage.getItem('token')}`
+                }
+            });
+            setNotifications(notifications.map(notification =>
+                notification.id === id ? response.data : notification
+            ));
+        } catch (error) {
+            console.error('Error updating notification status:', error);
+        }
     };
 
     return (
@@ -49,15 +69,15 @@ const NotificationTable = () => {
                                         </div>
                                     </div>
                                     <div>
-                                        <div className="font-bold">{notification.name}</div>
+                                        <div className="font-bold">{notification.user}</div>
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <p>{notification.message}</p>
                             </td>
-                            <td>{notification.date}</td>
-                            <td>{notification.time}</td>
+                            <td>{new Date(notification.created_at).toLocaleDateString()}</td>
+                            <td>{new Date(notification.created_at).toLocaleTimeString()}</td>
                             <th>
                                 <button
                                     className={`btn btn-xs ${notification.read ? 'btn-info' : 'btn-error'}`}
