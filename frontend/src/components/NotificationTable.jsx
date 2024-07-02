@@ -71,8 +71,8 @@ const NotificationTable = () => {
                             <td>
                                 <p>{notification.message}</p>
                             </td>
-                            <td>{notification.date}</td>
-                            <td>{notification.time}</td>
+                            <td>{new Date(notification.created_at).toLocaleDateString()}</td>
+                            <td>{new Date(notification.created_at).toLocaleTimeString()}</td>
                             <th>
                                 <button
                                     className={`btn btn-xs ${notification.read ? 'btn-info' : 'btn-error'}`}

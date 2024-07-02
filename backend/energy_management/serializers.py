@@ -123,10 +123,7 @@ class NotificationPreferencesSerializer(serializers.ModelSerializer):
 
 
 class NotificationMessageSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Notification
-        fields = [
-            'id', 'user', 'message', 'created_at', 'read'
-        ]
+        fields = ["id", "user", "message", "read", "created_at"]

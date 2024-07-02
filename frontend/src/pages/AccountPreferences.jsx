@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useCallback } from 'react';
+import { useEffect, useContext, useCallback } from 'react';
 import Navbar from "../components/Navbar";
 import TabBar from "../components/TabBar";
 import AccountPrefDisplay from "../components/AccountPrefDisplay";
@@ -11,7 +11,6 @@ import api from '../../services/api';
 const AccountPreferences = () => {
     // Access the user's Notification Preferences
     const { notificationPreferences, setNotificationPreferences } = useContext(AuthContext);
-    const [loading, setLoading] = useState(true);
 
     const fetchNotificationPreferences = useCallback(async () => {
         try {
@@ -21,8 +20,6 @@ const AccountPreferences = () => {
             setNotificationPreferences(response.data);
         } catch (error) {
             console.error('Error fetching notification preferences:', error);
-        } finally {
-            setLoading(false);
         }
     }, [setNotificationPreferences]);
 
@@ -41,9 +38,6 @@ const AccountPreferences = () => {
         }
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <div className="min-h-screen flex flex-col p-5">
