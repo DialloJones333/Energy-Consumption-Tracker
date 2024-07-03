@@ -332,7 +332,7 @@ class ConsumptionRecordViewSet(viewsets.ModelViewSet):
         return Response(data)
 
 
-# API view my MonthlyConsumption model
+# API view MonthlyConsumption model
 class YearlyConsumptionView(APIView):
     def get(self, request):
         # Get the current year
@@ -357,67 +357,88 @@ class YearlyConsumptionView(APIView):
         return Response(response_data)
 
 
-# ViewSet for Notification model
+# ViewSet for NotificationPreferences model
 class NotificationPreferencesView(APIView):
     permission_classes = [IsAuthenticated]
 
+    # GET method for returning the users notification preferences
     def get(self, request):
         try:
+            # Retrieve the notification preferences for the current user
             notification_preferences = NotificationPreferences.objects.get(
                 user=request.user
             )
+        # If the notification preferences do not exist, create a new one
         except NotificationPreferences.DoesNotExist:
             notification_preferences = NotificationPreferences.objects.create(
                 user=request.user
             )
+        # Serialize the notification preferences and return it
         serializer = NotificationPreferencesSerializer(notification_preferences)
         return Response(serializer.data)
 
+    # PUT method for updating the users notification preferences
     def put(self, request):
         try:
+            # Retrieve the notification preferences for the current user
             notification_preferences = NotificationPreferences.objects.get(
                 user=request.user
             )
+        # If the notification preferences do not exist, return an error
         except NotificationPreferences.DoesNotExist:
             return Response(
                 {"error": "Notification preferences not found."},
                 status=status.HTTP_404_NOT_FOUND,
             )
+        # Validate and update the notification preferences
         serializer = NotificationPreferencesSerializer(
             notification_preferences, data=request.data, partial=True
         )
+        # If the notification preferences are valid, save them and return them
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# ViewSet for Notification model
 class NotificationView(APIView):
     permission_classes = [IsAuthenticated]
 
+    # GET method for returning the users notifications
     def get(self, request, pk=None):
+        # If a pk is provided, return the notification with the matching id
         if pk:
             try:
+                # Retrieve the notification with the matching id
                 notification = Notification.objects.get(id=pk, user=request.user)
+                # Serialize the notification and return it
                 serializer = NotificationMessageSerializer(notification)
                 return Response(serializer.data)
+            # If the notification does not exist, return an error
             except Notification.DoesNotExist:
                 return Response(
                     {"error": "Notification not found."},
                     status=status.HTTP_404_NOT_FOUND,
                 )
+        # If no pk is provided, return all notifications for the current user
         else:
             notifications = Notification.objects.filter(user=request.user)
             serializer = NotificationMessageSerializer(notifications, many=True)
             return Response(serializer.data)
 
+    # PUT method for marking a notification as read or unread
     def put(self, request, pk=None):
         try:
+            # Retrieve the notification with the matching id
             notification = Notification.objects.get(id=pk, user=request.user)
+            # Update the notification's read status and save it
             notification.read = not notification.read
             notification.save()
+            # Serialize the notification and return it
             serializer = NotificationMessageSerializer(notification)
             return Response(serializer.data, status=status.HTTP_200_OK)
+        # If the notification does not exist, return an error
         except Notification.DoesNotExist:
             return Response(
                 {"error": "Notification not found."}, status=status.HTTP_404_NOT_FOUND

@@ -82,7 +82,7 @@ class MonthlyConsumption(models.Model):
         unique_together = ('device', 'year', 'month')
 
 
-# Models to store notifications and notification preferences for the user
+# Model to store user notifications
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField()
@@ -92,7 +92,7 @@ class Notification(models.Model):
     def __str__(self):
         return f"Notification for {self.user.username}"
 
-
+# Model to store user notification preferences
 class NotificationPreferences(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     allow_text_notifications = models.BooleanField(default=True)

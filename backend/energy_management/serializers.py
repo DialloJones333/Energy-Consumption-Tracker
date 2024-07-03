@@ -73,7 +73,6 @@ class LogoutSerializer(serializers.Serializer):
 
 # Serializer for User model
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'username', 'email']
@@ -111,7 +110,7 @@ class MonthlyConsumptionSerializer(serializers.ModelSerializer):
         fields = ['device', 'year', 'month', 'total_consumption', 'unit']
 
 
-# Serializers for Notification model
+# Serializer for NotificationPreferences model
 class NotificationPreferencesSerializer(serializers.ModelSerializer):
     class Meta:
         model = NotificationPreferences
@@ -122,8 +121,8 @@ class NotificationPreferencesSerializer(serializers.ModelSerializer):
         ]
 
 
+# Serializer for Notification model
 class NotificationMessageSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Notification
         fields = ["id", "user", "message", "read", "created_at"]

@@ -9,12 +9,16 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+# Task to generate consumption records
 @shared_task
 def generate_consumption_records():
+    # Get the current time
     now = timezone.now()
     logger.debug(f"Current time: {now}")
+    # Generate consumption records for each device
     for device in Device.objects.all():
         daily_consumption = device.daily_consumption
+        # Create a new consumption record
         consumption_record = ConsumptionRecord.objects.create(
             device=device,
             date=now.date(),
@@ -22,18 +26,23 @@ def generate_consumption_records():
             consumption=daily_consumption / 12,
             unit="kWh",
         )
+        # Save the consumption record
         consumption_record.save()
         logger.debug(f"Created ConsumptionRecord: {consumption_record}")
 
 
+# Task to generate monthly consumption
 @shared_task
 def generate_monthly_consumption():
+    # Get the current time
     now = timezone.now()
     logger.debug(f"Current time: {now}")
+    # Define the start and end of the month
     start_of_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     end_of_month = (start_of_month + timezone.timedelta(days=31)).replace(
         day=1
     ) - timezone.timedelta(seconds=1)
+    # Get the monthly consumption
     monthly_data = (
         ConsumptionRecord.objects.filter(
             timestamp__range=(start_of_month, end_of_month)
@@ -41,6 +50,7 @@ def generate_monthly_consumption():
         .values("device")
         .annotate(total_consumption=Sum("consumption"))
     )
+    # Update or create the monthly consumption
     for data in monthly_data:
         MonthlyConsumption.objects.update_or_create(
             device_id=data["device"],
@@ -50,9 +60,12 @@ def generate_monthly_consumption():
         )
 
 
+# Task to send weekly notifications
 @shared_task
 def send_weekly_notifications():
+    # Get the current time
     now = timezone.now()
+    # Get last week and the week before last week
     last_week = now - timedelta(days=7)
     week_before_last = last_week - timedelta(days=7)
 
@@ -75,12 +88,15 @@ def send_weekly_notifications():
     # Get all users' notification preferences
     preferences = NotificationPreferences.objects.all()
 
+    # If the user has disabled all notifications, skip sending the notification
     for pref in preferences:
         if pref.disable_all_notifications:
             continue
 
+        # Send the notification based on the difference in consumption
         message = f"Your consumption usage was up {last_week_consumption - prev_week_consumption} kWh this past week. Visit the tips and tricks page to learn how to keep it down!"
 
+        # Create the new notification
         Notification.objects.create(
             user=pref.user,
             message=message,
@@ -89,7 +105,9 @@ def send_weekly_notifications():
 
 @shared_task
 def send_monthly_notifications():
+    # Get the current time
     now = timezone.now()
+    # Get last month and the month before last month
     last_month = now - timedelta(days=30)
     month_before_last = last_month - timedelta(days=30)
 
@@ -112,12 +130,15 @@ def send_monthly_notifications():
     # Get all users' notification preferences
     preferences = NotificationPreferences.objects.all()
 
+    # If the user has disabled all notifications, skip sending the notification
     for pref in preferences:
         if pref.disable_all_notifications:
             continue
 
+        # Send the notification based on the difference in consumption
         message = f"Your consumption usage was up {last_month_consumption - prev_month_consumption} kWh this past month. Visit the tips and tricks page to learn how to keep it down!"
 
+        # Create the new notification
         Notification.objects.create(
             user=pref.user,
             message=message,
