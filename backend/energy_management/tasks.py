@@ -88,13 +88,15 @@ def send_weekly_notifications():
     # Get all users' notification preferences
     preferences = NotificationPreferences.objects.all()
 
-    # If the user has disabled all notifications, skip sending the notification
     for pref in preferences:
         if pref.disable_all_notifications:
             continue
 
-        # Send the notification based on the difference in consumption
-        message = f"Your consumption usage was up {last_week_consumption - prev_week_consumption} kWh this past week. Visit the tips and tricks page to learn how to keep it down!"
+        # Determine if consumption was up or down
+        if last_week_consumption > prev_week_consumption:
+            message = f"Your consumption usage was up {last_week_consumption - prev_week_consumption:.2f} kWh this past week. Visit the tips and tricks page to learn how to keep it down!"
+        else:
+            message = f"Your consumption usage was down {prev_week_consumption - last_week_consumption:.2f} kWh this past week. Keep up the good work!"
 
         # Create the new notification
         Notification.objects.create(
@@ -103,6 +105,7 @@ def send_weekly_notifications():
         )
 
 
+# Task to send monthly notifications
 @shared_task
 def send_monthly_notifications():
     # Get the current time
@@ -130,13 +133,15 @@ def send_monthly_notifications():
     # Get all users' notification preferences
     preferences = NotificationPreferences.objects.all()
 
-    # If the user has disabled all notifications, skip sending the notification
     for pref in preferences:
         if pref.disable_all_notifications:
             continue
 
-        # Send the notification based on the difference in consumption
-        message = f"Your consumption usage was up {last_month_consumption - prev_month_consumption} kWh this past month. Visit the tips and tricks page to learn how to keep it down!"
+        # Determine if consumption was up or down
+        if last_month_consumption > prev_month_consumption:
+            message = f"Your consumption usage was up {last_month_consumption - prev_month_consumption:.2f} kWh this past month. Visit the tips and tricks page to learn how to keep it down!"
+        else:
+            message = f"Your consumption usage was down {prev_month_consumption - last_month_consumption:.2f} kWh this past month. Keep up the good work!"
 
         # Create the new notification
         Notification.objects.create(
