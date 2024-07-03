@@ -3,16 +3,22 @@ import os
 from celery import Celery
 from celery.schedules import crontab
 
+# set the default Django settings module for the Celery program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'energy_configs.settings.development')
 
+# Set the folder where this celery file is located
 app = Celery('energy_configs')
+# Load the task modules from all registered Django app configurations
 app.config_from_object('django.conf:settings', namespace='CELERY')
+# Automatically discover tasks in all registered Django app configurations
 app.autodiscover_tasks()
 
+# Debug task to ensure that the tasks are being called
 @app.task(bind=True)
 def debug_task(self):
     print(f"Request: {self.request!r}")
 
+# Dictionary that holds the periodic tasks
 app.conf.beat_schedule = {
     "generate-consumption-records-every-2-hours": {
         "task": "energy_management.tasks.generate_consumption_records",
