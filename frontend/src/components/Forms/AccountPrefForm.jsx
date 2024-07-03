@@ -1,20 +1,26 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+// Component to display and edit account preferences
 const AccountPrefForm = ({ textNoti, emailNoti, disableAll, handleApplyChanges }) => {
     const [localTextNoti, setLocalTextNoti] = useState(textNoti);
     const [localEmailNoti, setLocalEmailNoti] = useState(emailNoti);
     const [localDisableAll, setLocalDisableAll] = useState(disableAll);
 
+    // Set the initial state of the form
     useEffect(() => {
         setLocalTextNoti(textNoti);
         setLocalEmailNoti(emailNoti);
         setLocalDisableAll(disableAll);
     }, [textNoti, emailNoti, disableAll]);
 
+    // Function to handle updating the user's notification preferences
     const handleToggle = (field, value) => {
+        // Update the user's notification preferences
         let updatedPreferences;
+        // Check if the user wants to disable all notifications
         if (field === 'disableAll') {
+            // If so, set the disable_all_notifications field to true
             updatedPreferences = {
                 allow_text_notifications: false,
                 allow_email_notifications: false,
@@ -23,6 +29,7 @@ const AccountPrefForm = ({ textNoti, emailNoti, disableAll, handleApplyChanges }
             setLocalTextNoti(false);
             setLocalEmailNoti(false);
             setLocalDisableAll(value);
+        // If not, set the appropriate field to the opposite of its current value
         } else {
             updatedPreferences = {
                 allow_text_notifications: field === 'textNoti' ? value : localTextNoti,

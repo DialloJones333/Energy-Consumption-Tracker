@@ -12,27 +12,39 @@ const AccountPreferences = () => {
     // Access the user's Notification Preferences
     const { notificationPreferences, setNotificationPreferences } = useContext(AuthContext);
 
+    // Fetch the Notification Preferences from my API
     const fetchNotificationPreferences = useCallback(async () => {
         try {
+            // Get the user's notification preferences
             const response = await api.get('/notification-preferences/', {
+                // Set the Authorization header with the user's token
                 headers: { 'Authorization': `Token ${localStorage.getItem('token')}` }
             });
+            // Set the user's notification preferences in state
             setNotificationPreferences(response.data);
+        // Log any errors that occur
         } catch (error) {
             console.error('Error fetching notification preferences:', error);
         }
+    // Pass the setNotificationPreferences function as a dependency
     }, [setNotificationPreferences]);
 
+    // Fetch the notification preferences when the component mounts
     useEffect(() => {
         fetchNotificationPreferences();
     }, [fetchNotificationPreferences]);
 
+    // Function to handle updating the user's notification preferences
     const handleApplyChanges = async (updatedPreferences) => {
         try {
+            // Update the user's notification preferences
             const response = await api.put('/notification-preferences/', updatedPreferences, {
+                // Set the Authorization header with the user's token
                 headers: { 'Authorization': `Token ${localStorage.getItem('token')}` }
             });
+            // Set the user's notification preferences in state
             setNotificationPreferences(response.data);
+        // Log any errors that occur
         } catch (error) {
             console.error('There was an error updating the user preferences!', error);
         }
