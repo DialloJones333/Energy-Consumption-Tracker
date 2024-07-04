@@ -50,7 +50,7 @@ const NotificationTable = () => {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Name</th>
+                        <th>User</th>
                         <th>Message</th>
                         <th>Date</th>
                         <th>Time</th>
@@ -100,7 +100,7 @@ const NotificationTable = () => {
                 <tfoot>
                     <tr>
                         <th></th>
-                        <th>Name</th>
+                        <th>User</th>
                         <th>Message</th>
                         <th>Date</th>
                         <th>Time</th>

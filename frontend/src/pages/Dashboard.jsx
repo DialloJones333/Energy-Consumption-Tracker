@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import DeviceChart from "../components/Charts/DeviceChart";
-import MiniCompareChart from "../components/Charts/MiniCompareChart";
+import MiniFilterChart from "../components/Charts/MiniFilterChart";
 import Carousel from "../components/Carousel";
 import DailyChart from "../components/Charts/DailyChart";
 import YearlyChart from "../components/Charts/YearlyChart";
@@ -25,11 +25,11 @@ const Dashboard = () => {
                         </button>
                     </div>
                     <div className="w-104 h-72 shadow-xl flex items-center justify-center rounded-lg">
-                        <MiniCompareChart />
+                        <MiniFilterChart />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
                             <button onClick={() => navigate('/compare-rates')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold ">
-                                Compare Rates
+                                Filter Energy Data
                             </button>
                         </div>
                     <div className="w-104 h-72 flex items-center justify-center shadow-xl rounded-lg ">

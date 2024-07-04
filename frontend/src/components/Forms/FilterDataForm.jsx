@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-const CompareRatesForm = () => {
+const FIlterDataForm = () => {
     const [timeFrame, setTimeFrame] = useState('');
     const [timeFrames] = useState(['1 Day', '1 Week', '1 Month', '1 Year']);
-    const [region, setRegion] = useState('');
-    const [regions] = useState(['Eastern', 'Central', 'Western']);
+    const [device, setDevice] = useState('');
+    const [devices] = useState(['All', 'Array of user specific devices']);
 
     
 
@@ -18,17 +18,17 @@ const CompareRatesForm = () => {
                     <div className="mb-6">
                         <label
                             className="block text-md font-bold mb-2"
-                            htmlFor="region">
-                            Region
+                            htmlFor="device">
+                            Device
                         </label>
                         <select
                             className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
                             id="device-type"
-                            value={region}
-                            onChange={(e) => setRegion(e.target.value)}
+                            value={device}
+                            onChange={(e) => setDevice(e.target.value)}
                         >
-                            <option value="">Select region</option>
-                            {regions.map((type) => (
+                            <option value="">Select device</option>
+                            {devices.map((type) => (
                                 <option key={type} value={type}>{type}</option>
                             ))}
                         </select>
@@ -66,4 +66,4 @@ const CompareRatesForm = () => {
     );
 };
 
-export default CompareRatesForm;
+export default FIlterDataForm;

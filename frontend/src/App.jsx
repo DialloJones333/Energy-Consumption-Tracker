@@ -5,7 +5,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import DeviceManagement from './pages/DeviceManagement';
-import CompareRates from './pages/CompareRates';
+import FilterData from './pages/FilterData';
 import TipsAndTricks from './pages/TipsAndTricks';
 import Profile from './pages/Profile';
 import ChangePassword from './pages/ChangePassword';
@@ -24,7 +24,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/device-management" element={<DeviceManagement />} />
-            <Route path="/compare-rates" element={<CompareRates />} />
+            <Route path="/compare-rates" element={<FilterData />} />
             <Route path="/tips-and-tricks" element={<TipsAndTricks />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/change-password" element={<ChangePassword />} />

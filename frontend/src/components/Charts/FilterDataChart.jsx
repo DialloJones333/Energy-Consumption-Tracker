@@ -4,42 +4,41 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 const data = [
     {
         name: '1st',
-        Yours: 3000,
-        Local: 2200,
+        Consumption: 3000,
     },
     {
         name: '2nd',
-        Yours: 4200,
-        Local: 1398,
+        Consumption: 4200,
+
     },
     {
         name: '3rd',
-        Yours: 1000,
-        Local: 5500,
+        Consumption: 1000,
+
     },
     {
         name: '4th',
-        Yours: 4200,
-        Local: 1398,
+        Consumption: 4200,
+
     },
     {
         name: '5th',
-        Yours: 1890,
-        Local: 4800,
+        Consumption: 1890,
+
     },
     {
         name: '6th',
-        Yours: 4200,
-        Local: 1398,
+        Consumption: 4200,
+
     },
     {
         name: '7th',
-        Yours: 1000,
-        Local: 5500,
+        Consumption: 1000,
+
     },
 ];
 
-class MiniCompareChart extends PureComponent {
+class FilterDataChart extends PureComponent {
     render() {
         return (
             <ResponsiveContainer width="100%" height="100%">
@@ -59,12 +58,11 @@ class MiniCompareChart extends PureComponent {
                     <YAxis tick={{ fill: '#1e293b' }} />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="Local" stroke="#a8a29e" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="Yours" stroke="#10B981" />
+                    <Line type="monotone" dataKey="Consumption" stroke="#10B981" />
                 </LineChart>
             </ResponsiveContainer>
             );
         }
     }
 
-export default MiniCompareChart
+export default FilterDataChart;
