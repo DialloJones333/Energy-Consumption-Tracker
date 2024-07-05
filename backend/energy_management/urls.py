@@ -13,6 +13,7 @@ from .views import (
     LogoutView,
     VerifyTokenView,
     CurrentUserViewSet,
+    FilterConsumptionView
 )
 
 router = DefaultRouter()
@@ -71,4 +72,8 @@ urlpatterns = [
         NotificationView.as_view(),
         name="notification-detail",
     ), # Endpoint for getting a specific notification
+    
+    path('api/filter-consumption/', 
+        FilterConsumptionView.as_view(), 
+        name='filter-consumption'),
 ]

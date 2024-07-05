@@ -1,4 +1,5 @@
 import logging
+from datetime import timedelta
 from rest_framework import status
 from django.utils import timezone
 from django.db.models import Sum
@@ -115,7 +116,7 @@ from .models import (
     Notification,
     NotificationPreferences,
 )
-from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, NotificationPreferencesSerializer, NotificationMessageSerializer
+from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, NotificationPreferencesSerializer, NotificationMessageSerializer, FilteredConsumptionRecordSerializer
 
 # ViewSet for Current User
 class CurrentUserViewSet(ViewSet):
@@ -443,3 +444,42 @@ class NotificationView(APIView):
             return Response(
                 {"error": "Notification not found."}, status=status.HTTP_404_NOT_FOUND
             )
+            
+            
+class FilterConsumptionView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        device_id = request.query_params.get('device')
+        time_frame = request.query_params.get('time_frame')
+
+        now = timezone.now()
+        if time_frame == '1 Day':
+            start_date = now - timedelta(days=1)
+        elif time_frame == '1 Week':
+            start_date = now - timedelta(weeks=1)
+        elif time_frame == '1 Month':
+            start_date = now - timedelta(days=30)
+        elif time_frame == '1 Year':
+            start_date = now - timedelta(days=365)
+        else:
+            return Response({"error": "Invalid time frame"}, status=400)
+
+        if device_id == 'All':
+            records = ConsumptionRecord.objects.filter(
+                device__user=request.user,
+                timestamp__range=(start_date, now)
+            )
+        else:
+            try:
+                device = Device.objects.get(id=device_id, user=request.user)
+            except Device.DoesNotExist:
+                return Response({"error": "Device not found"}, status=404)
+
+            records = ConsumptionRecord.objects.filter(
+                device=device,
+                timestamp__range=(start_date, now)
+            )
+
+        serializer = FilteredConsumptionRecordSerializer(records, many=True)
+        return Response(serializer.data)
