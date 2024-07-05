@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import api from '../../../services/api';
-import moment from 'moment';  // import moment.js for date formatting
+import moment from 'moment';
 
 const FilterDataChart = ({ filters }) => {
     const [data, setData] = useState([]);
@@ -29,7 +29,20 @@ const FilterDataChart = ({ filters }) => {
 
     // Function to format the timestamp
     const formatTimestamp = (timestamp) => {
-        return moment(timestamp).format('MMM DD, YYYY'); // Format as "Jun 26, 2024"
+        return moment(timestamp).format('MMM DD, YYYY');
+    };
+
+    // Custom tooltip formatter using optional chaining
+    const customTooltip = ({ payload, label }) => {
+        if (payload?.length) {
+            return (
+                <div className="custom-tooltip" style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)', padding: '5px', borderRadius: '3px', color: '#fff' }}>
+                    <p className="label">{`Date: ${formatTimestamp(label)}`}</p>
+                    <p className="intro">{`Consumption: ${payload[0]?.value} kWh`}</p>
+                </div>
+            );
+        }
+        return null;
     };
 
     return (
@@ -48,7 +61,7 @@ const FilterDataChart = ({ filters }) => {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis tick={{ fill: '#1e293b' }} dataKey="timestamp" tickFormatter={formatTimestamp} />
                 <YAxis tick={{ fill: '#1e293b' }} />
-                <Tooltip />
+                <Tooltip content={customTooltip} />
                 <Legend />
                 <Line type="monotone" dataKey="consumption" stroke="#10B981" />
             </LineChart>
