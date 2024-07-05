@@ -28,7 +28,7 @@ const Dashboard = () => {
                         <MiniFilterChart />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
-                            <button onClick={() => navigate('/compare-rates')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold ">
+                            <button onClick={() => navigate('/filter-consumption')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold ">
                                 Filter Energy Data
                             </button>
                         </div>

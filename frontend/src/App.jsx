@@ -24,7 +24,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/device-management" element={<DeviceManagement />} />
-            <Route path="/compare-rates" element={<FilterData />} />
+            <Route path="/filter-consumption" element={<FilterData />} />
             <Route path="/tips-and-tricks" element={<TipsAndTricks />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/change-password" element={<ChangePassword />} />
