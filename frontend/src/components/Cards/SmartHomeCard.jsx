@@ -8,7 +8,9 @@ const SmartHomeCard = () => {
                 <h2 className="card-title">Want to Learn About The Advantages of Smart Devices?</h2>
                 <p>Check out this page!</p>
                 <div className="card-actions justify-end">
-                    <button className="btn bg-stone-400 text-gray-100 hover:bg-emerald-500">Learn More</button>
+                    <a href='https://www.cnet.com/home/smart-home/' target="_blank" rel="noopener noreferrer">
+                        <button className="btn bg-stone-400 text-gray-100 hover:bg-emerald-500">Learn More</button>
+                    </a>
                 </div>
             </div>
         </div>

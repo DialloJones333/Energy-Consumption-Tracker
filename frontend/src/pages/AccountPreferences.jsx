@@ -1,32 +1,60 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext, useCallback } from 'react';
 import Navbar from "../components/Navbar";
 import TabBar from "../components/TabBar";
 import AccountPrefDisplay from "../components/AccountPrefDisplay";
 import AccountPrefForm from "../components/Forms/AccountPrefForm";
 import Footer from "../components/Footer";
+import AuthContext from '../../services/AuthContext';
+import api from '../../services/api';
 
+// Component to render the Account Preferences page
 const AccountPreferences = () => {
-    const [textNoti, setTextNoti] = useState(true);
-    const [emailNoti, setEmailNoti] = useState(true);
-    const [disableAll, setDisableAll] = useState(false);
+    // Access the user's Notification Preferences
+    const { notificationPreferences, setNotificationPreferences } = useContext(AuthContext);
 
-    useEffect(() => {
-        if (disableAll) {
-            setTextNoti(false);
-            setEmailNoti(false);
+    // Fetch the Notification Preferences from my API
+    const fetchNotificationPreferences = useCallback(async () => {
+        try {
+            // Get the user's notification preferences
+            const response = await api.get('/notification-preferences/', {
+                // Set the Authorization header with the user's token
+                headers: { 'Authorization': `Token ${localStorage.getItem('token')}` }
+            });
+            // Set the user's notification preferences in state
+            setNotificationPreferences(response.data);
+        // Log any errors that occur
+        } catch (error) {
+            console.error('Error fetching notification preferences:', error);
         }
-    }, [disableAll]);
+    // Pass the setNotificationPreferences function as a dependency
+    }, [setNotificationPreferences]);
 
+    // Fetch the notification preferences when the component mounts
     useEffect(() => {
-        if (textNoti || emailNoti) {
-            setDisableAll(false);
+        fetchNotificationPreferences();
+    }, [fetchNotificationPreferences]);
+
+    // Function to handle updating the user's notification preferences
+    const handleApplyChanges = async (updatedPreferences) => {
+        try {
+            // Update the user's notification preferences
+            const response = await api.put('/notification-preferences/', updatedPreferences, {
+                // Set the Authorization header with the user's token
+                headers: { 'Authorization': `Token ${localStorage.getItem('token')}` }
+            });
+            // Set the user's notification preferences in state
+            setNotificationPreferences(response.data);
+        // Log any errors that occur
+        } catch (error) {
+            console.error('There was an error updating the user preferences!', error);
         }
-    }, [textNoti, emailNoti]);
+    };
+
 
     return (
         <div className="min-h-screen flex flex-col p-5">
             <Navbar />
-            <section className="w-full border-b-2 border-slate-800 ">
+            <section className="w-full border-b-2 border-slate-800">
                 <div className="flex flex-col ms-4 mt-20">
                     <h1 className="text-6xl font-bold font-serif mb-10">
                         Account Preferences
@@ -38,23 +66,21 @@ const AccountPreferences = () => {
             </section>
             <main className="flex flex-row flex-grow ms-4 mt-10">
                 <div className="flex flex-col gap-10 w-2/4">
-                    <div className="h-104 me-8 flex items-center justify-center shadow-2xl rounded-lg font-serif">
+                    <div className="me-8 h-104 flex items-center justify-center shadow-2xl rounded-lg font-serif">
                         <AccountPrefDisplay
-                            textNoti={textNoti}
-                            emailNoti={emailNoti}
-                            disableAll={disableAll}
+                            textNoti={notificationPreferences.allow_text_notifications}
+                            emailNoti={notificationPreferences.allow_email_notifications}
+                            disableAll={notificationPreferences.disable_all_notifications}
                         />
                     </div>
                 </div>
                 <div className="flex flex-col me-4 gap-10 mb-10 w-2/4">
-                    <div className="h-104 shadow-2xl items-center justify-center flex rounded-lg font-serif">
+                    <div className="min-h-104 overflow-auto shadow-2xl flex rounded-lg font-serif">
                         <AccountPrefForm
-                            textNoti={textNoti}
-                            setTextNoti={setTextNoti}
-                            emailNoti={emailNoti}
-                            setEmailNoti={setEmailNoti}
-                            disableAll={disableAll}
-                            setDisableAll={setDisableAll}
+                            textNoti={notificationPreferences.allow_text_notifications}
+                            emailNoti={notificationPreferences.allow_email_notifications}
+                            disableAll={notificationPreferences.disable_all_notifications}
+                            handleApplyChanges={handleApplyChanges}
                         />
                     </div>
                 </div>
@@ -62,6 +88,6 @@ const AccountPreferences = () => {
             <Footer />
         </div>
     );
-}
+};
 
 export default AccountPreferences;

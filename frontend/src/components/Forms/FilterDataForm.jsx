@@ -1,48 +1,56 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import api from '../../../services/api';
 
-const CompareRatesForm = () => {
+const FilterDataForm = ({ onFilterChange }) => {
     const [timeFrame, setTimeFrame] = useState('');
     const [timeFrames] = useState(['1 Day', '1 Week', '1 Month', '1 Year']);
-    const [region, setRegion] = useState('');
-    const [regions] = useState(['Eastern', 'Central', 'Western']);
+    const [device, setDevice] = useState('');
+    const [devices, setDevices] = useState([]);
 
-    
+    useEffect(() => {
+        // Fetch user devices
+        const fetchDevices = async () => {
+            try {
+                const response = await api.get('/devices/');
+                setDevices(response.data);
+            } catch (error) {
+                console.error("Error fetching devices:", error);
+            }
+        };
+
+        fetchDevices();
+    }, []);
+
+    const handleApply = () => {
+        onFilterChange({ device, timeFrame });
+    };
 
     return (
         <div className="flex items-center justify-center w-full">
             <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
-                <h2 className="text-2xl font-bold text-center mb-6">
-                    Filter
-                </h2>
+                <h2 className="text-2xl font-bold text-center mb-6">Filter</h2>
                 <form>
                     <div className="mb-6">
-                        <label
-                            className="block text-md font-bold mb-2"
-                            htmlFor="region">
-                            Region
-                        </label>
+                        <label className="block text-md font-bold mb-2" htmlFor="device">Device</label>
                         <select
                             className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
-                            id="device-type"
-                            value={region}
-                            onChange={(e) => setRegion(e.target.value)}
+                            id="device"
+                            value={device}
+                            onChange={(e) => setDevice(e.target.value)}
                         >
-                            <option value="">Select region</option>
-                            {regions.map((type) => (
-                                <option key={type} value={type}>{type}</option>
+                            <option value="">Select device</option>
+                            <option value="All">All</option>
+                            {devices.map((device) => (
+                                <option key={device.id} value={device.id}>{device.device_type}</option>
                             ))}
                         </select>
                     </div>
                     <div className="mb-6">
-                        <label
-                            className="block text-slate-800 text-md font-bold mb-2"
-                            htmlFor="device-type"
-                        >
-                            Time Frame
-                        </label>
+                        <label className="block text-slate-800 text-md font-bold mb-2" htmlFor="time-frame">Time Frame</label>
                         <select
                             className="shadow-md appearance-none border rounded w-full py-2 px-3 text-slate-800 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-white"
-                            id="device-type"
+                            id="time-frame"
                             value={timeFrame}
                             onChange={(e) => setTimeFrame(e.target.value)}
                         >
@@ -56,6 +64,7 @@ const CompareRatesForm = () => {
                         <button
                             className="bg-stone-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
                             type="button"
+                            onClick={handleApply}
                         >
                             Apply
                         </button>
@@ -66,4 +75,8 @@ const CompareRatesForm = () => {
     );
 };
 
-export default CompareRatesForm;
+FilterDataForm.propTypes = {
+    onFilterChange: PropTypes.func.isRequired,
+};
+
+export default FilterDataForm;

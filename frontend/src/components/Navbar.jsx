@@ -1,16 +1,26 @@
 import { useLocation, useNavigate} from 'react-router-dom';
+import useAuth from '../../services/useAuth';
 
 const Navbar = () => {
     const location = useLocation();
+    const navigate = useNavigate();
+    const { logout } = useAuth();
     const isDashboard = location.pathname === '/dashboard';
     const isDeviceManagement = location.pathname === '/device-management';
-    const isCompareRates = location.pathname === '/compare-rates';
+    const isFIlterConsumption = location.pathname === '/filter-consumption';
     const isTipsAndTricks = location.pathname === '/tips-and-tricks';
     const isProfile  = location.pathname === '/profile'
     const isAccountPreferences = location.pathname === '/account-preferences'
     const isNotifications = location.pathname === '/notifications'
     
-    const navigate = useNavigate();
+    const handleLogout = async () => {
+        try {
+            await logout();
+            navigate('/');
+        } catch (error) {
+            console.error("Logout failed", error);
+        }
+    };
 
     return (
         <div className="shadow-xl rounded-xl mx-4 my-2 p-4 bg-white font-serif">
@@ -20,10 +30,10 @@ const Navbar = () => {
                         <button tabIndex={0} className="btn btn-ghost btn-circle">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
                         </button>
-                        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-md bg-gray-100 rounded-box w-52">
+                        <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-md bg-gray-100 rounded-box w-52">
                             {!isDashboard && <li><button onClick={() => navigate('/dashboard')}>Dashboard</button></li>}
                             {!isDeviceManagement && <li><button onClick={() => navigate('/device-management')}>Device Management</button></li>}
-                            {!isCompareRates && <li><button onClick={() => navigate('/compare-rates')}>Comparison Tool</button></li>}
+                            {!isFIlterConsumption && <li><button onClick={() => navigate('/filter-consumption')}>Filter Energy Data</button></li>}
                             {!isTipsAndTricks && <li><button onClick={() => navigate('/tips-and-tricks')}>Tips & Tricks</button></li>}
                             <li><a href="https://github.com/DialloJones333/Energy-Consumption-Tracker" target="_blank" rel="noopener noreferrer">About</a></li>
                         </ul>
@@ -43,7 +53,7 @@ const Navbar = () => {
                             <img alt="Tailwind CSS Navbar component" src="images/tree_of_life_avatar_pic.jpeg" />
                         </div>
                     </button>
-                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gray-100 rounded-box w-52">
+                    <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gray-100 rounded-box w-52">
                         {!isProfile && <li>
                             <button onClick={() => navigate('/profile')} className="justify-between">
                                 Profile <span className="badge">New</span>
@@ -51,7 +61,7 @@ const Navbar = () => {
                         </li>}
                         {!isAccountPreferences && <li><button onClick={() => navigate('/account-preferences')}>Account Preferences</button></li>}
                         {!isNotifications && <li><button onClick={() => navigate('/notifications')}>Notifications</button></li>}
-                        <li><button onClick={() => navigate('/')}>Logout</button></li>
+                        <li><button onClick={handleLogout}>Logout</button></li>
                     </ul>
                 </div>
             </div>

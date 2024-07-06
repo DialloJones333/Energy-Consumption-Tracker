@@ -82,3 +82,7 @@ __pycache__/
 
 # Ignore SQLite database file
 db.sqlite3
+
+# Ignore database files
+*.db
+.rdb

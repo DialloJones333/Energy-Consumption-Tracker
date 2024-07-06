@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
+// ProfileForm component for updating user profile
 const ProfileForm = ({ firstName, lastName, username, phoneNumber, email, handleApplyChanges }) => {
     const [localFirstName, setLocalFirstName] = useState(firstName);
     const [localLastName, setLocalLastName] = useState(lastName);
@@ -9,12 +11,50 @@ const ProfileForm = ({ firstName, lastName, username, phoneNumber, email, handle
     const [localPhoneNumber, setLocalPhoneNumber] = useState(phoneNumber);
     const [localEmail, setLocalEmail] = useState(email);
 
-    const handleApply = () => {
-        handleApplyChanges(localFirstName, localLastName, localUsername, localPhoneNumber, localEmail);
+    // Update user profile fields in local state
+    useEffect(() => {
+        setLocalFirstName(firstName);
+        setLocalLastName(lastName);
+        setLocalUsername(username);
+        setLocalPhoneNumber(phoneNumber);
+        setLocalEmail(email);
+    }, [firstName, lastName, username, phoneNumber, email]);
+
+    // Handle form submission
+    const handleApply = async (e) => {
+        e.preventDefault();
+        const updatedUser = {
+            first_name: localFirstName,
+            last_name: localLastName,
+            username: localUsername,
+            phone_number: localPhoneNumber,
+            email: localEmail,
+        };
+
+        // Send PUT request to update user profile
+        try {
+            const response = await axios.put('http://127.0.0.1:8000/api/update-user/', updatedUser, {
+                // Set the Authorization header with the user's token
+                headers: {
+                    'Authorization': `Token ${localStorage.getItem('token')}`
+                }
+            });
+            // Update user profile fields in local state
+            handleApplyChanges(
+                response.data.first_name,
+                response.data.last_name,
+                response.data.username,
+                response.data.phone_number,
+                response.data.email
+            );
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const nameInputRef = useRef(null);
 
+    // Focus the first name input field when the component mounts
     useEffect(() => {
         if (nameInputRef.current) {
             nameInputRef.current.focus();

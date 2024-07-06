@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import DeviceChart from "../components/Charts/DeviceChart";
-import MiniCompareChart from "../components/Charts/MiniCompareChart";
+import MiniFilterChart from "../components/Charts/MiniFilterChart";
 import Carousel from "../components/Carousel";
 import DailyChart from "../components/Charts/DailyChart";
 import YearlyChart from "../components/Charts/YearlyChart";
@@ -12,7 +12,7 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen p-5 font-serif">
+        <div className="flex flex-col min-h-screen p-5 font-serif">
             <Navbar />
             <main className="flex flex-row gap-10 mt-10">
                 <div className="flex flex-col ms-4 gap-10">
@@ -25,11 +25,11 @@ const Dashboard = () => {
                         </button>
                     </div>
                     <div className="w-104 h-72 shadow-xl flex items-center justify-center rounded-lg">
-                        <MiniCompareChart />
+                        <MiniFilterChart />
                     </div>
                     <div className="flex flex-row justify-center mb-10">
-                            <button onClick={() => navigate('/compare-rates')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold ">
-                                Compare Rates
+                            <button onClick={() => navigate('/filter-consumption')} className="btn btn-lg btn-outline shadow-md border-slate-800 hover:bg-emerald-500 text-slate-800 font-bold ">
+                                Filter Energy Data
                             </button>
                         </div>
                     <div className="w-104 h-72 flex items-center justify-center shadow-xl rounded-lg ">
@@ -57,7 +57,7 @@ const Dashboard = () => {
                         <YearlyChart />
                     </div>
                     <div className="badge badge-lg bg-stone-300 text-black shadow-md mb-10">
-                        Yearly Energy Usage (KWH)
+                        Monthly Energy Usage (KWH)
                     </div>
                 </div>
             </main>

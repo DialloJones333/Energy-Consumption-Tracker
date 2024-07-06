@@ -1,23 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import TabBar from "../components/TabBar";
 import ProfileDisplay from "../components/ProfileDisplay";
 import ProfileForm from "../components/Forms/ProfileForm";
 import Footer from "../components/Footer";
+import AuthContext from '../../services/AuthContext';
 
 const Profile = () => {
-    const [firstName, setFirstName] = useState('Diallo')
-    const [lastName, setLastName] = useState('Jones')
-    const [username, setUsername] = useState('DialloJones23')
-    const [phoneNumber, setPhoneNumber] = useState('7049960661')
-    const [email, setEmail] = useState('diallojones23@gmail.com')
+    // Get the user data from the AuthContext provider
+    const { user, setUser } = useContext(AuthContext);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [username, setUsername] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [email, setEmail] = useState('');
 
-    const handleApplyChanges = (newFirstName, newLastname, newUsername, newPhoneNumber, newEmail) => {
-        setFirstName(newFirstName);
-        setLastName(newLastname);
-        setUsername(newUsername);
-        setPhoneNumber(newPhoneNumber);
-        setEmail(newEmail);
+    // Update user profile fields in local state
+    useEffect(() => {
+        // Check if there is a user
+        if (user) {
+            setFirstName(user.first_name);
+            setLastName(user.last_name);
+            setUsername(user.username);
+            setPhoneNumber(user.phone_number);
+            setEmail(user.email);
+        }
+    }, [user]); // Update when user changes
+
+    //Handle changes in the form
+    const handleApplyChanges = (newFirstName, newLastName, newUsername, newPhoneNumber, newEmail) => {
+        // Update user profile fields in local state
+        const updatedUser = {
+            // Spread the existing user data
+            ...user,
+            first_name: newFirstName,
+            last_name: newLastName,
+            username: newUsername,
+            phone_number: newPhoneNumber,
+            email: newEmail
+        };
+        // Update the user data in the AuthContext provider
+        setUser(updatedUser);
     };
 
     return (

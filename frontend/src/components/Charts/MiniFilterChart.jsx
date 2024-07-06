@@ -4,42 +4,42 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 const data = [
     {
         name: '1st',
-        Yours: 3000,
-        Regional: 2200,
+        Weekly: 3000,
+        Monthly: 2200,
     },
     {
         name: '2nd',
-        Yours: 4200,
-        Regional: 1398,
+        Weekly: 4200,
+        Monthly: 1198,
     },
     {
         name: '3rd',
-        Yours: 1000,
-        Regional: 5500,
+        Weekly: 400,
+        Monthly: 5500,
     },
     {
         name: '4th',
-        Yours: 4200,
-        Regional: 1398,
+        Weekly: 4200,
+        Monthly: 1198,
     },
     {
         name: '5th',
-        Yours: 1890,
-        Regional: 4800,
+        Weekly: 800,
+        Monthly: 4800,
     },
     {
         name: '6th',
-        Yours: 4200,
-        Regional: 1398,
+        Weekly: 4200,
+        Monthly: 1398,
     },
     {
         name: '7th',
-        Yours: 1000,
-        Regional: 5500,
+        Weekly: 600,
+        Monthly: 5500,
     },
 ];
 
-class CompareRatesChart extends PureComponent {
+class MiniFilterChart extends PureComponent {
     render() {
         return (
             <ResponsiveContainer width="100%" height="100%">
@@ -59,12 +59,12 @@ class CompareRatesChart extends PureComponent {
                     <YAxis tick={{ fill: '#1e293b' }} />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="Regional" stroke="#a8a29e" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="Yours" stroke="#10B981" />
+                    <Line type="monotone" dataKey="Monthly" stroke="#a8a29e" activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey="Weekly" stroke="#10B981" />
                 </LineChart>
             </ResponsiveContainer>
             );
         }
     }
 
-export default CompareRatesChart;
+export default MiniFilterChart;
