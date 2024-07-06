@@ -114,7 +114,7 @@ cd home-energy-consumption-tracker
 
 ### Frontend Setup
 
-1.	Navigate to the frontend directory:
+1. Navigate to the frontend directory:
 
     ```bash
     cd frontend
@@ -182,10 +182,10 @@ REDIS_URL=redis://localhost:6379/0
 ## Usage
 
 1. Access the backend API:
-    Navigate to http://localhost:8000 to access the backend API.
+    Navigate to [http://localhost:8000](http://localhost:8000) to access the backend API.
 
 2. Access the frontend application:
-    Navigate to http://localhost:5173 to access the frontend application.
+    Navigate to [http://localhost:5173](http://localhost:5173) to access the frontend application.
 
 3. User registration and login:
     Register a new user, log in, and start adding your devices.
@@ -205,6 +205,6 @@ I welcome contributions to enhance the functionality and features of this applic
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
 
 Thank you for using the Home Energy Consumption Tracker. Together, let’s make our homes more energy-efficient and sustainable!
