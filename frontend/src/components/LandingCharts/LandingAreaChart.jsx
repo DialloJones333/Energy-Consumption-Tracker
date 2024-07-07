@@ -3,44 +3,52 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 const data = [
     {
-        name: 'January',
+        name: 'Jan',
         Usage: 4500,
-        Goal: 5000,
     },
     {
-        name: 'February',
+        name: 'Feb',
         Usage: 3300,
-        Goal: 4298,
     },
     {
-        name: 'March',
+        name: 'Mar',
         Usage: 5200,
-        Goal: 6800,
     },
     {
-        name: 'April',
+        name: 'Apr',
         Usage: 3780,
-        Goal: 4908,
     },
     {
         name: 'May',
         Usage: 4890,
-        Goal: 5950,
     },
     {
-        name: 'June',
+        name: 'Jun',
         Usage: 3390,
-        Goal: 3800,
     },
     {
-        name: 'July',
+        name: 'Jul',
         Usage: 4490,
-        Goal: 5300,
     },
     {
-        name: 'August',
+        name: 'Aug',
         Usage: 2220,
-        Goal: 4100,
+    },
+    {
+        name: 'Sep',
+        Usage: 5220,
+    },
+    {
+        name: 'Oct',
+        Usage: 3120,
+    },
+    {
+        name: 'Nov',
+        Usage: 5820,
+    },
+    {
+        name: 'Dec',
+        Usage: 3330,
     },
 ];
 
@@ -64,7 +72,6 @@ class LandingAreaChart extends PureComponent {
                     <YAxis tick={{ fill: '#1e293b' }} />
                     <Tooltip />
                     <Area type="monotone" dataKey="Usage" stackId="1" stroke="#a8a29e" fill="#a8a29e" />
-                    <Area type="monotone" dataKey="Goal" stackId="1" stroke="#4ade80" fill="#4ade80" />
                 </AreaChart>
             </ResponsiveContainer>
         );

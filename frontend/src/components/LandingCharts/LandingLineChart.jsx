@@ -4,38 +4,38 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 const data = [
     {
         name: '1st',
-        User: 3000,
-        Local: 2200,
+        Weekly: 3000,
+        Monthly: 2200,
     },
     {
         name: '2nd',
-        User: 4200,
-        Local: 1398,
+        Weekly: 4200,
+        Monthly: 1198,
     },
     {
         name: '3rd',
-        User: 2000,
-        Local: 5500,
+        Weekly: 400,
+        Monthly: 5500,
     },
     {
         name: '4th',
-        User: 2780,
-        Local: 3908,
+        Weekly: 4200,
+        Monthly: 1198,
     },
     {
         name: '5th',
-        User: 1890,
-        Local: 4800,
+        Weekly: 800,
+        Monthly: 4800,
     },
     {
         name: '6th',
-        User: 1390,
-        Local: 3800,
+        Weekly: 4200,
+        Monthly: 1398,
     },
     {
         name: '7th',
-        User: 2690,
-        Local: 4800,
+        Weekly: 600,
+        Monthly: 5500,
     },
 ];
 
@@ -59,8 +59,8 @@ class LandingLineChart extends PureComponent {
                     <YAxis tick={{ fill: '#1e293b' }} />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="Local" stroke="#a8a29e" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="User" stroke="#4ade80" />
+                    <Line type="monotone" dataKey="Monthly" stroke="#a8a29e" activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey="Weekly" stroke="#4ade80" />
                 </LineChart>
             </ResponsiveContainer>
             );
