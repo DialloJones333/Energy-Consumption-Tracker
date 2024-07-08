@@ -5,17 +5,17 @@ const data = [
     {
         name: '1st',
         Weekly: 3000,
-        Monthly: 2200,
+        Monthly: 3000,
     },
     {
         name: '2nd',
-        Weekly: 4200,
-        Monthly: 1198,
+        Weekly: 4500,
+        Monthly: 1500,
     },
     {
         name: '3rd',
-        Weekly: 400,
-        Monthly: 5500,
+        Weekly: 500,
+        Monthly: 4500,
     },
     {
         name: '4th',
@@ -24,8 +24,8 @@ const data = [
     },
     {
         name: '5th',
-        Weekly: 800,
-        Monthly: 4800,
+        Weekly: 500,
+        Monthly: 4500,
     },
     {
         name: '6th',
@@ -34,7 +34,7 @@ const data = [
     },
     {
         name: '7th',
-        Weekly: 600,
+        Weekly: 500,
         Monthly: 5500,
     },
 ];
