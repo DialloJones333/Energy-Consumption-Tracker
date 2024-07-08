@@ -40,11 +40,22 @@ const DeviceChart = ({ token }) => {
             'Televisions': 0.1,
             'Gaming Consoles': 0.15,
             'Desktop Computers': 0.2,
-            'Laptops': 0.05
+            'Laptops': 0.05,
+            'Microwave Ovens': 1.2,
+            'Refrigerators': 1.5,
+            'Washing Machines': 0.3,
+            'Dryers': 3.0,
+            'Dishwashers': 1.5,
+            'Air Conditioners': 1.3,
+            'Heaters': 1.5,
+            'Water Heaters': 4.0,
+            'Electric Ovens': 2.0,
+            'Electric Kettles': 0.1,
+            'Hair Dryers': 1.5,
+            'Coffee Makers': 0.1
         };
         return consumptionRates[deviceType] * hoursUsed;
     };
-
 
     const getDeviceTypeAbbreviation = (deviceType) => {
         const abbreviations = {
@@ -58,7 +69,19 @@ const DeviceChart = ({ token }) => {
             'Televisions': 'TV',
             'Gaming Consoles': 'GC',
             'Desktop Computers': 'PC',
-            'Laptops': 'Lap'
+            'Laptops': 'Lap',
+            'Microwave Ovens': 'MO',
+            'Refrigerators': 'Ref',
+            'Washing Machines': 'WM',
+            'Dryers': 'Dry',
+            'Dishwashers': 'DW',
+            'Air Conditioners': 'AC',
+            'Heaters': 'HTR',
+            'Water Heaters': 'WH',
+            'Electric Ovens': 'EO',
+            'Electric Kettles': 'EK',
+            'Hair Dryers': 'HD',
+            'Coffee Makers': 'CM'
         };
         return abbreviations[deviceType] || deviceType;
     };

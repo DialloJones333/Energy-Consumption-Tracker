@@ -35,7 +35,7 @@ const Navbar = () => {
                             {!isDeviceManagement && <li><button onClick={() => navigate('/device-management')}>Device Management</button></li>}
                             {!isFIlterConsumption && <li><button onClick={() => navigate('/filter-consumption')}>Filter Energy Data</button></li>}
                             {!isTipsAndTricks && <li><button onClick={() => navigate('/tips-and-tricks')}>Tips & Tricks</button></li>}
-                            <li><a href="https://github.com/DialloJones333/Energy-Consumption-Tracker" target="_blank" rel="noopener noreferrer">About</a></li>
+                            <li><a href="https://github.com/DialloJones333/Energy-Consumption-Tracker?tab=readme-ov-file#readme" target="_blank" rel="noopener noreferrer">About</a></li>
                         </ul>
                     </div>
                 </div>

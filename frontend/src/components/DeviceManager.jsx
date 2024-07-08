@@ -6,10 +6,19 @@ import api from '../../services/api';
 const DeviceManager = () => {
     const DeviceInputRef = useRef(null);
     const [deviceType, setDeviceType] = useState('');
-    const [deviceTypes] = useState(['LED Bulbs', 'Incandescent Bulbs', 'CFL Bulbs', 'Smart Bulbs', 'Smart Plugs', 'Smart Thermostats', 'Fans', 'Televisions', 'Gaming Consoles', 'Desktop Computers', 'Laptops']);
+    const [deviceTypes] = useState([
+        'LED Bulbs', 'Incandescent Bulbs', 'CFL Bulbs', 'Smart Bulbs', 'Smart Plugs', 'Smart Thermostats',
+        'Fans', 'Televisions', 'Gaming Consoles', 'Desktop Computers', 'Laptops', 'Microwave Ovens',
+        'Refrigerators', 'Washing Machines', 'Dryers', 'Dishwashers', 'Air Conditioners', 'Heaters',
+        'Water Heaters', 'Electric Ovens', 'Electric Kettles', 'Hair Dryers', 'Coffee Makers'
+    ]);
     const [hoursUsed, setHoursUsed] = useState('');
     const [brand, setBrand] = useState('');
-    const [brands] = useState(['Apple', 'Samsung', 'LG', 'Sony', 'Dell', 'HP', 'Other']);
+    const [brands] = useState([
+        'Apple', 'Samsung', 'LG', 'Sony', 'Dell', 'HP', 'Philips', 'Panasonic', 'Bosch', 'Whirlpool',
+        'GE', 'Toshiba', 'Asus', 'Acer', 'Lenovo', 'Microsoft', 'Nokia', 'Huawei', 'Xiaomi',
+        'Google', 'Amazon', 'Other'
+    ]);
     const [otherBrand, setOtherBrand] = useState('');
     const [messages, setMessages] = useState([]);
 

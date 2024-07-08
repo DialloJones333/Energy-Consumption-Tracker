@@ -16,7 +16,7 @@ const LandingPage = () => (
                     Nulla fermentum sapien vitae aliquet tempor. Cras ac tempus velit, a euismod erat. Pellentesque elit eros, 
                     auctor scelerisque convallis vitae, elementum id tortor.
                 </p>
-                <a href='https://github.com/DialloJones333/Energy-Consumption-Tracker' target="_blank" rel="noopener noreferrer">
+                <a href='https://github.com/DialloJones333/Energy-Consumption-Tracker?tab=readme-ov-file#readme' target="_blank" rel="noopener noreferrer">
                     <button className="bg-stone-400 shadow-lg text-gray-100 py-2 px-4 rounded-lg hover:bg-green-500">Learn More</button>
                 </a> 
             </section>
