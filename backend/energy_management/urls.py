@@ -29,19 +29,19 @@ urlpatterns = [
     path("api/", include(router.urls)),
     
     path("api/register/", RegisterView.as_view(), 
-        name="register"
+        name="register",
     ), # Endpoint for Registering new users
     
     path("api/login/", LoginView.as_view(), 
-        name="login"
+        name="login",
     ), # Endpoint for Logging in
     
     path("api/verify-token/", VerifyTokenView.as_view(), 
-        name="verify_token"
+        name="verify_token",
     ), # Endpoint for Verifying authentication tokens
     
     path("api/logout/", LogoutView.as_view(), 
-        name="logout"
+        name="logout",
     ), # Endpoint for Logging out
     
     path(
@@ -64,7 +64,7 @@ urlpatterns = [
     
     path("api/notifications/", 
         NotificationView.as_view(), 
-        name="notification-list"
+        name="notification-list",
     ), # Endpoint for getting a users notifications
     
     path(
@@ -75,5 +75,6 @@ urlpatterns = [
     
     path('api/filter-consumption/', 
         FilterConsumptionView.as_view(), 
-        name='filter-consumption'),
+        name='filter-consumption',
+        ), # Endpoint for filtering consumption
 ]

@@ -32,7 +32,7 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     instance.userprofile.save()
 
 
-# Device model to store information about a users device
+# Device model to store information about each device
 class Device(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     brand = models.CharField(max_length=30)

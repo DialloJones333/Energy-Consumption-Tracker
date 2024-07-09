@@ -333,7 +333,7 @@ class ConsumptionRecordViewSet(viewsets.ModelViewSet):
         return Response(data)
 
 
-# API view MonthlyConsumption model
+# API view for MonthlyConsumption model
 class YearlyConsumptionView(APIView):
     def get(self, request):
         # Get the current year
@@ -358,7 +358,7 @@ class YearlyConsumptionView(APIView):
         return Response(response_data)
 
 
-# ViewSet for NotificationPreferences model
+# API for NotificationPreferences model
 class NotificationPreferencesView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -402,7 +402,7 @@ class NotificationPreferencesView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# ViewSet for Notification model
+# API view for Notification model
 class NotificationView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -444,15 +444,19 @@ class NotificationView(APIView):
             return Response(
                 {"error": "Notification not found."}, status=status.HTTP_404_NOT_FOUND
             )
-            
-            
+
+
+# API view for filtering data from the ConsumptionRecord model
 class FilterConsumptionView(APIView):
     permission_classes = [IsAuthenticated]
 
+    # GET method for requesting the filtered consumption data
     def get(self, request):
+        # Extract the device id and time frame from the query parameters
         device_id = request.query_params.get('device')
         time_frame = request.query_params.get('time_frame')
 
+        # Calculate the start date based on the current time minus the selected time frame
         now = timezone.now()
         if time_frame == '1 Day':
             start_date = now - timedelta(days=1)
@@ -465,21 +469,25 @@ class FilterConsumptionView(APIView):
         else:
             return Response({"error": "Invalid time frame"}, status=400)
 
+        # If the user has selected 'All' for the device id, retrieve all records
         if device_id == 'All':
             records = ConsumptionRecord.objects.filter(
                 device__user=request.user,
                 timestamp__range=(start_date, now)
             )
         else:
+            # Retrieve the device with the matching id
             try:
                 device = Device.objects.get(id=device_id, user=request.user)
             except Device.DoesNotExist:
                 return Response({"error": "Device not found"}, status=404)
 
+            # Retrieve the records for the selected device and time frame
             records = ConsumptionRecord.objects.filter(
                 device=device,
                 timestamp__range=(start_date, now)
             )
 
+        # Serialize the records and return them
         serializer = FilteredConsumptionRecordSerializer(records, many=True)
         return Response(serializer.data)
