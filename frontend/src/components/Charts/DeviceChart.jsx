@@ -3,32 +3,41 @@ import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
 import PropTypes from 'prop-types';
 import api from '../../../services/api';
 
+// Component for rendering the device chart
 const DeviceChart = ({ token }) => {
     const [data, setData] = useState([]);
     const [activeIndex, setActiveIndex] = useState(0);
 
     useEffect(() => {
+        // Function for fetching the users devices
         const fetchDevices = async () => {
             try {
+                // Send a GET request to the devices endpoint
                 const response = await api.get('/devices/', {
+                    // Set the Authorization header to the users token
                     headers: {
                         'Authorization': `Token ${token}`
                     }
                 });
+                // Set the data to the devices with the calculated consumption
                 setData(response.data.map(device => ({
                     brand: device.brand,
                     deviceType: device.device_type,
                     kWh: calculateConsumption(device.device_type, device.hours_used_per_day)
                 })));
+            // Catch any errors and log them to the console
             } catch (error) {
                 console.error('Failed to fetch devices:', error);
             }
         };
 
+        // Call the fetchDevices function
         fetchDevices();
     }, [token]);
 
+    // Function to calculate the consumption of a device
     const calculateConsumption = (deviceType, hoursUsed) => {
+        // Consumption rates for different devices in kWh
         const consumptionRates = {
             'LED Bulbs': 0.01,
             'Incandescent Bulbs': 0.06,
@@ -54,9 +63,11 @@ const DeviceChart = ({ token }) => {
             'Hair Dryers': 1.5,
             'Coffee Makers': 0.1
         };
+        // Return the consumption rate multiplied by the hours used
         return consumptionRates[deviceType] * hoursUsed;
     };
 
+    // Function to get the abbreviation for a device type
     const getDeviceTypeAbbreviation = (deviceType) => {
         const abbreviations = {
             'LED Bulbs': 'LED',
@@ -83,6 +94,7 @@ const DeviceChart = ({ token }) => {
             'Hair Dryers': 'HD',
             'Coffee Makers': 'CM'
         };
+        // Return the abbreviation or the device type if no abbreviation exists
         return abbreviations[deviceType] || deviceType;
     };
 
