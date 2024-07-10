@@ -9,8 +9,8 @@ const data = [
     },
     {
         name: '2nd',
-        Weekly: 4500,
-        Monthly: 1500,
+        Weekly: 4200,
+        Monthly: 1198,
     },
     {
         name: '3rd',
