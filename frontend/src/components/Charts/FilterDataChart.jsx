@@ -24,7 +24,6 @@ const FilterDataChart = ({ filters }) => {
                     });
                     // Update the data state with the fetched data
                     setData(response.data);
-                // Catch any errors and display them on the console
                 } catch (error) {
                     console.error('Error fetching data:', error);
                 }
@@ -58,10 +57,8 @@ const FilterDataChart = ({ filters }) => {
     };
 
     return (
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height={400}>
             <LineChart
-                width={500}
-                height={300}
                 data={data}
                 margin={{
                     top: 5,
