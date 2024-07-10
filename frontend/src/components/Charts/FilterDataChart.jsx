@@ -4,25 +4,33 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import api from '../../../services/api';
 import moment from 'moment';
 
+// Component for the filtered data chart
 const FilterDataChart = ({ filters }) => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
+        // If both device and time frame filters are provided, fetch data
         if (filters.device && filters.timeFrame) {
+            // Function to fetch data
             const fetchData = async () => {
                 try {
+                    // Send a GET request to the filter-consumption endpoint to get the filtered data
                     const response = await api.get('/filter-consumption/', {
+                        // Pass the device and time frame filters as query parameters
                         params: {
                             device: filters.device,
                             time_frame: filters.timeFrame,
                         },
                     });
+                    // Update the data state with the fetched data
                     setData(response.data);
+                // Catch any errors and display them on the console
                 } catch (error) {
                     console.error('Error fetching data:', error);
                 }
             };
 
+            // Call the fetchData function
             fetchData();
         }
     }, [filters]);
@@ -34,7 +42,9 @@ const FilterDataChart = ({ filters }) => {
 
     // Custom tooltip formatter using optional chaining
     const customTooltip = ({ payload, label }) => {
+        // Check if the payload is not empty
         if (payload?.length) {
+            // If the payload is not empty, return a custom tooltip
             return (
                 <div className="custom-tooltip" style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)', padding: '5px', borderRadius: '3px', color: '#fff' }}>
                     <p className="label">{`Date: ${formatTimestamp(label)}`}</p>
@@ -42,6 +52,8 @@ const FilterDataChart = ({ filters }) => {
                 </div>
             );
         }
+
+        // If the payload is empty, return null
         return null;
     };
 
