@@ -73,7 +73,7 @@ const DeviceManager = () => {
         <div className="flex items-center justify-center w-full">
             <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
                 <h2 className="text-2xl font-bold text-center mb-6">
-                    Add Device
+                    Add Devices
                 </h2>
                 {renderError()}
                 <form>
