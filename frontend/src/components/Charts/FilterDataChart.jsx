@@ -15,10 +15,8 @@ const CustomTooltip = ({ active, payload, label }) => {
         );
     }
 
-    // If there is no active tooltip, return null
     return null;
 };
-
 
 CustomTooltip.propTypes = {
     active: PropTypes.bool,
@@ -48,42 +46,34 @@ const FilterDataChart = ({ filters }) => {
     const [data, setData] = useState([]);
 
     // Process response data
-    const processResponseData = (responseData) => {
+    const processResponseData = useCallback((responseData) => {
         return responseData
-            // Remove duplicate records
             .filter((record, index, self) =>
                 index === self.findIndex((t) => t.timestamp === record.timestamp)
             )
-            // Add formatted timestamp
             .map(record => ({
                 ...record,
                 formattedTimestamp: moment(record.timestamp).format('YYYY-MM-DD')
             }))
-            // Sort by timestamp
             .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-    };
+    }, []);
 
     // Fetch and process data
     const fetchData = useCallback(async () => {
         try {
-            // Send a GET request to the filter-consumption endpoint with the device and time frame filters
             const response = await api.get('/filter-consumption/', {
                 params: {
                     device: filters.device,
                     time_frame: filters.timeFrame,
                 },
             });
-            // Process the response data
             const uniqueSortedData = processResponseData(response.data);
-            // Update the data state with the processed data
             setData(uniqueSortedData);
-        // Catch any errors and display them on the console
         } catch (error) {
             console.error('Failed to fetch data:', error);
         }
-    }, [filters]);
+    }, [filters, processResponseData]);
 
-    // Fetch data when the filters change
     useEffect(() => {
         if (filters.device && filters.timeFrame) {
             fetchData();

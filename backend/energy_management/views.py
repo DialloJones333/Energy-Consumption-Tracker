@@ -116,7 +116,16 @@ from .models import (
     Notification,
     NotificationPreferences,
 )
-from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, NotificationPreferencesSerializer, NotificationMessageSerializer, FilteredConsumptionRecordSerializer
+from .serializers import (
+    UserSerializer,
+    UserProfileSerializer,
+    DeviceSerializer,
+    ConsumptionRecordSerializer,
+    NotificationPreferencesSerializer,
+    NotificationMessageSerializer,
+    FilteredConsumptionRecordSerializer,
+    MonthlyConsumptionSerializer,
+)
 
 # ViewSet for Current User
 class CurrentUserViewSet(ViewSet):
@@ -467,44 +476,51 @@ class NotificationView(APIView):
 class FilterConsumptionView(APIView):
     permission_classes = [IsAuthenticated]
 
-    # GET method for requesting the filtered consumption data
     def get(self, request):
-        # Extract the device id and time frame from the query parameters
-        device_id = request.query_params.get('device')
-        time_frame = request.query_params.get('time_frame')
-
-        # Calculate the start date based on the current time minus the selected time frame
+        device_id = request.query_params.get("device")
+        time_frame = request.query_params.get("time_frame")
         now = timezone.now()
-        if time_frame == '1 Day':
-            start_date = now - timedelta(days=1)
-        elif time_frame == '1 Week':
-            start_date = now - timedelta(weeks=1)
-        elif time_frame == '1 Month':
-            start_date = now - timedelta(days=30)
-        elif time_frame == '1 Year':
-            start_date = now - timedelta(days=365)
+
+        if time_frame == "1 Day":
+            start_date = now - timezone.timedelta(days=1)
+        elif time_frame == "1 Week":
+            start_date = now - timezone.timedelta(weeks=1)
+        elif time_frame == "1 Month":
+            start_date = now - timezone.timedelta(days=30)
+        elif time_frame == "1 Year":
+            return self.get_yearly_data(request)
         else:
             return Response({"error": "Invalid time frame"}, status=400)
 
-        # If the user has selected 'All' for the device id, retrieve all records
-        if device_id == 'All':
+        if device_id == "All":
             records = ConsumptionRecord.objects.filter(
-                device__user=request.user,
-                timestamp__range=(start_date, now)
+                device__user=request.user, timestamp__range=(start_date, now)
             )
         else:
-            # Retrieve the device with the matching id
             try:
                 device = Device.objects.get(id=device_id, user=request.user)
             except Device.DoesNotExist:
                 return Response({"error": "Device not found"}, status=404)
-
-            # Retrieve the records for the selected device and time frame
             records = ConsumptionRecord.objects.filter(
-                device=device,
-                timestamp__range=(start_date, now)
+                device=device, timestamp__range=(start_date, now)
             )
 
-        # Serialize the records and return them
         serializer = FilteredConsumptionRecordSerializer(records, many=True)
         return Response(serializer.data)
+
+    def get_yearly_data(self, request):
+        year = timezone.now().year
+        data = (
+            MonthlyConsumption.objects.filter(year=year, device__user=request.user)
+            .values("month")
+            .annotate(total_consumption=Sum("total_consumption"))
+        )
+
+        response_data = [
+            {
+                "timestamp": f"{year}-{record.get('month'):02d}-01",
+                "consumption": record.get("total_consumption"),
+            }
+            for record in data
+        ]
+        return Response(response_data)
