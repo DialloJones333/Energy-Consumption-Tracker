@@ -1,5 +1,4 @@
 import logging
-from datetime import timedelta
 from rest_framework import status
 from django.utils import timezone
 from django.db.models import Sum
@@ -9,7 +8,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework.viewsets import ViewSet
-from .tasks import generate_consumption_records, generate_monthly_consumption, send_weekly_notifications, send_monthly_notifications
+from .tasks import generate_consumption_records, generate_monthly_consumption
 from .serializers import RegisterSerializer, CurrentUserSerializer
 
 # Setting up a logger for debugging purposes
@@ -108,7 +107,7 @@ class LogoutView(APIView):
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from django.contrib.auth.models import User
-from django.db.models.functions import TruncWeek
+from django.db.models.functions import TruncWeek, TruncDay
 from .models import (
     UserProfile,
     Device,
@@ -472,6 +471,9 @@ class NotificationView(APIView):
             )
 
 
+# Define a constant for the "Device not found" message
+DEVICE_NOT_FOUND_MSG = "Device not found"
+
 # API view for filtering data from the ConsumptionRecord model
 class FilterConsumptionView(APIView):
     permission_classes = [IsAuthenticated]
@@ -485,7 +487,7 @@ class FilterConsumptionView(APIView):
         if time_frame == '1 Day':
             start_date = now - timezone.timedelta(days=1)
         elif time_frame == '1 Week':
-            start_date = now - timezone.timedelta(weeks=1)
+            return self.get_weekly_data(request)
         elif time_frame == '1 Month':
             return self.get_monthly_data(request)
         elif time_frame == '1 Year':
@@ -503,7 +505,7 @@ class FilterConsumptionView(APIView):
             try:
                 device = Device.objects.get(id=device_id, user=request.user)
             except Device.DoesNotExist:
-                return Response({"error": "Device not found"}, status=404)
+                return Response({"error": DEVICE_NOT_FOUND_MSG}, status=404)
             records = ConsumptionRecord.objects.filter(
                 device=device,
                 timestamp__range=(start_date, now)
@@ -512,6 +514,41 @@ class FilterConsumptionView(APIView):
         # Serialize the records and return the response
         serializer = FilteredConsumptionRecordSerializer(records, many=True)
         return Response(serializer.data)
+
+    # Method to handle weekly data aggregation by day
+    def get_weekly_data(self, request):
+        now = timezone.now()
+        start_date = now - timezone.timedelta(weeks=1)
+        device_id = request.query_params.get('device')
+
+        # Retrieve records for all devices or a specific device within the weekly time range
+        if device_id == 'All':
+            records = ConsumptionRecord.objects.filter(
+                device__user=request.user,
+                timestamp__range=(start_date, now)
+            )
+        else:
+            try:
+                device = Device.objects.get(id=device_id, user=request.user)
+            except Device.DoesNotExist:
+                return Response({"error": DEVICE_NOT_FOUND_MSG}, status=404)
+            records = ConsumptionRecord.objects.filter(
+                device=device,
+                timestamp__range=(start_date, now)
+            )
+
+        # Aggregate the data by day
+        data = records.annotate(day=TruncDay('timestamp')).values('day').annotate(total_consumption=Sum('consumption'))
+
+        # Format the response data
+        response_data = [
+            {
+                "timestamp": record.get("day"),
+                "consumption": record.get("total_consumption"),
+            }
+            for record in data
+        ]
+        return Response(response_data)
 
     # Method to handle monthly data aggregation by week
     def get_monthly_data(self, request):
@@ -529,7 +566,7 @@ class FilterConsumptionView(APIView):
             try:
                 device = Device.objects.get(id=device_id, user=request.user)
             except Device.DoesNotExist:
-                return Response({"error": "Device not found"}, status=404)
+                return Response({"error": DEVICE_NOT_FOUND_MSG}, status=404)
             records = ConsumptionRecord.objects.filter(
                 device=device,
                 timestamp__range=(start_date, now)
