@@ -4,7 +4,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContai
 import api from '../../../services/api';
 import moment from 'moment';
 
-// Custom Tooltip to match the color and style of the badge
+// Custom Tooltip for the chart
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload?.length) {
         return (
@@ -15,6 +15,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         );
     }
 
+    // If there is no active tooltip, return null
     return null;
 };
 
@@ -45,7 +46,7 @@ CustomXAxisTick.propTypes = {
 const FilterDataChart = ({ filters }) => {
     const [data, setData] = useState([]);
 
-    // Process response data
+    // Process response data to remove duplicates, format timestamps, and sort by timestamp
     const processResponseData = useCallback((responseData) => {
         return responseData
             .filter((record, index, self) =>
@@ -58,7 +59,7 @@ const FilterDataChart = ({ filters }) => {
             .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
     }, []);
 
-    // Fetch and process data
+    // Fetch and process data based on the selected filters
     const fetchData = useCallback(async () => {
         try {
             const response = await api.get('/filter-consumption/', {
@@ -74,6 +75,7 @@ const FilterDataChart = ({ filters }) => {
         }
     }, [filters, processResponseData]);
 
+    // Fetch data when the filters change
     useEffect(() => {
         if (filters.device && filters.timeFrame) {
             fetchData();
@@ -81,7 +83,7 @@ const FilterDataChart = ({ filters }) => {
     }, [fetchData, filters]);
 
     return (
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="98%" height="99%">
             <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="formattedTimestamp" tick={<CustomXAxisTick />} />
