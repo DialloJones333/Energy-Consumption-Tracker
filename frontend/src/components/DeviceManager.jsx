@@ -150,7 +150,7 @@ const DeviceManager = () => {
                         <button
                             className="bg-stone-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
                             type="button"
-                            onClick={() => navigate('/dashboard')}
+                            onClick={() => navigate('/remove-devices')}
                         >
                             Remove Device
                         </button>
