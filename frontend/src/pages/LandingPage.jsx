@@ -9,8 +9,8 @@ const LandingPage = () => (
         <main className="p-10 flex-grow">
             <section className="text-center mb-10">
                 <h1 className="text-6xl font-bold mb-8">EcoEfficient Living</h1>
-                <p className="text-slate-800 text-2xl mb-8 max-w-4xl mx-auto">
-                    Welcome to EcoEfficient Living – 
+                <p className="text-slate-800 font-semibold text-2xl mb-8 max-w-4xl mx-auto">
+                    Welcome to EcoEfficient Living –
                     a platform designed to empower you with the knowledge and tools to take control of your home energy consumption while reducing 
                     your carbon footprint and saving on energy bills with just a few clicks.
                     <br /><br />
@@ -23,7 +23,7 @@ const LandingPage = () => (
                     interact with your energy data by simply hovering over the charts.
                 </p>
                 <a href='https://github.com/DialloJones333/Energy-Consumption-Tracker?tab=readme-ov-file#readme' target="_blank" rel="noopener noreferrer">
-                    <button className="bg-stone-400 shadow-lg text-gray-100 py-2 px-4 rounded-lg hover:bg-green-500">Learn More</button>
+                    <button className="bg-stone-400 shadow-lg text-gray-100 font-semibold py-2 px-4 rounded-lg hover:bg-green-500">Learn More</button>
                 </a> 
             </section>
             <LandingCharts />
