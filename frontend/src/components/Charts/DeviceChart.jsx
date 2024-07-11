@@ -21,11 +21,12 @@ const DeviceChart = ({ token }) => {
                 });
                 // Set the data to the devices with the calculated consumption
                 setData(response.data.map(device => ({
+                    id: device.id,
                     brand: device.brand,
                     deviceType: device.device_type,
                     kWh: calculateConsumption(device.device_type, device.hours_used_per_day)
                 })));
-            // Catch any errors and log them to the console
+                // Catch any errors and log them to the console
             } catch (error) {
                 console.error('Failed to fetch devices:', error);
             }
@@ -117,7 +118,7 @@ const DeviceChart = ({ token }) => {
                     {payload.brand}
                 </text>
                 <text x={ex} y={ey + 15} textAnchor={textAnchor} fill="#1e293b" style={{ fontSize: '12px', fontWeight: 'bold' }}>
-                    {getDeviceTypeAbbreviation(payload.deviceType)}
+                    {`${getDeviceTypeAbbreviation(payload.deviceType)} (ID: ${payload.id})`}
                 </text>
                 <Sector
                     cx={cx}
@@ -173,20 +174,21 @@ const DeviceChart = ({ token }) => {
 
 DeviceChart.propTypes = {
     token: PropTypes.string.isRequired,
-    cx: PropTypes.number.isRequired,
-    cy: PropTypes.number.isRequired,
-    midAngle: PropTypes.number.isRequired,
-    innerRadius: PropTypes.number.isRequired,
-    outerRadius: PropTypes.number.isRequired,
-    startAngle: PropTypes.number.isRequired,
-    endAngle: PropTypes.number.isRequired,
-    fill: PropTypes.string.isRequired,
+    cx: PropTypes.number,
+    cy: PropTypes.number,
+    midAngle: PropTypes.number,
+    innerRadius: PropTypes.number,
+    outerRadius: PropTypes.number,
+    startAngle: PropTypes.number,
+    endAngle: PropTypes.number,
+    fill: PropTypes.string,
     payload: PropTypes.shape({
-        brand: PropTypes.string.isRequired,
-        deviceType: PropTypes.string.isRequired
-    }).isRequired,
-    percent: PropTypes.number.isRequired,
-    kWh: PropTypes.number.isRequired,
+        brand: PropTypes.string,
+        deviceType: PropTypes.string,
+        id: PropTypes.number,
+    }),
+    percent: PropTypes.number,
+    kWh: PropTypes.number,
 };
 
 export default DeviceChart;

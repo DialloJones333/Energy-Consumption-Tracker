@@ -18,7 +18,7 @@ const FilterDataForm = ({ onFilterChange }) => {
                 const response = await api.get('/devices/');
                 // Update the devices state with the fetched devices
                 setDevices(response.data);
-            // Catch any errors and display them on the console
+                // Catch any errors and display them on the console
             } catch (error) {
                 console.error("Error fetching devices:", error);
             }
@@ -49,7 +49,7 @@ const FilterDataForm = ({ onFilterChange }) => {
                             <option value="">Select device</option>
                             <option value="All">All</option>
                             {devices.map((device) => (
-                                <option key={device.id} value={device.id}>{device.device_type}</option>
+                                <option key={device.id} value={device.id}>{`${device.device_type} (ID: ${device.id})`}</option>
                             ))}
                         </select>
                     </div>

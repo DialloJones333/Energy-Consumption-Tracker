@@ -81,7 +81,7 @@ const DeviceManager = () => {
                         >
                             <option value="">Select device</option>
                             {devices.map((device) => (
-                                <option key={device.id} value={device.id}>{device.device_type}</option>
+                                <option key={device.id} value={device.id}>{`${device.device_type} (ID: ${device.id})`}</option>
                             ))}
                         </select>
                     </div>
