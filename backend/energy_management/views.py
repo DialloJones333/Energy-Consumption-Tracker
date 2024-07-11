@@ -107,7 +107,7 @@ class LogoutView(APIView):
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from django.contrib.auth.models import User
-from django.db.models.functions import TruncWeek, TruncDay
+from django.db.models.functions import TruncWeek, TruncDay, TruncHour
 from .models import (
     UserProfile,
     Device,
@@ -316,39 +316,38 @@ class ConsumptionRecordViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = ConsumptionRecordSerializer
 
-    # Custom queryset function to filter records by current user
+    # Custom queryset to filter records by the current user
     def get_queryset(self):
         return ConsumptionRecord.objects.filter(device__user=self.request.user)
 
-    # GET method for returning the total consumption of a device
+    # GET method for returning the total consumption of a device within the last 24 hours
     @action(detail=False, methods=['get'])
     def total_consumption(self, request):
         # Get the current time
         now = timezone.now()
-        # Set the start of the day to now and the end of the day to 24 hours from now
-        start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
-        end_of_day = now.replace(hour=23, minute=59, second=59, microsecond=999999)
+        # Set the start time to 24 hours ago
+        start_of_day = now - timezone.timedelta(hours=24)
 
-        # Fetch consumption records for the current user within the last day
+        # Fetch consumption records for the current user within the last 24 hours
         consumption_records = (
             ConsumptionRecord.objects.filter(
                 device__user=request.user,
-                timestamp__range=(start_of_day, end_of_day),
-            )  # Get the sum of the consumption values for each hour within the last 24 hours.
-            .values("timestamp__hour")
-            .annotate(total_consumption=Sum("consumption"))
-            .order_by("timestamp__hour")  # Sort by hour
+                timestamp__range=(start_of_day, now),
+            )
+            .annotate(hour=TruncHour('timestamp'))  # Truncate the timestamp to the hour
+            .values('hour')
+            .annotate(total_consumption=Sum('consumption'))  # Sum the consumption values for each hour
+            .order_by('hour')  # Sort by hour
         )
 
         # Log the outputs to determine all is working as expected
         logger.debug(f"Start of day: {start_of_day}")
-        logger.debug(f"End of day: {end_of_day}")
         logger.debug(f"Consumption records: {consumption_records}")
 
-        # Return the hour and total consumption from the users consumption records
+        # Format the data for the response
         data = [
             {
-                'hour': record['timestamp__hour'],
+                'hour': record['hour'].hour,  # Extract the hour from the truncated timestamp
                 'total_consumption': record['total_consumption']
             }
             for record in consumption_records

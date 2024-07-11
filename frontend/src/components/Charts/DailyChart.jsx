@@ -6,15 +6,18 @@ import api from '../../../services/api';
 const DailyChart = ({ token }) => {
     const [data, setData] = useState([]);
 
+    // Function to fetch consumption data from the backend
     useEffect(() => {
         const fetchConsumptionData = async () => {
             try {
+                // Make an API request to get the total consumption data
                 const response = await api.get('/consumption-records/total_consumption/', {
                     headers: {
                         'Authorization': `Token ${token}`
                     }
                 });
 
+                // Format the data to include AM/PM notation
                 const formattedData = response.data.map(item => {
                     let hour = item.hour;
                     let period = 'AM';
@@ -34,12 +37,14 @@ const DailyChart = ({ token }) => {
                     };
                 });
 
+                // Update the state with the formatted data
                 setData(formattedData);
             } catch (error) {
                 console.error('Failed to fetch consumption data:', error);
             }
         };
 
+        // Call the fetchConsumptionData function when the component mounts
         fetchConsumptionData();
     }, [token]);
 
