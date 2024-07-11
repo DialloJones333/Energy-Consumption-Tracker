@@ -213,7 +213,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 class DeviceViewSet(viewsets.ModelViewSet):
     serializer_class = DeviceSerializer
     permission_classes = [IsAuthenticated]
-    
+
     # Custom queryset function to filter devices by current user
     def get_queryset(self):
         return Device.objects.filter(user=self.request.user)
@@ -224,22 +224,22 @@ class DeviceViewSet(viewsets.ModelViewSet):
         user = request.user
         # Get the data from the request
         data = request.data
-        
+
         # Get the devices brand
         brand = data.get('device_brand')
         # Get the device type
         device_type = data.get('device_type')
-        
+
         # Get the usage hours
         hours_used_per_day = data.get('hours_used')
-        
+
         # Check if either fields are blank
         if not brand or not device_type or not hours_used_per_day:
             return Response(
                 {'error': 'Neither fields can be blank'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-            
+
         # Ensure hours_used_per_day is a valid float
         try:
             hours_used_per_day = float(hours_used_per_day)
@@ -248,7 +248,7 @@ class DeviceViewSet(viewsets.ModelViewSet):
                 {'error': 'Average daily usage must be a valid number'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-            
+
         # Ensure user cannot input a time over 24 hours
         if hours_used_per_day > 24.0:
             return Response(
@@ -263,7 +263,7 @@ class DeviceViewSet(viewsets.ModelViewSet):
             device_type=device_type,
             hours_used_per_day=hours_used_per_day
         )
-        
+
         # Calculate initial consumption record synchronously
         now = timezone.now()
         daily_consumption = device.daily_consumption
@@ -277,13 +277,30 @@ class DeviceViewSet(viewsets.ModelViewSet):
 
         # Trigger Celery task for daily consumption updates
         generate_consumption_records.delay()
-        
+
         # Trigger Celery task for monthly consumption updates
         generate_monthly_consumption.delay()
 
         # Serialize the newly created device and return it
         serializer = self.get_serializer(device)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    # DELETE method for removing a device
+    def destroy(self, request, *args, **kwargs):
+        # Custom behavior before deletion can be added here
+        instance = self.get_object()
+
+        # Example: Log the deletion
+        user = request.user
+        device_id = instance.id
+        device_name = instance.device_type
+        print(f"User {user} is deleting device {device_name} with ID {device_id}")
+
+        # Perform the actual deletion
+        response = super().destroy(request, *args, **kwargs)
+
+        # Return the response
+        return response
 
 
 # ViewSet for ConsumptionRecord model
