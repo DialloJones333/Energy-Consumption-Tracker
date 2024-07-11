@@ -30,7 +30,7 @@ const data = [
     {
         name: '6th',
         Weekly: 4200,
-        Monthly: 1398,
+        Monthly: 1198,
     },
     {
         name: '7th',
