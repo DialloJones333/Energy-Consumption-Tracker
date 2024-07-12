@@ -1,4 +1,4 @@
-import { PureComponent } from 'react';
+import { useState } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
 
 const data = [
@@ -10,7 +10,7 @@ const data = [
 
 const renderActiveShape = (props) => {
     const RADIAN = Math.PI / 180;
-    const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
+    const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent } = props;
     const sin = Math.sin(-RADIAN * midAngle);
     const cos = Math.cos(-RADIAN * midAngle);
     const sx = cx + (outerRadius + 10) * cos;
@@ -23,8 +23,9 @@ const renderActiveShape = (props) => {
 
     return (
         <g>
-            <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-                {payload.name}
+            <text x={cx} y={cy} dy={-10} textAnchor="middle" fill={fill} style={{ fontSize: '14px' }}>{`kWh: ${payload.value}`}</text>
+            <text x={cx} y={cy} dy={10} textAnchor="middle" fill={fill} style={{ fontSize: '14px' }}>
+                {`Rate ${(percent * 100).toFixed(2)}%`}
             </text>
             <Sector
                 cx={cx}
@@ -46,45 +47,38 @@ const renderActiveShape = (props) => {
             />
             <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
             <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#1e293b" style={{ fontSize: '12px' }}>{`Value ${value}`}</text>
-            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#1e293b" style={{ fontSize: '12px' }}>
-                {`(Rate ${(percent * 100).toFixed(2)}%)`}
+            <text x={ex} y={ey} textAnchor={textAnchor} fill="#1e293b" style={{ fontSize: '16px', fontWeight: 'bold' }}>
+                {payload.name}
             </text>
         </g>
     );
 };
 
-class LandingPieChart extends PureComponent {
-    state = {
-        activeIndex: 0,
+const LandingPieChart = () => {
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    const onPieEnter = (_, index) => {
+        setActiveIndex(index);
     };
 
-    onPieEnter = (_, index) => {
-        this.setState({
-            activeIndex: index,
-        });
-    };
-
-    render() {
-        return (
-            <ResponsiveContainer width="100%" height="100%">
-                <PieChart width={200} height={200}>
-                    <Pie
-                        activeIndex={this.state.activeIndex}
-                        activeShape={renderActiveShape}
-                        data={data}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={40}
-                        outerRadius={60}
-                        fill="#4ade80"
-                        dataKey="value"
-                        onMouseEnter={this.onPieEnter}
-                    />
-                </PieChart>
-            </ResponsiveContainer>
-        );
-    }
-}
+    return (
+        <ResponsiveContainer width="100%" height="100%">
+            <PieChart width={350} height={350}>
+                <Pie
+                    activeIndex={activeIndex}
+                    activeShape={renderActiveShape}
+                    data={data}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={50}
+                    outerRadius={70}
+                    fill="#4ade80"
+                    dataKey="value"
+                    onMouseEnter={onPieEnter}
+                />
+            </PieChart>
+        </ResponsiveContainer>
+    );
+};
 
 export default LandingPieChart;

@@ -4,8 +4,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 const data = [
     {
         name: '1st',
-        Weekly: 3000,
-        Monthly: 2200,
+        Weekly: 1198,
+        Monthly: 4200,
     },
     {
         name: '2nd',
@@ -14,7 +14,7 @@ const data = [
     },
     {
         name: '3rd',
-        Weekly: 400,
+        Weekly: 600,
         Monthly: 5500,
     },
     {
@@ -24,13 +24,13 @@ const data = [
     },
     {
         name: '5th',
-        Weekly: 800,
-        Monthly: 4800,
+        Weekly: 600,
+        Monthly: 5500,
     },
     {
         name: '6th',
         Weekly: 4200,
-        Monthly: 1398,
+        Monthly: 1198,
     },
     {
         name: '7th',

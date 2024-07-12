@@ -4,31 +4,31 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 const data = [
     {
         name: '12AM',
-        Energy: 2400,
+        Energy: 1200,
     },
     {
         name: '2AM',
-        Energy: 1398,
+        Energy: 1600,
     },
     {
         name: '4AM',
-        Energy: 1100,
+        Energy: 2000,
     },
     {
         name: '6AM',
-        Energy: 3908,
+        Energy: 2400,
     },
     {
         name: '8AM',
-        Energy: 4800,
+        Energy: 2800,
     },
     {
         name: '10AM',
-        Energy: 3800,
+        Energy: 3200,
     },
     {
         name: '12PM',
-        Energy: 4300,
+        Energy: 3600,
     },
 ];
 

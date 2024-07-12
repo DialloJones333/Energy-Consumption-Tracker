@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../services/api';
 
+// Component for the filter data form
 const FilterDataForm = ({ onFilterChange }) => {
+    // State variables for the device and time frame filters
     const [timeFrame, setTimeFrame] = useState('');
     const [timeFrames] = useState(['1 Day', '1 Week', '1 Month', '1 Year']);
     const [device, setDevice] = useState('');
@@ -12,17 +14,22 @@ const FilterDataForm = ({ onFilterChange }) => {
         // Fetch user devices
         const fetchDevices = async () => {
             try {
+                // Send a GET request to the devices endpoint
                 const response = await api.get('/devices/');
+                // Update the devices state with the fetched devices
                 setDevices(response.data);
+                // Catch any errors and display them on the console
             } catch (error) {
                 console.error("Error fetching devices:", error);
             }
         };
 
+        // Call the fetchDevices function
         fetchDevices();
     }, []);
 
     const handleApply = () => {
+        // Call the onFilterChange function with the device and time frame values
         onFilterChange({ device, timeFrame });
     };
 
@@ -42,7 +49,7 @@ const FilterDataForm = ({ onFilterChange }) => {
                             <option value="">Select device</option>
                             <option value="All">All</option>
                             {devices.map((device) => (
-                                <option key={device.id} value={device.id}>{device.device_type}</option>
+                                <option key={device.id} value={device.id}>{`${device.device_type} (ID: ${device.id})`}</option>
                             ))}
                         </select>
                     </div>

@@ -5,6 +5,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import DeviceManagement from './pages/DeviceManagement';
+import RemoveDevices from './pages/RemoveDevices';
 import FilterData from './pages/FilterData';
 import TipsAndTricks from './pages/TipsAndTricks';
 import Profile from './pages/Profile';
@@ -24,6 +25,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/device-management" element={<DeviceManagement />} />
+            <Route path="/remove-devices" element={<RemoveDevices />} />
             <Route path="/filter-consumption" element={<FilterData />} />
             <Route path="/tips-and-tricks" element={<TipsAndTricks />} />
             <Route path="/profile" element={<Profile />} />

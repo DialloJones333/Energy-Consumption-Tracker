@@ -103,17 +103,18 @@ class ConsumptionRecordSerializer(serializers.ModelSerializer):
         fields = ['device', 'date', 'timestamp', 'consumption', 'unit']
 
 
+# Serializer for filtering data from the ConsumptionRecord model
+class FilteredConsumptionRecordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ConsumptionRecord
+        fields = ['timestamp', 'consumption', 'device']
+
+
 # Serializer for MonthlyConsumption model
 class MonthlyConsumptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = MonthlyConsumption
         fields = ['device', 'year', 'month', 'total_consumption', 'unit']
-
-
-class FilteredConsumptionRecordSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ConsumptionRecord
-        fields = ['timestamp', 'consumption', 'device']
 
 
 # Serializer for NotificationPreferences model

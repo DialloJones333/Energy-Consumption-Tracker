@@ -32,7 +32,7 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     instance.userprofile.save()
 
 
-# Device model to store information about a users device
+# Device model to store information about each device
 class Device(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     brand = models.CharField(max_length=30)
@@ -41,17 +41,29 @@ class Device(models.Model):
 
     # Consumption rates (in kWh) for each device type
     CONSUMPTION_RATES = {
-        'LED Bulbs': 0.01,
-        'Incandescent Bulbs': 0.06,
-        'CFL Bulbs': 0.015,
-        'Smart Bulbs': 0.01,
-        'Smart Plugs': 0.05,
-        'Smart Thermostats': 0.1,
-        'Fans': 0.05,
-        'Televisions': 0.1,
-        'Gaming Consoles': 0.2,
-        'Desktop Computers': 0.3,
-        'Laptops': 0.1
+        "LED Bulbs": 0.01,
+        "Incandescent Bulbs": 0.06,
+        "CFL Bulbs": 0.015,
+        "Smart Bulbs": 0.01,
+        "Smart Plugs": 0.05,
+        "Smart Thermostats": 0.1,
+        "Fans": 0.05,
+        "Televisions": 0.1,
+        "Gaming Consoles": 0.2,
+        "Desktop Computers": 0.3,
+        "Laptops": 0.1,
+        "Microwave Ovens": 1.2,
+        "Refrigerators": 1.5,
+        "Washing Machines": 0.3,
+        "Dryers": 3.0,
+        "Dishwashers": 1.5,
+        "Air Conditioners": 1.3,
+        "Heaters": 1.5,
+        "Water Heaters": 4.0,
+        "Electric Ovens": 2.0,
+        "Electric Kettles": 0.1,
+        "Hair Dryers": 1.5,
+        "Coffee Makers": 0.1,
     }
 
     # Calculate the daily consumption of a device based on its type and the number of hours used per day.

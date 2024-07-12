@@ -6,10 +6,19 @@ import api from '../../services/api';
 const DeviceManager = () => {
     const DeviceInputRef = useRef(null);
     const [deviceType, setDeviceType] = useState('');
-    const [deviceTypes] = useState(['LED Bulbs', 'Incandescent Bulbs', 'CFL Bulbs', 'Smart Bulbs', 'Smart Plugs', 'Smart Thermostats', 'Fans', 'Televisions', 'Gaming Consoles', 'Desktop Computers', 'Laptops']);
+    const [deviceTypes] = useState([
+        'LED Bulbs', 'Incandescent Bulbs', 'CFL Bulbs', 'Smart Bulbs', 'Smart Plugs', 'Smart Thermostats',
+        'Fans', 'Televisions', 'Gaming Consoles', 'Desktop Computers', 'Laptops', 'Microwave Ovens',
+        'Refrigerators', 'Washing Machines', 'Dryers', 'Dishwashers', 'Air Conditioners', 'Heaters',
+        'Water Heaters', 'Electric Ovens', 'Electric Kettles', 'Hair Dryers', 'Coffee Makers'
+    ]);
     const [hoursUsed, setHoursUsed] = useState('');
     const [brand, setBrand] = useState('');
-    const [brands] = useState(['Apple', 'Samsung', 'LG', 'Sony', 'Dell', 'HP', 'Other']);
+    const [brands] = useState([
+        'Apple', 'Samsung', 'LG', 'Sony', 'Dell', 'HP', 'Philips', 'Panasonic', 'Bosch', 'Whirlpool',
+        'GE', 'Toshiba', 'Asus', 'Acer', 'Lenovo', 'Microsoft', 'Nokia', 'Huawei', 'Xiaomi',
+        'Google', 'Amazon', 'Other'
+    ]);
     const [otherBrand, setOtherBrand] = useState('');
     const [messages, setMessages] = useState([]);
 
@@ -64,7 +73,7 @@ const DeviceManager = () => {
         <div className="flex items-center justify-center w-full">
             <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
                 <h2 className="text-2xl font-bold text-center mb-6">
-                    Add Device
+                    Add Devices
                 </h2>
                 {renderError()}
                 <form>
@@ -137,6 +146,13 @@ const DeviceManager = () => {
                             onClick={handleDevices}
                         >
                             Add Device
+                        </button>
+                        <button
+                            className="bg-stone-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
+                            type="button"
+                            onClick={() => navigate('/remove-devices')}
+                        >
+                            Remove Device
                         </button>
                     </div>
                 </form>

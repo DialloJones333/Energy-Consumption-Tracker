@@ -18,6 +18,10 @@ The primary objective of this project is to develop a user-friendly web applicat
 
 - Users can comprehensively filter their consumption data based on a certain time frame and even a specific device, allowing for detailed and customized analysis.
 
+### Interactive Charts
+
+- Interact with our intuitive charts to explore your energy data. Hover over the charts for detailed insights, click to filter data, and observe changes in your consumption over time.
+
 ### Customizable Alerts and Notifications
 
 - The system notifies users when their energy consumption exceeds set thresholds, helping to prevent excessive usage and unexpected high costs.

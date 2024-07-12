@@ -3,32 +3,42 @@ import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
 import PropTypes from 'prop-types';
 import api from '../../../services/api';
 
+// Component for rendering the device chart
 const DeviceChart = ({ token }) => {
     const [data, setData] = useState([]);
     const [activeIndex, setActiveIndex] = useState(0);
 
     useEffect(() => {
+        // Function for fetching the users devices
         const fetchDevices = async () => {
             try {
+                // Send a GET request to the devices endpoint
                 const response = await api.get('/devices/', {
+                    // Set the Authorization header to the users token
                     headers: {
                         'Authorization': `Token ${token}`
                     }
                 });
+                // Set the data to the devices with the calculated consumption
                 setData(response.data.map(device => ({
+                    id: device.id,
                     brand: device.brand,
                     deviceType: device.device_type,
                     kWh: calculateConsumption(device.device_type, device.hours_used_per_day)
                 })));
+                // Catch any errors and log them to the console
             } catch (error) {
                 console.error('Failed to fetch devices:', error);
             }
         };
 
+        // Call the fetchDevices function
         fetchDevices();
     }, [token]);
 
+    // Function to calculate the consumption of a device
     const calculateConsumption = (deviceType, hoursUsed) => {
+        // Consumption rates for different devices in kWh
         const consumptionRates = {
             'LED Bulbs': 0.01,
             'Incandescent Bulbs': 0.06,
@@ -40,12 +50,25 @@ const DeviceChart = ({ token }) => {
             'Televisions': 0.1,
             'Gaming Consoles': 0.15,
             'Desktop Computers': 0.2,
-            'Laptops': 0.05
+            'Laptops': 0.05,
+            'Microwave Ovens': 1.2,
+            'Refrigerators': 1.5,
+            'Washing Machines': 0.3,
+            'Dryers': 3.0,
+            'Dishwashers': 1.5,
+            'Air Conditioners': 1.3,
+            'Heaters': 1.5,
+            'Water Heaters': 4.0,
+            'Electric Ovens': 2.0,
+            'Electric Kettles': 0.1,
+            'Hair Dryers': 1.5,
+            'Coffee Makers': 0.1
         };
+        // Return the consumption rate multiplied by the hours used
         return consumptionRates[deviceType] * hoursUsed;
     };
 
-
+    // Function to get the abbreviation for a device type
     const getDeviceTypeAbbreviation = (deviceType) => {
         const abbreviations = {
             'LED Bulbs': 'LED',
@@ -58,8 +81,21 @@ const DeviceChart = ({ token }) => {
             'Televisions': 'TV',
             'Gaming Consoles': 'GC',
             'Desktop Computers': 'PC',
-            'Laptops': 'Lap'
+            'Laptops': 'Lap',
+            'Microwave Ovens': 'MO',
+            'Refrigerators': 'Ref',
+            'Washing Machines': 'WM',
+            'Dryers': 'Dry',
+            'Dishwashers': 'DW',
+            'Air Conditioners': 'AC',
+            'Heaters': 'HTR',
+            'Water Heaters': 'WH',
+            'Electric Ovens': 'EO',
+            'Electric Kettles': 'EK',
+            'Hair Dryers': 'HD',
+            'Coffee Makers': 'CM'
         };
+        // Return the abbreviation or the device type if no abbreviation exists
         return abbreviations[deviceType] || deviceType;
     };
 
@@ -82,7 +118,7 @@ const DeviceChart = ({ token }) => {
                     {payload.brand}
                 </text>
                 <text x={ex} y={ey + 15} textAnchor={textAnchor} fill="#1e293b" style={{ fontSize: '12px', fontWeight: 'bold' }}>
-                    {getDeviceTypeAbbreviation(payload.deviceType)}
+                    {`${getDeviceTypeAbbreviation(payload.deviceType)} (ID: ${payload.id})`}
                 </text>
                 <Sector
                     cx={cx}
@@ -138,20 +174,21 @@ const DeviceChart = ({ token }) => {
 
 DeviceChart.propTypes = {
     token: PropTypes.string.isRequired,
-    cx: PropTypes.number.isRequired,
-    cy: PropTypes.number.isRequired,
-    midAngle: PropTypes.number.isRequired,
-    innerRadius: PropTypes.number.isRequired,
-    outerRadius: PropTypes.number.isRequired,
-    startAngle: PropTypes.number.isRequired,
-    endAngle: PropTypes.number.isRequired,
-    fill: PropTypes.string.isRequired,
+    cx: PropTypes.number,
+    cy: PropTypes.number,
+    midAngle: PropTypes.number,
+    innerRadius: PropTypes.number,
+    outerRadius: PropTypes.number,
+    startAngle: PropTypes.number,
+    endAngle: PropTypes.number,
+    fill: PropTypes.string,
     payload: PropTypes.shape({
-        brand: PropTypes.string.isRequired,
-        deviceType: PropTypes.string.isRequired
-    }).isRequired,
-    percent: PropTypes.number.isRequired,
-    kWh: PropTypes.number.isRequired,
+        brand: PropTypes.string,
+        deviceType: PropTypes.string,
+        id: PropTypes.number,
+    }),
+    percent: PropTypes.number,
+    kWh: PropTypes.number,
 };
 
 export default DeviceChart;

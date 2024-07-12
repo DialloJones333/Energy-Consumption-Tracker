@@ -1,5 +1,4 @@
 import logging
-from datetime import timedelta
 from rest_framework import status
 from django.utils import timezone
 from django.db.models import Sum
@@ -9,7 +8,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework.viewsets import ViewSet
-from .tasks import generate_consumption_records, generate_monthly_consumption, send_weekly_notifications, send_monthly_notifications
+from .tasks import generate_consumption_records, generate_monthly_consumption
 from .serializers import RegisterSerializer, CurrentUserSerializer
 
 # Setting up a logger for debugging purposes
@@ -105,9 +104,10 @@ class LogoutView(APIView):
 
 
 # ViewSets for models in my project
-from rest_framework import viewsets, generics
+from rest_framework import viewsets
 from rest_framework.decorators import action
 from django.contrib.auth.models import User
+from django.db.models.functions import TruncWeek, TruncDay, TruncHour
 from .models import (
     UserProfile,
     Device,
@@ -116,7 +116,15 @@ from .models import (
     Notification,
     NotificationPreferences,
 )
-from .serializers import UserSerializer, UserProfileSerializer, DeviceSerializer, ConsumptionRecordSerializer, NotificationPreferencesSerializer, NotificationMessageSerializer, FilteredConsumptionRecordSerializer
+from .serializers import (
+    UserSerializer,
+    UserProfileSerializer,
+    DeviceSerializer,
+    ConsumptionRecordSerializer,
+    NotificationPreferencesSerializer,
+    NotificationMessageSerializer,
+    FilteredConsumptionRecordSerializer,
+)
 
 # ViewSet for Current User
 class CurrentUserViewSet(ViewSet):
@@ -213,7 +221,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 class DeviceViewSet(viewsets.ModelViewSet):
     serializer_class = DeviceSerializer
     permission_classes = [IsAuthenticated]
-    
+
     # Custom queryset function to filter devices by current user
     def get_queryset(self):
         return Device.objects.filter(user=self.request.user)
@@ -224,22 +232,22 @@ class DeviceViewSet(viewsets.ModelViewSet):
         user = request.user
         # Get the data from the request
         data = request.data
-        
+
         # Get the devices brand
         brand = data.get('device_brand')
         # Get the device type
         device_type = data.get('device_type')
-        
+
         # Get the usage hours
         hours_used_per_day = data.get('hours_used')
-        
+
         # Check if either fields are blank
         if not brand or not device_type or not hours_used_per_day:
             return Response(
                 {'error': 'Neither fields can be blank'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-            
+
         # Ensure hours_used_per_day is a valid float
         try:
             hours_used_per_day = float(hours_used_per_day)
@@ -248,7 +256,7 @@ class DeviceViewSet(viewsets.ModelViewSet):
                 {'error': 'Average daily usage must be a valid number'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-            
+
         # Ensure user cannot input a time over 24 hours
         if hours_used_per_day > 24.0:
             return Response(
@@ -263,7 +271,7 @@ class DeviceViewSet(viewsets.ModelViewSet):
             device_type=device_type,
             hours_used_per_day=hours_used_per_day
         )
-        
+
         # Calculate initial consumption record synchronously
         now = timezone.now()
         daily_consumption = device.daily_consumption
@@ -277,7 +285,7 @@ class DeviceViewSet(viewsets.ModelViewSet):
 
         # Trigger Celery task for daily consumption updates
         generate_consumption_records.delay()
-        
+
         # Trigger Celery task for monthly consumption updates
         generate_monthly_consumption.delay()
 
@@ -285,45 +293,61 @@ class DeviceViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(device)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    # DELETE method for removing a device
+    def destroy(self, request, *args, **kwargs):
+        # Custom behavior before deletion can be added here
+        instance = self.get_object()
+
+        # Example: Log the deletion
+        user = request.user
+        device_id = instance.id
+        device_name = instance.device_type
+        print(f"User {user} is deleting device {device_name} with ID {device_id}")
+
+        # Perform the actual deletion
+        response = super().destroy(request, *args, **kwargs)
+
+        # Return the response
+        return response
+
 
 # ViewSet for ConsumptionRecord model
 class ConsumptionRecordViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = ConsumptionRecordSerializer
 
-    # Custom queryset function to filter records by current user
+    # Custom queryset to filter records by the current user
     def get_queryset(self):
         return ConsumptionRecord.objects.filter(device__user=self.request.user)
 
-    # GET method for returning the total consumption of a device
+    # GET method for returning the total consumption of a device within the last 24 hours
     @action(detail=False, methods=['get'])
     def total_consumption(self, request):
         # Get the current time
         now = timezone.now()
-        # Set the start of the day to now and the end of the day to 24 hours from now
-        start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
-        end_of_day = now.replace(hour=23, minute=59, second=59, microsecond=999999)
+        # Set the start time to 24 hours ago
+        start_of_day = now - timezone.timedelta(hours=24)
 
-        # Fetch consumption records for the current user within the last day
+        # Fetch consumption records for the current user within the last 24 hours
         consumption_records = (
             ConsumptionRecord.objects.filter(
                 device__user=request.user,
-                timestamp__range=(start_of_day, end_of_day),
-            )  # Get the sum of the consumption values for each hour within the last 24 hours.
-            .values("timestamp__hour")
-            .annotate(total_consumption=Sum("consumption"))
-            .order_by("timestamp__hour")  # Sort by hour
+                timestamp__range=(start_of_day, now),
+            )
+            .annotate(hour=TruncHour('timestamp'))  # Truncate the timestamp to the hour
+            .values('hour')
+            .annotate(total_consumption=Sum('consumption'))  # Sum the consumption values for each hour
+            .order_by('hour')  # Sort by hour
         )
 
         # Log the outputs to determine all is working as expected
         logger.debug(f"Start of day: {start_of_day}")
-        logger.debug(f"End of day: {end_of_day}")
         logger.debug(f"Consumption records: {consumption_records}")
 
-        # Return the hour and total consumption from the users consumption records
+        # Format the data for the response
         data = [
             {
-                'hour': record['timestamp__hour'],
+                'hour': record['hour'].hour,  # Extract the hour from the truncated timestamp
                 'total_consumption': record['total_consumption']
             }
             for record in consumption_records
@@ -333,7 +357,7 @@ class ConsumptionRecordViewSet(viewsets.ModelViewSet):
         return Response(data)
 
 
-# API view MonthlyConsumption model
+# API view for MonthlyConsumption model
 class YearlyConsumptionView(APIView):
     def get(self, request):
         # Get the current year
@@ -358,7 +382,7 @@ class YearlyConsumptionView(APIView):
         return Response(response_data)
 
 
-# ViewSet for NotificationPreferences model
+# API for NotificationPreferences model
 class NotificationPreferencesView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -402,7 +426,7 @@ class NotificationPreferencesView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# ViewSet for Notification model
+# API view for Notification model
 class NotificationView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -444,27 +468,33 @@ class NotificationView(APIView):
             return Response(
                 {"error": "Notification not found."}, status=status.HTTP_404_NOT_FOUND
             )
-            
-            
+
+
+# Define a constant for the "Device not found" message
+DEVICE_NOT_FOUND_MSG = "Device not found"
+
+# API view for filtering data from the ConsumptionRecord model
 class FilterConsumptionView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         device_id = request.query_params.get('device')
         time_frame = request.query_params.get('time_frame')
-
         now = timezone.now()
+
+        # Determine the start date based on the selected time frame
         if time_frame == '1 Day':
-            start_date = now - timedelta(days=1)
+            start_date = now - timezone.timedelta(days=1)
         elif time_frame == '1 Week':
-            start_date = now - timedelta(weeks=1)
+            return self.get_weekly_data(request)
         elif time_frame == '1 Month':
-            start_date = now - timedelta(days=30)
+            return self.get_monthly_data(request)
         elif time_frame == '1 Year':
-            start_date = now - timedelta(days=365)
+            return self.get_yearly_data(request)
         else:
             return Response({"error": "Invalid time frame"}, status=400)
 
+        # Retrieve records for all devices or a specific device within the time range
         if device_id == 'All':
             records = ConsumptionRecord.objects.filter(
                 device__user=request.user,
@@ -474,12 +504,99 @@ class FilterConsumptionView(APIView):
             try:
                 device = Device.objects.get(id=device_id, user=request.user)
             except Device.DoesNotExist:
-                return Response({"error": "Device not found"}, status=404)
-
+                return Response({"error": DEVICE_NOT_FOUND_MSG}, status=404)
             records = ConsumptionRecord.objects.filter(
                 device=device,
                 timestamp__range=(start_date, now)
             )
 
+        # Serialize the records and return the response
         serializer = FilteredConsumptionRecordSerializer(records, many=True)
         return Response(serializer.data)
+
+    # Method to handle weekly data aggregation by day
+    def get_weekly_data(self, request):
+        now = timezone.now()
+        start_date = now - timezone.timedelta(weeks=1)
+        device_id = request.query_params.get('device')
+
+        # Retrieve records for all devices or a specific device within the weekly time range
+        if device_id == 'All':
+            records = ConsumptionRecord.objects.filter(
+                device__user=request.user,
+                timestamp__range=(start_date, now)
+            )
+        else:
+            try:
+                device = Device.objects.get(id=device_id, user=request.user)
+            except Device.DoesNotExist:
+                return Response({"error": DEVICE_NOT_FOUND_MSG}, status=404)
+            records = ConsumptionRecord.objects.filter(
+                device=device,
+                timestamp__range=(start_date, now)
+            )
+
+        # Aggregate the data by day
+        data = records.annotate(day=TruncDay('timestamp')).values('day').annotate(total_consumption=Sum('consumption'))
+
+        # Format the response data
+        response_data = [
+            {
+                "timestamp": record.get("day"),
+                "consumption": record.get("total_consumption"),
+            }
+            for record in data
+        ]
+        return Response(response_data)
+
+    # Method to handle monthly data aggregation by week
+    def get_monthly_data(self, request):
+        now = timezone.now()
+        start_date = now - timezone.timedelta(days=30)
+        device_id = request.query_params.get('device')
+
+        # Retrieve records for all devices or a specific device within the monthly time range
+        if device_id == 'All':
+            records = ConsumptionRecord.objects.filter(
+                device__user=request.user,
+                timestamp__range=(start_date, now)
+            )
+        else:
+            try:
+                device = Device.objects.get(id=device_id, user=request.user)
+            except Device.DoesNotExist:
+                return Response({"error": DEVICE_NOT_FOUND_MSG}, status=404)
+            records = ConsumptionRecord.objects.filter(
+                device=device,
+                timestamp__range=(start_date, now)
+            )
+
+        # Aggregate the data by week
+        data = records.annotate(week=TruncWeek('timestamp')).values('week').annotate(total_consumption=Sum('consumption'))
+
+        # Format the response data
+        response_data = [
+            {
+                "timestamp": record.get("week"),
+                "consumption": record.get("total_consumption"),
+            }
+            for record in data
+        ]
+        return Response(response_data)
+
+    # Method to handle yearly data aggregation by month
+    def get_yearly_data(self, request):
+        year = timezone.now().year
+        data = MonthlyConsumption.objects.filter(year=year, device__user=request.user)\
+                                        .values("month")\
+                                        .annotate(total_consumption=Sum("total_consumption"))
+
+        # Format the response data
+        response_data = [
+            {
+                "timestamp": f"{year}-{record.get('month'):02d}-01",
+                "consumption": record.get("total_consumption"),
+            }
+            for record in data
+        ]
+        return Response(response_data)

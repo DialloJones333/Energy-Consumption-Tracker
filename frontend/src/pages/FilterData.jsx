@@ -4,9 +4,12 @@ import FilterDataForm from "../components/Forms/FilterDataForm";
 import FilterDataChart from "../components/Charts/FilterDataChart";
 import Footer from "../components/Footer";
 
+// Component for the filter data page
 const FilterData = () => {
+    // Manage the state of the device and time frame filters
     const [filters, setFilters] = useState({ device: '', timeFrame: '' });
 
+    // Function to handle with the filters
     const handleFilterChange = (newFilters) => {
         setFilters(newFilters);
     };
