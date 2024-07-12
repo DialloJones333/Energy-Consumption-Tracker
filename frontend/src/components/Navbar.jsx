@@ -1,6 +1,7 @@
 import { useLocation, useNavigate} from 'react-router-dom';
 import useAuth from '../../services/useAuth';
 
+// Component for the navbar
 const Navbar = () => {
     const location = useLocation();
     const navigate = useNavigate();

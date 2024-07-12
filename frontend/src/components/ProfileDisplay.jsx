@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 
+// Component for displaying profile information
 const ProfileDisplay = ({firstName, lastName, username, phoneNumber, email}) => {
     
     return (

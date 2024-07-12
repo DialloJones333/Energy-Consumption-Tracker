@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 
+// Component for the landing pages navbar
 const LandingNavbar = () => {
     const location = useLocation();
     const navigate = useNavigate();

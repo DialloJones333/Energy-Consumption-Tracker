@@ -1,3 +1,4 @@
+// Component for lower-energy card
 const LowerEnergyCard = () => {
 
     return (

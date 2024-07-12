@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import daisyui from "daisyui"
 
+// Tailwind configuration
 export default {
   content: [
     "./index.html",

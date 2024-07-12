@@ -33,6 +33,7 @@ export const getUserData = async () => {
 
 // Create an axios instance
 const api = axios.create({
+    // Set the base URL to the development server
     baseURL: 'http://127.0.0.1:8000/api',
 });
 
@@ -50,6 +51,7 @@ api.interceptors.request.use((config) => {
     if (csrfToken) {
         config.headers['X-CSRFToken'] = csrfToken;
     }
+    // Return the config object
     return config;
 }, (error) => {
     return Promise.reject(error);

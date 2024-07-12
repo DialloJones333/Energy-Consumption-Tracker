@@ -4,9 +4,6 @@ from datetime import timedelta
 from django.db.models import Sum
 from django.contrib.auth.models import User
 from .models import Device, ConsumptionRecord, MonthlyConsumption, Notification, NotificationPreferences
-import logging
-
-logger = logging.getLogger(__name__)
 
 
 # Task to generate consumption records
@@ -14,7 +11,6 @@ logger = logging.getLogger(__name__)
 def generate_consumption_records():
     # Get the current time
     now = timezone.now()
-    logger.debug(f"Current time: {now}")
     # Generate consumption records for each device
     for device in Device.objects.all():
         daily_consumption = device.daily_consumption
@@ -28,7 +24,6 @@ def generate_consumption_records():
         )
         # Save the consumption record
         consumption_record.save()
-        logger.debug(f"Created ConsumptionRecord: {consumption_record}")
 
 
 # Task to generate monthly consumption
@@ -36,7 +31,6 @@ def generate_consumption_records():
 def generate_monthly_consumption():
     # Get the current time
     now = timezone.now()
-    logger.debug(f"Current time: {now}")
     # Define the start and end of the month
     start_of_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     end_of_month = (start_of_month + timezone.timedelta(days=31)).replace(

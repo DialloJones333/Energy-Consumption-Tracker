@@ -6,6 +6,7 @@ import ProfileForm from "../components/Forms/ProfileForm";
 import Footer from "../components/Footer";
 import AuthContext from '../../services/AuthContext';
 
+// Component to render the Profile page
 const Profile = () => {
     // Get the user data from the AuthContext provider
     const { user, setUser } = useContext(AuthContext);

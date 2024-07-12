@@ -1,3 +1,4 @@
+// Component for lower-bill card
 const LowerBillCard = () => {
 
     return (

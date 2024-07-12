@@ -8,6 +8,7 @@ import DailyChart from "../components/Charts/DailyChart";
 import YearlyChart from "../components/Charts/YearlyChart";
 import '../styles/LandingPage.css';
 
+// Component for the Dashboard page
 const Dashboard = () => {
     const navigate = useNavigate();
 

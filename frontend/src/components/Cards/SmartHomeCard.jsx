@@ -1,3 +1,4 @@
+// Component for smart-home card
 const SmartHomeCard = () => {
 
     return (

@@ -1,4 +1,3 @@
-import logging
 from rest_framework import status
 from django.utils import timezone
 from django.db.models import Sum
@@ -11,11 +10,9 @@ from rest_framework.viewsets import ViewSet
 from .tasks import generate_consumption_records, generate_monthly_consumption
 from .serializers import RegisterSerializer, CurrentUserSerializer
 
-# Setting up a logger for debugging purposes
-logger = logging.getLogger(__name__)
-
-# View for handling user registration
-class RegisterView(APIView):
+# APIView for handling user registration
+class RegisterView(APIView):\
+    # Allow any user
     permission_classes = [AllowAny]
 
     # POST method for user registration
@@ -36,11 +33,12 @@ class RegisterView(APIView):
                 },
                 status=status.HTTP_201_CREATED,
             )
+            # Return the response or raise an error if serializer is invalid
             return response
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# View for handling user login
+# APIView for handling user login
 class LoginView(APIView):
     permission_classes = (AllowAny,)
 
@@ -69,7 +67,7 @@ class LoginView(APIView):
         )
 
 
-# View for verifying a users token
+# APIView for verifying a users token
 class VerifyTokenView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -89,7 +87,7 @@ class VerifyTokenView(APIView):
         )
 
 
-# View for handling user logout
+# APIView for handling user logout
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -128,6 +126,7 @@ from .serializers import (
 
 # ViewSet for Current User
 class CurrentUserViewSet(ViewSet):
+    # Allow only authenticated users
     permission_classes = [IsAuthenticated]
 
     # GET method for getting a list of the current users data
@@ -339,10 +338,6 @@ class ConsumptionRecordViewSet(viewsets.ModelViewSet):
             .annotate(total_consumption=Sum('consumption'))  # Sum the consumption values for each hour
             .order_by('hour')  # Sort by hour
         )
-
-        # Log the outputs to determine all is working as expected
-        logger.debug(f"Start of day: {start_of_day}")
-        logger.debug(f"Consumption records: {consumption_records}")
 
         # Format the data for the response
         data = [
@@ -588,8 +583,8 @@ class FilterConsumptionView(APIView):
     def get_yearly_data(self, request):
         year = timezone.now().year
         data = MonthlyConsumption.objects.filter(year=year, device__user=request.user)\
-                                        .values("month")\
-                                        .annotate(total_consumption=Sum("total_consumption"))
+                .values("month")\
+                                .annotate(total_consumption=Sum("total_consumption"))
 
         # Format the response data
         response_data = [

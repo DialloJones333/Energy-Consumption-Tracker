@@ -1,6 +1,7 @@
 import { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
+// Static data for the chart
 const data = [
     {
         name: '1st',
@@ -39,6 +40,7 @@ const data = [
     },
 ];
 
+// Component for the mini filter chart
 class MiniFilterChart extends PureComponent {
     render() {
         return (

@@ -3,6 +3,7 @@ import githubicon from '../assets/github.svg'
 import linkedinicon from '../assets/linkedin.svg'
 import emailicon from '../assets/email.svg'
 
+// Component for the footer
 const Footer = () => (
     <footer className="footer p-4 bg-inherit text-inherit mt-auto flex justify-between items-center font-serif">
         <aside className="flex items-center grid-flow-col">

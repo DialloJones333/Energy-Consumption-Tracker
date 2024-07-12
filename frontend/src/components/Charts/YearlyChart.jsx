@@ -2,29 +2,37 @@ import { useEffect, useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import api from '../../../services/api';
 
-// Render a chart that displays monthly device data for the year
+// Component for the yearly chart
 const YearlyChart = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
+        // Fetch yearly consumption data
         const fetchData = async () => {
             try {
+                // Send a GET request to the yearly consumption endpoint
                 const response = await api.get('/yearly-consumption/', {
+                    // Include the user's token in the Authorization header
                     headers: {
                         Authorization: 'Token ${token}'
                     }
                 });
+                // Set a constant for the months
                 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                // Format the data
                 const formattedData = response.data.map(item => ({
                     name: months[item.month - 1],
                     Usage: item.total_consumption
                 }));
+                // Set the data
                 setData(formattedData);
+            // Catch any errors and log them to the console
             } catch (error) {
                 console.error('Error fetching yearly consumption data', error);
             }
         };
 
+        // Call the fetchData function
         fetchData();
     }, []);
 

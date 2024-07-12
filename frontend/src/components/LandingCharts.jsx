@@ -4,6 +4,7 @@ import LandingBarChart from './LandingCharts/LandingBarChart';
 import LandingAreaChart from './LandingCharts/LandingAreaChart';
 import '../styles/custom-spacing.css'
 
+// Component for the landing pages charts
 const LandingCharts = () => {
     return (
         <div className="flex flex-col items-center gap-8 mt-8">

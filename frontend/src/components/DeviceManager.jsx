@@ -3,25 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import api from '../../services/api';
 
+// Component for managing devices
 const DeviceManager = () => {
     const DeviceInputRef = useRef(null);
     const [deviceType, setDeviceType] = useState('');
+
     const [deviceTypes] = useState([
         'LED Bulbs', 'Incandescent Bulbs', 'CFL Bulbs', 'Smart Bulbs', 'Smart Plugs', 'Smart Thermostats',
         'Fans', 'Televisions', 'Gaming Consoles', 'Desktop Computers', 'Laptops', 'Microwave Ovens',
         'Refrigerators', 'Washing Machines', 'Dryers', 'Dishwashers', 'Air Conditioners', 'Heaters',
         'Water Heaters', 'Electric Ovens', 'Electric Kettles', 'Hair Dryers', 'Coffee Makers'
     ]);
+
     const [hoursUsed, setHoursUsed] = useState('');
     const [brand, setBrand] = useState('');
+
     const [brands] = useState([
         'Apple', 'Samsung', 'LG', 'Sony', 'Dell', 'HP', 'Philips', 'Panasonic', 'Bosch', 'Whirlpool',
         'GE', 'Toshiba', 'Asus', 'Acer', 'Lenovo', 'Microsoft', 'Nokia', 'Huawei', 'Xiaomi',
         'Google', 'Amazon', 'Other'
     ]);
+
     const [otherBrand, setOtherBrand] = useState('');
     const [messages, setMessages] = useState([]);
-
     const navigate = useNavigate();
 
     // Focus the device input field when the component mounts
@@ -33,6 +37,7 @@ const DeviceManager = () => {
 
     // Function to handle adding a device
     const handleDevices = async () => {
+        // Check if any of the fields are empty
         const deviceBrand = brand === 'Other' ? otherBrand : brand;
         try {
             // Make a POST request to my devices endpoint
@@ -41,6 +46,7 @@ const DeviceManager = () => {
                 device_type: deviceType,
                 hours_used: hoursUsed,
             }, {
+                // Include the users token in the Authorization header
                 headers: {
                     'Authorization': `Token ${localStorage.getItem('token')}`,
                 },
@@ -58,10 +64,12 @@ const DeviceManager = () => {
 
     // Function to render the error messages
     const renderError = () => {
+        // If the messages are not an array, return null
         if (!Array.isArray(messages)) {
             return null;
         }
 
+        // Map through the messages array and display each message
         return messages.map((message) => (
             <div key={uuidv4()} className="text-red-500">
                 {message}

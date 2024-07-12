@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
 
+// Sample data for the chart
 const data = [
     { name: 'Device A', value: 510 },
     { name: 'Device B', value: 325 },
@@ -8,6 +9,7 @@ const data = [
     { name: 'Device D', value: 300 },
 ];
 
+// Function to render the active shape of the chart
 const renderActiveShape = (props) => {
     const RADIAN = Math.PI / 180;
     const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent } = props;
@@ -54,6 +56,7 @@ const renderActiveShape = (props) => {
     );
 };
 
+// Component for the landings pages pie chart
 const LandingPieChart = () => {
     const [activeIndex, setActiveIndex] = useState(0);
 

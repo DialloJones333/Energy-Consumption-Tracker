@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '../../services/api';
 
-// Component to display a table of notifications
+// Component to display notifications
 const NotificationTable = () => {
     const [notifications, setNotifications] = useState([]);
 

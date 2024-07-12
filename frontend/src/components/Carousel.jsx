@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { dashboardTips } from "../data/tipsData";
 
+// Component for the carousel of tips
 const Carousel = () => {
     const [selectedTips, setSelectedTips] = useState([]);
 

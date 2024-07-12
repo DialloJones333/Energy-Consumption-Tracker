@@ -1,6 +1,7 @@
 import { PureComponent } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
+// Sample data for the chart
 const data = [
     {
         name: 'Jan',
@@ -52,6 +53,7 @@ const data = [
     },
 ];
 
+// Component for the landings pages area chart
 class LandingAreaChart extends PureComponent {
     render() {
         return (

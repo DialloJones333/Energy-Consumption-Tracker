@@ -6,6 +6,7 @@ import SmartHomeCard from "../components/Cards/SmartHomeCard";
 import Accordion from "../components/Accordion";
 import { tips1, tips2, tips3 } from "../data/tipsData";
 
+// Component to render the Tips & Tricks page
 const TipsAndTricks = () => {
 
     return (

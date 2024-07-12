@@ -1,3 +1,4 @@
+// Tips and Tricks data section 1
 export const tips1 = [
     { id: "1", title: "Use LED Lighting", content: "Replace incandescent bulbs with LED lights to save energy and reduce heat production." },
     { id: "2", title: "Unplug Devices", content: "Unplug electronics when not in use to avoid phantom energy usage." },
@@ -6,6 +7,7 @@ export const tips1 = [
     { id: "5", title: "Insulate Your Home", content: "Proper insulation helps maintain temperature, reducing heating and cooling costs." },
 ];
 
+// Tips and Tricks data section 2
 export const tips2 = [
     { id: "6", title: "Energy Audit", content: "Conduct an energy audit to identify areas where you can save on your energy bill." },
     { id: "7", title: "Off-Peak Hours", content: "Use appliances during off-peak hours when energy rates are lower." },
@@ -14,6 +16,7 @@ export const tips2 = [
     { id: "10", title: "Ceiling Fans", content: "Use ceiling fans to help circulate air and reduce the need for air conditioning." },
 ];
 
+// Tips and Tricks data section 3
 export const tips3 = [
     { id: "11", title: "Automate Lighting", content: "Use smart lighting to automatically turn off lights when not in use." },
     { id: "12", title: "Smart Plugs", content: "Use smart plugs to control devices remotely and schedule them to turn off." },
@@ -22,6 +25,7 @@ export const tips3 = [
     { id: "15", title: "Voice Control", content: "Use voice-activated assistants to control your smart devices and optimize energy use." },
 ];
 
+// Dashboard Tips
 export const dashboardTips = [
     { id: "1", content: "Turn off lights when not in use to save energy." },
     { id: "2", content: "Unplug devices when they are not being used." },

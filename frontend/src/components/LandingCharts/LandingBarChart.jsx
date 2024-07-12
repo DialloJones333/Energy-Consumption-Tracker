@@ -1,6 +1,7 @@
 import { PureComponent } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
+// Sample data for the chart
 const data = [
     {
         name: '12AM',
@@ -32,6 +33,7 @@ const data = [
     },
 ];
 
+// Component for the landings pages bar chart
 class LandingBarChart extends PureComponent {
     render () {
         return (

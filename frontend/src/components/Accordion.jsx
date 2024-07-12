@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 
+// Accordion component for displaying tips
 const Accordion = ({ tips }) => {
     return (
         <div className="join join-vertical w-full h-full">

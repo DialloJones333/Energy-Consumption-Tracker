@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Device, ConsumptionRecord, MonthlyConsumption, Notification, NotificationPreferences,UserProfile
 
+# Register my models
 admin.site.register(Device)
 admin.site.register(ConsumptionRecord)
 admin.site.register(MonthlyConsumption)

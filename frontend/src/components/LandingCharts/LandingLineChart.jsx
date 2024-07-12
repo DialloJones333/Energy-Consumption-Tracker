@@ -1,6 +1,7 @@
 import { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
+// Sample data for the chart
 const data = [
     {
         name: '1st',
@@ -39,6 +40,7 @@ const data = [
     },
 ];
 
+// Component for the landings pages line chart
 class LandingLineChart extends PureComponent {
     render() {
         return (

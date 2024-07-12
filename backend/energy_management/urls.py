@@ -17,6 +17,7 @@ from .views import (
 )
 
 router = DefaultRouter()
+# Register all the views
 router.register(r"users", UserViewSet)
 router.register(r"user-profiles", UserProfileViewSet)
 router.register(r"current-user", CurrentUserViewSet, basename="current-user")
@@ -25,6 +26,7 @@ router.register(r"update-password", CurrentUserViewSet, basename="update-passwor
 router.register(r"devices", DeviceViewSet, basename="devices")
 router.register(r"consumption-records", ConsumptionRecordViewSet, basename="consumption-records")
 
+# Add endpoints
 urlpatterns = [
     path("api/", include(router.urls)),
     

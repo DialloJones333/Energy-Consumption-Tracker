@@ -14,8 +14,10 @@ import AccountPreferences from './pages/AccountPreferences';
 import Notifications from './pages/Notifications';
 import { AuthProvider } from '../services/AuthContext';
 
+// Main application component
 function App() {
   return (
+    // Wrap the entire application with the AuthProvider
     <AuthProvider>
       <Router>
         <Routes>

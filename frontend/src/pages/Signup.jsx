@@ -2,6 +2,7 @@ import LandingNavbar from '../components/LandingNavbar';
 import Footer from '../components/Footer';
 import SignUpForm from '../components/Forms/SignUpForm';
 
+// Component to render the Signup page
 const SignUp = () => {
     return (
         <div className='flex flex-col min-h-screen font-serif'>

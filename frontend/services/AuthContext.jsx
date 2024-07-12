@@ -101,6 +101,7 @@ export const AuthProvider = ({ children }) => {
     }), [isAuthenticated, user, notificationPreferences]);
 
     return (
+        // Render the AuthContext.Provider with the value object
         <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 
+// Component for displaying account preferences
 const AccountPrefDisplay = ({ textNoti, emailNoti, disableAll }) => {
     return (
         <div className="stats stats-vertical h-full w-full bg-inherit text-slate-800">

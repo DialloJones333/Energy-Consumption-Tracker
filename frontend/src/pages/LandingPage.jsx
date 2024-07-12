@@ -3,6 +3,7 @@ import LandingCharts from '../components/LandingCharts';
 import Footer from '../components/Footer';
 import '../styles/LandingPage.css';
 
+// Component to render the landing page
 const LandingPage = () => (
     <div className='flex flex-col min-h-screen font-serif'>
         <LandingNavbar />

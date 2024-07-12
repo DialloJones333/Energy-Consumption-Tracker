@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 
+// Component for the tab bar
 const TabBar = () => {
     const location = useLocation();
 
