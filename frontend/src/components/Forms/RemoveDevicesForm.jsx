@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import api from '../../../services/api';
 
 const DeviceManager = () => {
+    // State variables for the devices and error messages
     const [device, setDevice] = useState('');
     const [devices, setDevices] = useState([]);
     const [messages, setMessages] = useState([]);
@@ -17,6 +18,7 @@ const DeviceManager = () => {
                 const response = await api.get('/devices/');
                 // Update the devices state with the fetched devices
                 setDevices(response.data);
+            // Catch any errors and display them on the console
             } catch (error) {
                 console.error("Error fetching devices:", error);
             }
@@ -37,9 +39,10 @@ const DeviceManager = () => {
                 },
             });
 
-            // Log the response
+            // Log the response and navigate to the dashboard
             console.log(response.data);
             navigate('/dashboard');
+        // Catch any errors and display them on the screen
         } catch (error) {
             setMessages([error.response?.data?.error || 'An error occurred']);
         }
@@ -47,10 +50,12 @@ const DeviceManager = () => {
 
     // Function to render the error messages
     const renderError = () => {
+        // If messages is not an array, return null
         if (!Array.isArray(messages)) {
             return null;
         }
 
+        // If messages is an array, return a list of error messages
         return messages.map((message) => (
             <div key={uuidv4()} className="text-red-500">
                 {message}

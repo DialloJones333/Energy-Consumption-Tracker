@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import RemoveDevicesForm from "../components/Forms/RemoveDevicesForm";
 import Footer from "../components/Footer";
 
+// Component for the Remove Devices page
 const RemoveDevices = () => {
 
     return (
